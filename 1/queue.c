@@ -57,6 +57,11 @@ int q_pop(Queue *q)
     return val;
 }
 
+int q_peek(Queue *q)
+{
+    return q->top->value;
+}
+
 int main(int argc, char **argv)
 {
     // TEST 1
