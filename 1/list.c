@@ -8,9 +8,9 @@ List *l_new()
     return lst;
 }
 
-Node *node(int value)
+SNode *snode(int value)
 {
-    Node *n = malloc(sizeof(Node));
+    SNode *n = malloc(sizeof(SNode));
     n->value = value;
     return n;
 }
@@ -22,7 +22,7 @@ bool l_isEmpty(List *list)
 
 bool l_find(List *list, int value)
 {
-    Node *cur = list->first;
+    SNode *cur = list->first;
     while(cur != NULL)
     {
         if(cur->value == value)
@@ -48,8 +48,8 @@ void l_insert(List *list, int index, list_val_t value)
         fprintf(stderr, "List index out of range.\n");
         exit(EXIT_FAILURE);
     }
-    Node *n = node(value);
-    Node *tmp;
+    SNode *n = snode(value);
+    SNode *tmp;
     if(list->first == NULL)
     {
         list->first = n;
@@ -64,7 +64,7 @@ void l_insert(List *list, int index, list_val_t value)
         return;
     }
 
-    Node *cur = list->first;
+    SNode *cur = list->first;
     for(int i = 1; i < index; i++)
     {
         cur = cur->next;
@@ -77,7 +77,7 @@ void l_insert(List *list, int index, list_val_t value)
 
 void l_print(List *list)
 {
-    Node *cur = list->first;
+    SNode *cur = list->first;
     printf("list size: %d.\n", list->count);
     while(cur != NULL)
     {
@@ -95,7 +95,7 @@ list_val_t l_fetch(List *list, int index)
         fprintf(stderr, "List index out of range.\n");
         exit(EXIT_FAILURE);
     }
-    Node *cur = list->first;
+    SNode *cur = list->first;
     for(int i = 0; i<index; i++)
     {
         cur = cur->next;
@@ -105,7 +105,7 @@ list_val_t l_fetch(List *list, int index)
 
 void l_free(List *list)
 {
-    Node *cur = list->first;
+    SNode *cur = list->first;
     while(cur != NULL)
     {
         list->first = list->first->next;
@@ -124,8 +124,8 @@ void l_remove(List *list, int index)
         exit(EXIT_FAILURE);
     }
 
-    Node *cur = list->first;
-    Node *tmp;
+    SNode *cur = list->first;
+    SNode *tmp;
     for(int i = 0; i < index-1; i++)
     {
         cur = cur->next;
@@ -138,7 +138,7 @@ void l_remove(List *list, int index)
 
 void l_merge(List *list1, List *list2)
 {
-    Node *last = list1->first;
+    SNode *last = list1->first;
     while(last->next != NULL)
     {
         last = last->next;
@@ -185,7 +185,7 @@ int main()
         end = clock();
         t_245 += (double)(end-start) / CLOCKS_PER_SEC;
         
-        for(int j = 0; j< 10; j++)
+        for(int j = 0; j< 100; j++)
         {
             int r = rand()%1000;
             start = clock();

@@ -9,20 +9,31 @@
 typedef int list_val_t;
 
 // list node
-typedef struct node {
+typedef struct sl_node {
     list_val_t value;
-    struct node *next;
-} Node;
+    struct sl_node *next;
+} SNode;
+
+typedef struct dl_node {
+    list_val_t value;
+    struct dl_node *prev;
+    struct dl_node *next;
+} DNode;
 
 // list data
 typedef struct {
-    Node *first;
+    SNode *first;
     int count;
 } List;
 
-// create new separated node with value
-Node *node(list_val_t value);
+typedef struct {
+    DNode *first;
+    int count;
+} DList;
 
+// create new separated node with value
+SNode *snode(list_val_t value);
+DNode *dnode(list_val_t value);
 // create new empty list
 List *l_new();
 
