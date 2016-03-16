@@ -158,6 +158,7 @@ int main()
     l_insertEnd(test, 3);
     l_remove(test, 2);
     l_print(test);
+    printf("test[2] = %d", l_fetch(test,2));
     
     printf("\nTEST #2 - merge\n");
     List *test2 = l_new();
@@ -184,7 +185,7 @@ int main()
         l_fetch(list, 245);
         end = clock();
         t_245 += (double)(end-start) / CLOCKS_PER_SEC;
-        
+        for(int j = 0; j< 10; j++)
         for(int j = 0; j< 100; j++)
         {
             int r = rand()%1000;
