@@ -136,8 +136,18 @@ void l_remove(List *list, int index)
     list->count--;
 }
 
+// make list1 equal to list1+list2
+// list1 cant be null
 void l_merge(List *list1, List *list2)
 {
+    if(list1 == NULL)
+    {
+        fprintf(stderr, "List1 is null. merge will have no effect.\n");
+        return;
+    }
+    if(list2 == NULL)
+        return;
+
     SNode *last = list1->first;
     while(last->next != NULL)
     {
@@ -149,7 +159,7 @@ void l_merge(List *list1, List *list2)
 }
 
 int main()
-{
+{/*
     printf("TEST #1 - basics\n");
     List *test = l_new();
     l_insertEnd(test, 0);
@@ -158,16 +168,20 @@ int main()
     l_insertEnd(test, 3);
     l_remove(test, 2);
     l_print(test);
-    printf("test[2] = %d", l_fetch(test,2));
+    printf("test[2] = %d\n", l_fetch(test,2));
     
     printf("\nTEST #2 - merge\n");
     List *test2 = l_new();
     l_insertEnd(test2, 4);
     l_insertEnd(test2, 5);
-    l_merge(test, test2);
+    l_merge(test, NULL);
     l_print(test);
+    printf("merge(test, NULL) success\n");
+    List *test3 = NULL;
+    printf("merge(NULL,test) success\n");
 
     printf("\nTEST #3 - access time\n");
+    */
     srand(time(0));
     double t_rand = 0;
     double t_245 = 0;
@@ -185,7 +199,6 @@ int main()
         l_fetch(list, 245);
         end = clock();
         t_245 += (double)(end-start) / CLOCKS_PER_SEC;
-        for(int j = 0; j< 10; j++)
         for(int j = 0; j< 100; j++)
         {
             int r = rand()%1000;

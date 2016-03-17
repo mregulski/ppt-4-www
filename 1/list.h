@@ -67,7 +67,7 @@ void dl_remove(DList *list, int index);
 
 // free all nodes in list
 void l_free(List *list);
-void dl_free(List *list);
+void dl_free(DList *list);
 
 // print values in list to stdout
 void l_print(List *list);
