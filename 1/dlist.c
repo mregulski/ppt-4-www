@@ -195,8 +195,13 @@ int main(int argc, char**argv)
     int verbose = 0;
     int list_size = LIST_SIZE;
     if(argc == 2)
-    {
         verbose = atoi(argv[1]);
+
+    if(argc == 4)
+    {
+        tests = atoi(argv[1]);
+        r_tests = atoi(argv[2]);
+        list_size = atoi(argv[3]);
     }
     if(argc == 5)
     {
@@ -230,16 +235,17 @@ int main(int argc, char**argv)
     //getchar();
     printf("ACCESS TIME TEST\n");
     srand(time(0));
-    long t_rand = 0;
-    long t_half = 0;
-    long t_first = 0;
-    long t_last = 0;
+    double t_rand = 0;
+    double t_half = 0;
+    double t_first = 0;
+    double t_last = 0;
     int r;
     long r_sum = 0;
 
-    DList **lists = malloc(sizeof(DList*) * tests);
 
     /* create a list for each test */
+    /*
+    DList **lists = malloc(sizeof(DList*) * tests);
     for(int exCount = 0; exCount < tests; exCount++)
     {
       lists[exCount] = dl_new();
@@ -247,57 +253,72 @@ int main(int argc, char**argv)
       {
           dl_insertStart(lists[exCount], rand()%10000);
       }
+      printf("list #%d created.\n",exCount);
     }
+    printf("list creation done.\n");
+    */
+    DList *list = dl_new();
+    for(int i = 0; i < list_size; i++)
+    {
+        dl_insertStart(list, rand()%10000);
+    }
+
 
     /*********************
         access time tests
      *********************/
-    for(int e = 0; e < tests; e++)
+    for(int e = 1; e <= tests; e++)
     {
-    // first element
-    if(verbose)
-    {
-        printf("Test #%d\n", e);
-        printf("\t%-8s ", "[FIRST]");
-    }
-    t_first += measure_time(lists[e], 1, verbose);
+        // first element
+        if(verbose)
+        {
+            printf("Test #%d\n", e);
+            printf("\t%-8s ", "[FIRST]");
+        }
+        t_first += (double)(measure_time(list, 1, verbose) - t_first) / e;
 
-    // last element
-    if(verbose)
-        printf("\t%-8s ", "[LAST]");
-    t_last  += measure_time(lists[e], lists[e]->count-1, verbose);
+        // last element
+        if(verbose)
+            printf("\t%-8s ", "[LAST]");
+        t_last  += (double)(measure_time(list, list->count-1, verbose) - t_last) / e;
 
-    // middle element
-    if(verbose)
-        printf("\t%-8s ", "[HALF]");
-    t_half  += measure_time(lists[e], lists[e]->count/2, verbose);
+        // middle element
+        if(verbose)
+            printf("\t%-8s ", "[HALF]");
+        t_half  += (double)(measure_time(list, list->count/2, verbose) - t_half) / e;
 
-    // random element
-    r = rand()%list_size;
-    r_sum += r;
-    if(verbose)
-        printf("\t%-8s ", "[RAND]");
-    t_rand  += measure_time(lists[e], r, verbose);
+        // random element
+        r = rand()%list_size;
+        r_sum += r;
+        if(verbose)
+            printf("\t%-8s ", "[RAND]");
+        t_rand  += (double)(measure_time(list, r, verbose) - t_rand) / e;
+        //printf("test #%d complete\n", e);
     }
     // print results
-    printf("%-8s avg: %f, total: %ld\n", "[FIRST]",
-        (double)t_first/(double)(tests), t_first);
-    printf("%-8s avg: %f, total: %ld\n", "[LAST]",
-        (double)t_last/(double)(tests), t_last);
-    printf("%-8s avg: %f\n", "[HALF]", (double)t_half/(double)(tests));
+    printf("%-8s avg: %f\n", "[FIRST]", t_first);
+    printf("%-8s avg: %f\n", "[LAST]", t_last);
+    printf("%-8s avg: %f\n", "[HALF]", t_half);
     printf("%-8s avg: %f | avg rand(): %ld\n", "[RAND]",
-        (double)t_rand/(double)tests, r_sum/tests);
+        t_rand, r_sum/tests);
 }
 
 long measure_time(DList *list, int index, int verbose)
 {
-    struct timeval start, end;
-
-    gettimeofday(&start, NULL);
+    //struct timeval start, end;
+    clock_t start, end;
+    //gettimeofday(&start, NULL);
+    start = clock();
     dl_fetch(list, index);
-    gettimeofday(&end, NULL);
+    end = clock();
+    //gettimeofday(&end, NULL);
     if(verbose)
+    {
         printf("fetch %4d, start: %8ld, end: %8ld, time: %2ld\n",
-            index, start.tv_usec, end.tv_usec, end.tv_usec - start.tv_usec);
-    return end.tv_usec - start.tv_usec;
+            index, start, end, end - start);
+        //printf("fetch %4d, start: %8ld, end: %8ld, time: %2ld\n",
+        //  index, start.tv_usec, end.tv_usec, end.tv_usec - start.tv_usec);
+    }
+    //return end.tv_usec - start.tv_usec;
+    return end - start;
 }
