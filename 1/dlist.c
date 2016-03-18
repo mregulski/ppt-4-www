@@ -4,7 +4,7 @@
 
 DList *dl_new()
 {
-    DList *lst = malloc(sizeof(DList));
+    DList *lst = (DList*) malloc(sizeof(DList));
     lst->first = NULL;
     lst->count = 0;
     return lst;
@@ -136,13 +136,14 @@ void dl_free(DList *list)
 
 list_val_t dl_fetch(DList *list, int index)
 {
-    if(index > list->count)
+    if(index >= list->count)
     {
-        fprintf(stderr, "List index out of range.(%d)", index);
-        exit(EXIT_FAILURE);
+        fprintf(stderr, "[fetch] List index (%d) out of range (0..%d).\n",
+        index, list->count-1);
+        //exit(EXIT_FAILURE);
     }
     DNode *cur = list->first;
-    if(index == 0) 
+    if(index == 0)
     {
     //    printf("feetching 0\n");
         return list->first->value;
@@ -156,7 +157,7 @@ list_val_t dl_fetch(DList *list, int index)
     {
     //    printf("fetching half(%d)\n", list->count/2);
         for(int i=0; i < list->count-index; i++)
-            cur = cur->prev;  
+            cur = cur->prev;
     }
     else
     {
@@ -170,16 +171,18 @@ long measure_time(DList *list, int index, int verbose);
 void dl_merge(DList *list1, DList *list2)
  {
     DNode *list1f, *list2f, *list1l, *list2l;
+    /* keep 'terminal' nodes on both lists */
     list1f = list1->first;
     list2f = list2->first;
     list1l = list1->first->prev;
     list2l = list2->first->prev;
-    
+
+    /* stitch the ends together */
     list1->first->prev->next = list2f;
     list2->first->prev->next = list1f;
     list2->first->prev = list1l;
     list1->first->prev = list2l;
-    
+    /* update count */
     list1->count += list2->count;
 }
 #define TESTS 1000
@@ -195,61 +198,37 @@ int main(int argc, char**argv)
     {
         verbose = atoi(argv[1]);
     }
-    if(argc == 4)
-    { 
+    if(argc == 5)
+    {
         tests = atoi(argv[1]);
         r_tests = atoi(argv[2]);
         list_size = atoi(argv[3]);
-     }
-    
-    //printf("TEST #1\n");
-    DList *test = dl_new();
-    dl_insertEnd(test, 0);
-    dl_insertEnd(test, 1);
-    dl_insertEnd(test, 2);
-    dl_insertEnd(test, 3);
-    dl_insertEnd(test, 4);
-    dl_insertEnd(test, 5);
-    dl_insertEnd(test, 6);
-    dl_insertEnd(test, 7);
-    dl_insert(test, 4, 4444);
-    /*
-    dl_print(test);
-    printf("------\n");
-    printf("fetch(2): %d\n", dl_fetch(test, 2));
-    printf("fetch(5): %d\n", dl_fetch(test, 5));
-    printf("fetch(4): %d\n", dl_fetch(test, 4));
-    
-    
-    printf("--------------------\n");
-    printf("TEST #2\n");
-    */
-    DList *test2 = dl_new();
-    dl_insertStart(test2, 0);
-    dl_insertStart(test2, 1);
-    dl_insertStart(test2, 2);
-    dl_insertStart(test2, 3);
-    dl_insertStart(test2, 4);
-    dl_insertStart(test2, 5);
-    dl_insertStart(test2, 6);
-    dl_insertStart(test2, 7);
-    dl_merge(test,test2);
-    /*
-    dl_print(test2);
-    printf("------\n");
-    dl_merge(test,test2);
-    dl_print(test);
-    printf("------\n");
-    dl_insertStart(test, 8);
-    dl_print(test);
-    printf("test length: %d\n", test->count);
-    printf("fetch(0): %d\n", dl_fetch(test, 0));
-    printf("fetch(last): %d\n", dl_fetch(test, test->count-1));
-    printf("fetch(8): %d\n", dl_fetch(test, 8));
+        verbose = atoi(argv[4]);
+    }
 
-     printf("--------------------\n");
-   */
-    printf("ACTUAL TEST\n");
+    //printf("TEST #1\n");
+    if(verbose)
+    {
+        DList *test = dl_new();
+        for(int i = 0; i < 8; i++)
+            dl_insertEnd(test, i);
+
+        dl_insert(test, 4, 4444);
+        DList *test2 = dl_new();
+        for(int i = 0; i < 8; i++)
+            dl_insertStart(test2, i);
+
+        dl_merge(test,test2);
+
+        dl_print(test);
+        printf("test->length = %d\n", test->count);
+        printf("dl_fetch(test, 0) = %d\n", dl_fetch(test, 0));
+        printf("dl_fetch(test, 4) = %d\n", dl_fetch(test, 4));
+        printf("dl_fetch(test, test->count) = %d\n", dl_fetch(test, test->count));
+        printf("dl_fetch(test, test->count-1) = %d\n", dl_fetch(test, test->count-1));
+    }
+    //getchar();
+    printf("ACCESS TIME TEST\n");
     srand(time(0));
     long t_rand = 0;
     long t_half = 0;
@@ -257,59 +236,63 @@ int main(int argc, char**argv)
     long t_last = 0;
     int r;
     long r_sum = 0;
-    
-    DList *list = dl_new();
-    for(int i = 0; i < list_size; i++)
-    {
-        dl_insertEnd(list, rand()%10000);
-    }
 
+    DList **lists = malloc(sizeof(DList*) * tests);
+
+    /* create a list for each test */
     for(int exCount = 0; exCount < tests; exCount++)
     {
-        //list = test;//dl_new();
-        //list_size = list->count;
-        //printf("lsize: %d\n", list_size);
-        /*
-        for(int i = 0; i < list_size; i++)
-        {
-            dl_insertEnd(list, rand()%10000);
-        }
-        */
-        if(verbose)
-        {
-            printf("Test #%d\n", exCount);
-            printf("\t%-8s ", "[FIRST]");
-        }
-        t_first += measure_time(list, 1, verbose);
-        if(verbose)
-            printf("\t%-8s ", "[LAST]");
-        t_last  += measure_time(list, list->count, verbose);
-        if(verbose)
-            printf("\t%-8s ", "[HALF]");
-        t_half  += measure_time(list, list->count/2, verbose);
-        
-        r = rand()%list_size;
-        r_sum += r;
-        if(verbose)
-            printf("\t%-8s ", "[RAND]");
-        t_rand  += measure_time(list, r, verbose);
+      lists[exCount] = dl_new();
+      for(int i = 0; i < list_size; i++)
+      {
+          dl_insertStart(lists[exCount], rand()%10000);
+      }
     }
-    printf("[frst] avg: %f, total: %ld\n",
-            (double)t_first/(double)(tests), t_first);
-    printf("[last] avg: %f, total: %ld\n",
-            (double)t_last/(double)(tests), t_last);
-    printf("[half] avg: %f\n",
-            (double)t_half/(double)(tests));
-    printf("[rand] avg: %f | avg rand(): %ld\n",
-            (double)t_rand/(double)tests,
-            r_sum/tests
-            );
+
+    /*********************
+        access time tests
+     *********************/
+    for(int e = 0; e < tests; e++)
+    {
+    // first element
+    if(verbose)
+    {
+        printf("Test #%d\n", e);
+        printf("\t%-8s ", "[FIRST]");
+    }
+    t_first += measure_time(lists[e], 1, verbose);
+
+    // last element
+    if(verbose)
+        printf("\t%-8s ", "[LAST]");
+    t_last  += measure_time(lists[e], lists[e]->count-1, verbose);
+
+    // middle element
+    if(verbose)
+        printf("\t%-8s ", "[HALF]");
+    t_half  += measure_time(lists[e], lists[e]->count/2, verbose);
+
+    // random element
+    r = rand()%list_size;
+    r_sum += r;
+    if(verbose)
+        printf("\t%-8s ", "[RAND]");
+    t_rand  += measure_time(lists[e], r, verbose);
+    }
+    // print results
+    printf("%-8s avg: %f, total: %ld\n", "[FIRST]",
+        (double)t_first/(double)(tests), t_first);
+    printf("%-8s avg: %f, total: %ld\n", "[LAST]",
+        (double)t_last/(double)(tests), t_last);
+    printf("%-8s avg: %f\n", "[HALF]", (double)t_half/(double)(tests));
+    printf("%-8s avg: %f | avg rand(): %ld\n", "[RAND]",
+        (double)t_rand/(double)tests, r_sum/tests);
 }
 
 long measure_time(DList *list, int index, int verbose)
 {
     struct timeval start, end;
-   
+
     gettimeofday(&start, NULL);
     dl_fetch(list, index);
     gettimeofday(&end, NULL);
