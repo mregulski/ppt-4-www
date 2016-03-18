@@ -158,8 +158,24 @@ void l_merge(List *list1, List *list2)
 
 }
 
-int main()
-{/*
+#define TESTS 1000
+#define R_TESTS 100
+#define LIST_SIZE 1000
+int main(int argc, char *argv[])
+{
+    int tests = TESTS;
+    int r_tests = R_TESTS;
+    int list_size = LIST_SIZE;
+
+    if(argc == 4)
+    {
+        tests = atoi(argv[1]);
+        r_tests = atoi(argv[2]);
+        list_size = atoi(argv[3]);
+    }
+    
+    
+    /*
     printf("TEST #1 - basics\n");
     List *test = l_new();
     l_insertEnd(test, 0);
@@ -184,24 +200,39 @@ int main()
     */
     srand(time(0));
     double t_rand = 0;
-    double t_245 = 0;
+    double t_half = 0;
+    double t_first = 0;
+    double t_last = 0;
     clock_t start, end;
-    for(int e = 0; e < 1000; e++)
+    double r_avg = 0;
+    for(int e = 0; e < tests; e++)
     {
         List *list = l_new();
-        for(int i = 0; i < 1000; i++)
+        for(int i = 0; i < list_size; i++)
         {
             l_insertEnd(list, rand()%10000);
         }
          
 
         start = clock();
-        l_fetch(list, 245);
+        l_fetch(list, list->count/2);
         end = clock();
-        t_245 += (double)(end-start) / CLOCKS_PER_SEC;
-        for(int j = 0; j< 100; j++)
+        t_half += (double)(end-start) / CLOCKS_PER_SEC;
+
+        start = clock();
+        l_fetch(list, 0);
+        end = clock();
+        t_first += (double)(end - start) / CLOCKS_PER_SEC;
+
+        start = clock();
+        l_fetch(list, list->count-1);
+        end = clock();
+        t_last += (double)(end - start) / CLOCKS_PER_SEC;
+
+        for(int j = 0; j < r_tests; j++)
         {
-            int r = rand()%1000;
+            int r = rand()%list_size;
+            r_avg += r;
             start = clock();
             l_fetch(list, r);
             end = clock();
@@ -211,7 +242,12 @@ int main()
         l_free(list);
         free(list);
     } 
-    printf("[245] avg: %.10f\n", t_245/1000.0);
-    printf("[rand()] avg: %.10f\n", t_rand/10000.0);
+    double total_r_tests = tests*r_tests;
+    printf("avg rand(): %f\n", r_avg/total_r_tests);
+    printf("[frst] avg: %.10f\n", t_first/(double)tests);
+    printf("[last] avg: %.10f\n", t_last/(double)tests);
+    printf("[half] avg: %.10f\n", t_half/(double)tests);
+    printf("[rand] avg: %.10f\n", t_rand/total_r_tests);
+
 
 }
