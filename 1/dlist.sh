@@ -3,16 +3,18 @@ TOT1=0;
 TOT2=0;
 TOT3=0;
 TOT0=0;
+echo -n "0/$1"
 for j in {1..$1}; do
-    echo -n ".";
-    if (($j % 100 == 0)); then
-        echo " $j / $1";
+    if (($j % 10 == 0)); then
+        echo -n "\r$j / $1";
+    else
+        echo -n ".";
     fi
     AVG3=0;
     AVG2=0;
     AVG1=0;
     AVG0=0;
-    RES=$(for i in {1..100}; do bin/dlist 1000 1000; done);
+    RES=$(for i in {1..100}; do bin/dlist 1000 $2; done);
     N3=$(echo $RES | grep 'OVER 3'| wc -l);
     N2=$(echo $RES | grep 'OVER 2'| wc -l);
     N1=$(echo $RES | grep 'OVER 1'| wc -l);

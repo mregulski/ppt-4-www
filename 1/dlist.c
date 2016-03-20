@@ -206,28 +206,6 @@ int main(int argc, char**argv)
         list_size = atoi(argv[2]);
         verbose = atoi(argv[3]);
     }
-    //printf("TEST #1\n");
-    if(verbose)
-    {
-        DList *test = dl_new();
-        for(int i = 0; i < 8; i++)
-            dl_insertEnd(test, i);
-
-        dl_insert(test, 4, 4444);
-        DList *test2 = dl_new();
-        for(int i = 0; i < 8; i++)
-            dl_insertStart(test2, i);
-
-        dl_merge(test,test2);
-
-        dl_print(test);
-        printf("test->length = %d\n", test->count);
-        printf("dl_fetch(test, 0) = %d\n", dl_fetch(test, 0));
-        printf("dl_fetch(test, 4) = %d\n", dl_fetch(test, 4));
-        printf("dl_fetch(test, test->count) = %d\n", dl_fetch(test, test->count));
-        printf("dl_fetch(test, test->count-1) = %d\n", dl_fetch(test, test->count-1));
-    }
-    //getchar();
     printf("ACCESS TIME TEST\n");
     srand(time(0));
     double t_rand = 0;
@@ -237,21 +215,6 @@ int main(int argc, char**argv)
     int r;
     long r_sum = 0;
 
-
-    /* create a list for each test */
-    /*
-    DList **lists = malloc(sizeof(DList*) * tests);
-    for(int exCount = 0; exCount < tests; exCount++)
-    {
-      lists[exCount] = dl_new();
-      for(int i = 0; i < list_size; i++)
-      {
-          dl_insertStart(lists[exCount], rand()%10000);
-      }
-      printf("list #%d created.\n",exCount);
-    }
-    printf("list creation done.\n");
-    */
     DList *list = dl_new();
     for(int i = 0; i < list_size; i++)
     {
@@ -270,14 +233,14 @@ int main(int argc, char**argv)
             printf("Test #%d\n", e);
             printf("\t%-8s ", "[FIRST]");
         }
-        //t_first += measure_time(list, 0, verbose);
-        t_first += (double)(measure_time(list, 0, verbose) - t_first) / e;
+        t_first += measure_time(list, 0, verbose);
+        //t_first += (double)(measure_time(list, 0, verbose) - t_first) / e;
 
         // last element
         if(verbose)
             printf("\t%-8s ", "[LAST]");
-        //t_last += measure_time(list, list->count-1, verbose);
-        t_last += (double)(measure_time(list, list->count-1, verbose) - t_last) / e;
+        t_last += measure_time(list, list->count-1, verbose);
+        //t_last += (double)(measure_time(list, list->count-1, verbose) - t_last) / e;
 
         // middle element
         if(verbose)
@@ -295,10 +258,10 @@ int main(int argc, char**argv)
         //printf("test #%d complete\n", e);
     }
     // print results
-    printf("%-8s avg: %f\n", "[FIRST]", t_first);
-    printf("%-8s avg: %f\n", "[LAST]", t_last);
-    printf("%-8s avg: %f\n", "[HALF]", t_half);
-    printf("%-8s avg: %f | avg rand(): %ld\n", "[RAND]",
+    printf("%-8s total: %.6f\n", "[FIRST]", t_first);
+    printf("%-8s total: %.6f\n", "[LAST]", t_last);
+    printf("%-8s total: %.6f\n", "[HALF]", t_half);
+    printf("%-8s total: %.6f | avg rand(): %ld\n", "[RAND]",
         t_rand, r_sum/tests);
     if(t_first - t_last > 0.1)
         printf("OVER 1\n");
