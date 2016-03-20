@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=content-width, initial-scale=1" />
+	<title>Sortowanie przez wstawianie</title>
+	<link rel="stylesheet" href="bower_components/HTML5-Reset/assets/css/reset.css"/>
+	<link rel="stylesheet" href="styles/grid.css"/>
+	<link rel="stylesheet" href="styles/algorytm.css"/>
+	<script src="scripts/menu.js"></script>
+</head>
+<body>
+
+<header>
+	<div class="row space-after">
+		<div class="col-1-6">
+			<img id="logo" src="res/infppt.png" alt="logo wydziału"/>
+		</div>
+		<div class="col-5-6">
+			<h1> Podstawowe algorytmy</h1>
+		</div>
+	</div>
+	<p class="space-after">Na stronach tych omówione są najciekawsze algorytmy omawiane na wykładzie ze Wstępu do Informatyki
+	na pierwszym roku studiów informatycznych na Wydziale PPT PWr.</p>
+</header>
+<div id="menuToggle">&#9776; Menu</div>
+<div class="row">
+	<div class="col-2-6">
+		<nav id="menu">
+			<ul>
+				<li class="algorytm">
+					<a href="#">Algorytm Euklidesa</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Rozszerzony Algorytm Euklidesa</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Test pierwszości</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Sito Erastotenesa</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Sortowanie przez wstawianie</a>
+				</li>
+				<li class="algorytm">
+					<a class="active" href="#">Sortowanie przez scalanie</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Wyszukiwanie binarne</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Problem wież z Hanoi</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Problem Hetmanów</a>
+				</li>
+				<li class="algorytm">
+					<a href="#">Problem skoczka szachowego</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class="col-4-6">
+		<article>
+			<h2>Sortowanie przez scalanie</h2>
+			<p>Rekurencyjny algorytm sortowania wykorzystujący metodę dziel i zwyciężaj.</p>
+			<h3>Schemat działania</h3>
+			<ol>
+				<li>Podziel zestaw danych na dwie równe części.</li>
+				<li>Posortuj każdą część przez scalanie, chyba że został tylko jeden element.</li>
+				<li>Połącz posortowane podciągi w jeden.</li>
+			</ol>
+			<h3>Pseudo-kod funkcji:</h3>
+			<pre>
+// posortuj Array[start...end]
+mergeSort(Array, start, end):
+	if start != end:
+		center &lt;- floor((start+end)/2)
+		mergeSort(Array, start, center)
+		mergeSort(Array, center+1, end)
+	    merge(Array, start, center, finish)
+
+// scal A[start...center] z A[center+1 ... end]
+merge(A, start, center, end):
+	i &lt;- start, j &lt;- center+1
+	A2 &lt;- [] // tablica pomocnicza
+		while i &lt;= center and j &lt;= end
+			if A[j] &lt; A[i]
+				append A[j] to A2
+				j++
+			else
+				append A[i] to A2
+				i++
+		if one of the halves is empty:
+			append the rest of the other to the end of A2
+			copy A2 to A
+			</pre>
+		</article>
+	</div>
+</div>
+<footer>
+	<p>Copyryght &copy; 2016 WPPT PWr</p>
+</footer>
+</body>
+</html>
