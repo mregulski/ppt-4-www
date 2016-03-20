@@ -159,45 +159,18 @@ void l_merge(List *list1, List *list2)
 }
 
 #define TESTS 1000
-#define R_TESTS 100
 #define LIST_SIZE 1000
 int main(int argc, char *argv[])
 {
     int tests = TESTS;
-    int r_tests = R_TESTS;
     int list_size = LIST_SIZE;
 
     if(argc == 4)
     {
         tests = atoi(argv[1]);
-        r_tests = atoi(argv[2]);
-        list_size = atoi(argv[3]);
+        list_size = atoi(argv[2]);
     }
-    
-    
-    /*
-    printf("TEST #1 - basics\n");
-    List *test = l_new();
-    l_insertEnd(test, 0);
-    l_insertEnd(test, 1);
-    l_insertEnd(test, 2);
-    l_insertEnd(test, 3);
-    l_remove(test, 2);
-    l_print(test);
-    printf("test[2] = %d\n", l_fetch(test,2));
-    
-    printf("\nTEST #2 - merge\n");
-    List *test2 = l_new();
-    l_insertEnd(test2, 4);
-    l_insertEnd(test2, 5);
-    l_merge(test, NULL);
-    l_print(test);
-    printf("merge(test, NULL) success\n");
-    List *test3 = NULL;
-    printf("merge(NULL,test) success\n");
 
-    printf("\nTEST #3 - access time\n");
-    */
     srand(time(0));
     double t_rand = 0;
     double t_half = 0;
@@ -205,14 +178,17 @@ int main(int argc, char *argv[])
     double t_last = 0;
     clock_t start, end;
     double r_avg = 0;
+
+    List *list = l_new();
+    for(int i = 0; i < list_size; i++)
+    {
+        l_insertEnd(list, rand()%10000);
+    }
+
     for(int e = 0; e < tests; e++)
     {
-        List *list = l_new();
-        for(int i = 0; i < list_size; i++)
-        {
-            l_insertEnd(list, rand()%10000);
-        }
-         
+        
+
 
         start = clock();
         l_fetch(list, list->count/2);
@@ -241,7 +217,7 @@ int main(int argc, char *argv[])
 
         l_free(list);
         free(list);
-    } 
+    }
     double total_r_tests = tests*r_tests;
     printf("avg rand(): %f\n", r_avg/total_r_tests);
     printf("[frst] avg: %.10f\n", t_first/(double)tests);

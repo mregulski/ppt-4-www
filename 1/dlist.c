@@ -167,7 +167,7 @@ list_val_t dl_fetch(DList *list, int index)
     return cur->value;
 }
 
-long measure_time(DList *list, int index, int verbose);
+double measure_time(DList *list, int index, int verbose);
 void dl_merge(DList *list1, DList *list2)
  {
     DNode *list1f, *list2f, *list1l, *list2l;
@@ -186,31 +186,26 @@ void dl_merge(DList *list1, DList *list2)
     list1->count += list2->count;
 }
 #define TESTS 1000
-#define R_TESTS 100
 #define LIST_SIZE 1000
 int main(int argc, char**argv)
 {
     int tests = TESTS;
-    int r_tests = R_TESTS;
     int verbose = 0;
     int list_size = LIST_SIZE;
     if(argc == 2)
         verbose = atoi(argv[1]);
 
+    if(argc == 3)
+    {
+        tests = atoi(argv[1]);
+        list_size = atoi(argv[2]);
+    }
     if(argc == 4)
     {
         tests = atoi(argv[1]);
-        r_tests = atoi(argv[2]);
-        list_size = atoi(argv[3]);
+        list_size = atoi(argv[2]);
+        verbose = atoi(argv[3]);
     }
-    if(argc == 5)
-    {
-        tests = atoi(argv[1]);
-        r_tests = atoi(argv[2]);
-        list_size = atoi(argv[3]);
-        verbose = atoi(argv[4]);
-    }
-
     //printf("TEST #1\n");
     if(verbose)
     {
@@ -275,24 +270,28 @@ int main(int argc, char**argv)
             printf("Test #%d\n", e);
             printf("\t%-8s ", "[FIRST]");
         }
-        t_first += (double)(measure_time(list, 1, verbose) - t_first) / e;
+        //t_first += measure_time(list, 0, verbose);
+        t_first += (double)(measure_time(list, 0, verbose) - t_first) / e;
 
         // last element
         if(verbose)
             printf("\t%-8s ", "[LAST]");
-        t_last  += (double)(measure_time(list, list->count-1, verbose) - t_last) / e;
+        //t_last += measure_time(list, list->count-1, verbose);
+        t_last += (double)(measure_time(list, list->count-1, verbose) - t_last) / e;
 
         // middle element
         if(verbose)
             printf("\t%-8s ", "[HALF]");
-        t_half  += (double)(measure_time(list, list->count/2, verbose) - t_half) / e;
+        t_half += measure_time(list, list->count/2, verbose);
+        //t_half += (double)(measure_time(list, list->count/2, verbose) - t_half) / e;
 
         // random element
         r = rand()%list_size;
         r_sum += r;
         if(verbose)
             printf("\t%-8s ", "[RAND]");
-        t_rand  += (double)(measure_time(list, r, verbose) - t_rand) / e;
+        t_rand += measure_time(list, r, verbose);
+        //t_rand  += (double)(measure_time(list, r, verbose) - t_rand) / e;
         //printf("test #%d complete\n", e);
     }
     // print results
@@ -301,9 +300,17 @@ int main(int argc, char**argv)
     printf("%-8s avg: %f\n", "[HALF]", t_half);
     printf("%-8s avg: %f | avg rand(): %ld\n", "[RAND]",
         t_rand, r_sum/tests);
+    if(t_first - t_last > 0.1)
+        printf("OVER 1\n");
+    else if(t_first - t_last > 0.01)
+        printf("OVER 2\n");
+    else if(t_first - t_last > 0.001)
+        printf("OVER 3\n");
+    else if(t_first > t_last)
+        printf("OVER +\n");
 }
 
-long measure_time(DList *list, int index, int verbose)
+double measure_time(DList *list, int index, int verbose)
 {
     //struct timeval start, end;
     clock_t start, end;
@@ -320,5 +327,5 @@ long measure_time(DList *list, int index, int verbose)
         //  index, start.tv_usec, end.tv_usec, end.tv_usec - start.tv_usec);
     }
     //return end.tv_usec - start.tv_usec;
-    return end - start;
+    return (double)(end - start);
 }
