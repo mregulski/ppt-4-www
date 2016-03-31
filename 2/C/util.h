@@ -36,13 +36,11 @@ typedef enum {
     Random
 } OrderingE;
 
-
-
-void print_result(Result *r, long len, int tabular)
+void print_result(Result *r, long len, long time, int tabular)
 {
     if(tabular)
     {
-        printf("%7ld\t%12ld\t%12ld\n",len, r->count->swaps, r->count->cmps);
+        printf("\t%7ld\t%12ld\t%12ld\t%6ld\n",len, r->count->swaps, r->count->cmps, time);
     }
     else
     {

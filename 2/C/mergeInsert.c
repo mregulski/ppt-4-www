@@ -1,12 +1,14 @@
-#ifndef MERGE
-#define MERGE 1
 #include "util.h"
+#include "mergeSort.c"
+#include "insertSort.c"
 #include <string.h>
+#include <time.h>
 
-Result *_merge_sort(long *array, long len, Result *r, int logging);
-Result *merge(long *left, long left_len, long *right,
-              long right_len, long *array, Result *r, int logging);
-Result *merge_sort(long *array, long len, int logging)
+Result *_merge_insert_sort(long *array, long len, Result *r, int threshold, int logging);
+Result *merge_insert(long *left, long left_len, long *right, long right_len,
+              long *array, Result *r, int threshold, int logging);
+
+Result *merge_insert_sort(long *array, long len, int threshold, int logging)
 {
     long *copy = malloc(len * sizeof(long));
     memcpy(copy, array, len * sizeof(long));
@@ -16,19 +18,25 @@ Result *merge_sort(long *array, long len, int logging)
         print_array(" copy:", copy, len);
     }
     Result *r = result();
-    r = _merge_sort(copy, len, r, logging);
     r->array = copy;
+    r = _merge_insert_sort(copy, len, r, threshold, logging);
+    // print_array("merge done", copy, len);
     return r;
 }
 
-Result *_merge_sort(long *array, long len, Result *r, int logging)
+Result *_merge_insert_sort(long *array, long len, Result *r, int threshold, int logging)
 {
     long *l_half, *r_half;
     long l_len, r_len;
-    if (len < 2)
+    if(len < 2)
     {
         return r;
     }
+    if (len < threshold)
+    {
+        return insert_sort_nocopy(array, len, logging, r);
+    }
+
     // lengths of halves
     l_len = len / 2;
     r_len = len - l_len;
@@ -55,16 +63,18 @@ Result *_merge_sort(long *array, long len, Result *r, int logging)
         print_array("left: ", l_half, l_len);
         print_array("right:", r_half, r_len);
     }
-    r = _merge_sort(l_half, l_len, r, logging);
-    r = _merge_sort(r_half, r_len, r, logging);
+
+
+    r = _merge_insert_sort(l_half, l_len, r, threshold, logging);
+    r = _merge_insert_sort(r_half, r_len, r, threshold, logging);
     r = merge(l_half, l_len, r_half, r_len, array, r, logging);
     free(l_half);
     free(r_half);
     return r;
 }
 
-Result *merge(long *left, long left_len, long *right, long right_len,
-              long *array, Result *r, int logging)
+Result *merge_insert(long *left, long left_len, long *right, long right_len,
+              long *array, Result *r, int threshold, int logging)
 {
     long i = 0;
     long j = 0;
@@ -135,5 +145,3 @@ Result *merge(long *left, long left_len, long *right, long right_len,
     }
     return r;
 }
-
-#endif

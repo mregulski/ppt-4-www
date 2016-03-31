@@ -1,8 +1,10 @@
+#ifndef QUICK
+#define QUICK 1
 #include "util.h"
 #include <string.h>
 #include <time.h>
 
-Result *_quick_sort(long *array, long start, long stop, Result *r, int logging);
+Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold,  int logging);
 
 Result *quick_sort(long *array, long len, int logging)
 {
@@ -16,24 +18,26 @@ Result *quick_sort(long *array, long len, int logging)
     }
     Result *r = result();
     r->array = copy;
-    r = _quick_sort(copy, 0, len-1, r, logging);
+    r = _quick_sort(copy, 0, len-1, r, 0, logging);
     return r;
 }
 
-Result *_quick_sort(long *array, long start, long stop, Result *r, int logging)
+Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold, int logging)
 {
     if(logging > 2)
     {
         printf("\nsorting %ld through %ld\n", start, stop);
     }
-    if (stop > start)
+    if (stop - start > threshold)
     {
+
         if(logging > 1)
         {
             print_array("before partition:", array, stop-start);
         }
         long pivot, pivot_idx, tmp, i, j;
-        pivot_idx = start;
+        //pivot_idx = start;
+        pivot_idx = rand()%(stop-start+1) + start;
         pivot = array[pivot_idx];
         i = start - 1;
         j = stop + 1;
@@ -62,10 +66,11 @@ Result *_quick_sort(long *array, long start, long stop, Result *r, int logging)
                 start, stop, pivot_idx, i);
             print_array("after partition:", array, stop-start);
         }
-        r = _quick_sort(array, start, j, r, logging);
-        r =  _quick_sort(array, j+1, stop, r, logging);
-        return r;
+        r = _quick_sort(array, start, j, r, threshold, logging);
+        return  _quick_sort(array, j+1, stop, r, threshold, logging);
+        //return r;
     }
     return r;
 
 }
+#endif
