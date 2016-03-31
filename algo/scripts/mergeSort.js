@@ -76,6 +76,7 @@ sort = (function() {
     function log(text, step, level) {
         var br = document.createElement("br");
         var el = document.createElement("span");
+        el.classList.add("level-"+level)
         if(step == "split")
         {
             var txt = document.createTextNode('-'.repeat(2*level)+text);
