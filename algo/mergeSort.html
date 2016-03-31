@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="styles/grid.css"/>
 	<link rel="stylesheet" href="styles/algorytm.css"/>
 	<script src="scripts/menu.js"></script>
+	<script src="scripts/mergeSort.js"></script>
 </head>
 <body>
 
@@ -43,8 +44,8 @@
 				<li class="algorytm">
 					<a href="#">Sortowanie przez wstawianie</a>
 				</li>
-				<li class="algorytm">
-					<a class="active" href="#">Sortowanie przez scalanie</a>
+				<li class="algorytm active">
+					<a href="#">Sortowanie przez scalanie</a>
 				</li>
 				<li class="algorytm">
 					<a href="#">Wyszukiwanie binarne</a>
@@ -71,8 +72,9 @@
 				<li>Posortuj każdą część przez scalanie, chyba że został tylko jeden element.</li>
 				<li>Połącz posortowane podciągi w jeden.</li>
 			</ol>
-			<h3>Pseudo-kod funkcji:</h3>
-			<pre>
+			<section>
+				<h3>Pseudo-kod funkcji:</h3>
+				<pre>
 // posortuj Array[start...end]
 mergeSort(Array, start, end):
 	if start != end:
@@ -95,8 +97,17 @@ merge(A, start, center, end):
 		if one of the halves is empty:
 			append the rest of the other to the end of A2
 			copy A2 to A
-			</pre>
+				</pre>
+			</section>
 		</article>
+		<div id="simulator">
+			<h3>Przykład działania</h3>
+			<p>Wprowadź dane do posortowania oddzielone przecinkami</p>
+			<input type="text" placeholder="dane do sortowania" id="array"/>
+			<button id="runButton" name="run" disabled>Sortuj</button>
+			<div id="output">
+			</div>
+		</div>
 	</div>
 </div>
 <footer>

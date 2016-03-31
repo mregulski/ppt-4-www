@@ -19,7 +19,7 @@ JCI * 2016
   min-height: 1px;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 680px) {
 	[class*='col-'] {margin-right: 1.6%;}
 	[class*='col-']:last-of-type {margin-right: 0;}
 	.col-1-6 {width: 15.3333%;}
