@@ -30,9 +30,9 @@ sort = (function() {
                 right.push(array[i]);
             }
         }
-        log("split " + array, "split", level);
-        log("->  left: " + left, "split", level);
-        log("-> right: " + right, "split", level);
+        log("split " + array, level);
+        log("->  left: " + left, level);
+        log("-> right: " + right, level);
 
         console.log("split:")
         console.log("\tleft: " + left);
@@ -45,9 +45,9 @@ sort = (function() {
     function merge(left, right, level) {
         var output = document.getElementById("output");
         var result = [];
-        log("merging","merge", level);
-        log("    left: " + left, "merge", level);
-        log(" & right: " + right, "merge", level);
+        log("merging", level);
+        log("    left: " + left, level);
+        log(" & right: " + right, level);
 
         console.log("merge:")
         console.log("    left: " + left);
@@ -68,26 +68,17 @@ sort = (function() {
         while (right.length > 0) {
             result.push(right.shift());
         }
-        log("    -> result: " + result, "merge", level);
+        log("    -> result: " + result,level);
         console.log("\tresult: " + result);
         return result;
     }
 
-    function log(text, step, level) {
+    function log(text, level) {
         var br = document.createElement("br");
         var el = document.createElement("span");
         el.classList.add("level-"+level)
-        if(step == "split")
-        {
-            var txt = document.createTextNode('-'.repeat(2*level)+text);
+        var txt = document.createTextNode('-'.repeat(2*level)+text);
 
-        }
-        else if (step == "merge") {
-            var txt = document.createTextNode('-'.repeat(2*(level)) + text);
-        }
-        else {
-            return;
-        }
         el.appendChild(txt);
         output.appendChild(el);
         output.appendChild(br);
