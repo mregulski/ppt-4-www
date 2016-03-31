@@ -16,8 +16,18 @@ long *generate_list_random(long size);
 long *generate_list_ascending(long size);
 long *generate_list_descending(long size);
 
+struct flags {
+    int insert;
+    int merge;
+    int quick;
+    int qi;
+    int mi;
+};
+
 // main test method
-void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int qm_threshold);
+void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int qm_threshold, struct flags filter);
+
+
 
 // launcher
 int main(int argc, char **argv)
@@ -34,6 +44,10 @@ int main(int argc, char **argv)
     int qm_threshold = 30;
     // type of list to generate
     OrderingE list_type = Random;
+    // sort flags
+    int filter = 0;
+    struct flags filterRules = {1,1,1,1,1};
+
 
 
     // parse command line options
@@ -41,7 +55,7 @@ int main(int argc, char **argv)
     int c;
     do
     {
-        c = getopt(argc,argv,"s:t:v:i:m:");
+        c = getopt(argc,argv,"s:t:v:i:m:fABCDE");
         switch (c)
         {
             case 's':
@@ -72,11 +86,35 @@ int main(int argc, char **argv)
             case 'm':
                 qm_threshold = (int)strtol(optarg, NULL, 10);
                 break;
+            case 'f':
+                filter = 1;
+                filterRules.insert=filterRules.merge=filterRules.quick = 0;
+                filterRules.qi=filterRules.mi = 0;
+                break;
+            case 'A':
+                filterRules.insert=1;
+                break;
+            case 'B':
+                filterRules.merge=1;
+                break;
+            case 'C':
+                filterRules.quick=1;
+                break;
+            case 'D':
+                filterRules.qi=1;
+                break;
+            case 'E':
+                filterRules.mi=1;
+                break;
         }
     } while(c != -1);
 
+    if (filter)
+    {
+
+    }
     // run tests
-    test(test_size, logging, list_type, qi_threshold, qm_threshold);
+    test(test_size, logging, list_type, qi_threshold, qm_threshold, filterRules);
     // long a[5] = {8,4,6,3,1};
     // long b[5] = {7,2,5,9,0};
     // long d[10] = {0};
@@ -87,7 +125,7 @@ int main(int argc, char **argv)
 
 // cut-off value for printing sorted arrays
 #define MAX_OUTPUT_ARRAY 32
-void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int qm_threshold)
+void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int qm_threshold, struct flags filter)
 {
     long *arr = NULL;
     switch (list_type)
@@ -116,7 +154,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
     }
     if(logging > 0)
     {
-        print_array("Generated array:", arr, test_size);
+        print_array("Generated array:", arr, test_size, NO_SPECIAL);
     }
 
     int tabular_out = logging == 0 ? 1 : 0;
@@ -129,61 +167,71 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
     // logging = DEBUG;
 
     clock_t start, stop;
-
-    // printf("%-15s","insert sort:");
-    // // print_array("\nbefore", arr, test_size);
-    // start=clock();
-    // Result *insert = insert_sort(arr, test_size, logging);
-    // stop = clock();
-    // if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
-    // {
-    //     print_array("\nsorted:", insert->array, test_size);
-    // }
-    // print_result(insert, test_size, stop-start, tabular_out);
-
-    // printf("%-15s", "merge sort:");
-    // // print_array("\nbefore:", arr, test_size);
-    // start = clock();
-    // Result *merge = merge_sort(arr, test_size, logging);
-    // stop = clock();
-    // if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
-    // {
-    //     print_array("\nsorted:", merge->array, test_size);
-    // }
-    // print_result(merge, test_size, stop-start, tabular_out);
-
-    // printf("%-15s", "quick sort:");
-    // // print_array("\nbefore:", arr, test_size);
-    // start = clock();
-    // Result *quick = quick_sort(arr, test_size, logging);
-    // stop = clock();
-    // if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
-    // {
-    //     print_array("\nsorted:", quick->array, test_size);
-    // }
-    // print_result(quick, test_size, stop-start, tabular_out);
-
-    // printf("%-15s","quick+insert:");
-    // // print_array("\nbefore", arr, test_size);
-    // start = clock();
-    // Result *quick_insert = quick_insert_sort(arr, test_size, logging, qi_threshold);
-    // stop = clock();
-    // if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
-    // {
-    //     print_array("\nsorted:", quick_insert->array, test_size);
-    // }
-    // print_result(quick_insert, test_size, stop-start, tabular_out);
-
-    printf("%-15s","merge+insert:");
-    start = clock();
-    Result *merge_insert = merge_insert_sort(arr, test_size, qm_threshold, logging);
-    stop = clock();
-    if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+    if(filter.insert)
     {
-        print_array("\nsorted", merge_insert->array, test_size);
+        printf("%-15s","insert sort:\n");
+        // print_array("\nbefore", arr, test_size);
+        start=clock();
+        Result *insert = insert_sort(arr, test_size, logging);
+        stop = clock();
+        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted:", insert->array, test_size, NO_SPECIAL);
+        }
+        print_result(insert, test_size, stop-start, tabular_out);
     }
-    print_result(merge_insert, test_size, stop-start, tabular_out);
-
+    if(filter.merge)
+    {
+        printf("%-15s", "merge sort:\n");
+        // print_array("\nbefore:", arr, test_size);
+        start = clock();
+        Result *merge = merge_sort(arr, test_size, logging);
+        stop = clock();
+        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted:", merge->array, test_size, NO_SPECIAL);
+        }
+        print_result(merge, test_size, stop-start, tabular_out);
+    }
+    if(filter.quick)
+    {
+        printf("%-15s", "quick sort:\n");
+        // print_array("\nbefore:", arr, test_size);
+        start = clock();
+        Result *quick = quick_sort(arr, test_size, logging);
+        stop = clock();
+        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted:", quick->array, test_size, NO_SPECIAL);
+        }
+        print_result(quick, test_size, stop-start, tabular_out);
+    }
+    if(filter.qi)
+    {
+        printf("%-15s","quick+insert:\n");
+        // print_array("\nbefore", arr, test_size);
+        start = clock();
+        Result *quick_insert = quick_insert_sort(arr, test_size, logging, qi_threshold);
+        stop = clock();
+        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted:", quick_insert->array, test_size, NO_SPECIAL);
+        }
+        print_result(quick_insert, test_size, stop-start, tabular_out);
+    }
+    if(filter.mi)
+    {
+        printf("%-15s","merge+insert:\n");
+        start = clock();
+        Result *merge_insert = merge_insert_sort(arr, test_size, qm_threshold, logging);
+        stop = clock();
+        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted", merge_insert->array, test_size, NO_SPECIAL);
+        }
+        print_result(merge_insert, test_size, stop-start, tabular_out);
+    }
+    // makes no sense
     // printf("%-15s","quick+merge:");
     // // print_array("\nbefore", arr, test_size);
     // Result *quick_merge = quick_merge_sort(arr, test_size, qm_threshold, logging);
@@ -193,7 +241,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
     // }
     // print_result(quick_merge, test_size, stop-start, tabular_out);
 
-
+    //doenst workd
     //print_array("\n\nsorted:", quick->array, test_size);
     // logging = DEBUG;
     // printf("%-15s","Yaroslavskiy:");

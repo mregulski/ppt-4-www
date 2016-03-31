@@ -3,25 +3,26 @@
 #include "util.h"
 #include <string.h>
 
-Result *_merge_sort(long *array, long len, Result *r, int logging);
+Result *_merge_sort(long *array, long len, Result *r, int logging, int level);
 Result *merge(long *left, long left_len, long *right,
-              long right_len, long *array, Result *r, int logging);
+              long right_len, long *array, Result *r, int logging, int level);
 Result *merge_sort(long *array, long len, int logging)
 {
     long *copy = malloc(len * sizeof(long));
     memcpy(copy, array, len * sizeof(long));
     if(logging > 1)
     {
-        print_array("array:", array, len);
-        print_array(" copy:", copy, len);
+        print_array("array:", array, len, NO_SPECIAL);
+        print_array(" copy:", copy, len, NO_SPECIAL);
+        printf("start\n\n");
     }
     Result *r = result();
-    r = _merge_sort(copy, len, r, logging);
+    r = _merge_sort(copy, len, r, logging, 0);
     r->array = copy;
     return r;
 }
 
-Result *_merge_sort(long *array, long len, Result *r, int logging)
+Result *_merge_sort(long *array, long len, Result *r, int logging, int level)
 {
     long *l_half, *r_half;
     long l_len, r_len;
@@ -52,19 +53,23 @@ Result *_merge_sort(long *array, long len, Result *r, int logging)
     }
     if(logging > 1)
     {
-        print_array("left: ", l_half, l_len);
-        print_array("right:", r_half, r_len);
+        indent(level);
+        print_array("splitting: ", array, len, NO_SPECIAL);
+        indent(level);
+        print_array("left: ", l_half, l_len, NO_SPECIAL);
+        indent(level);
+        print_array("right:", r_half, r_len, NO_SPECIAL);
     }
-    r = _merge_sort(l_half, l_len, r, logging);
-    r = _merge_sort(r_half, r_len, r, logging);
-    r = merge(l_half, l_len, r_half, r_len, array, r, logging);
+    r = _merge_sort(l_half, l_len, r, logging, level+1);
+    r = _merge_sort(r_half, r_len, r, logging, level+1);
+    r = merge(l_half, l_len, r_half, r_len, array, r, logging, level);
     free(l_half);
     free(r_half);
     return r;
 }
 
 Result *merge(long *left, long left_len, long *right, long right_len,
-              long *array, Result *r, int logging)
+              long *array, Result *r, int logging, int level)
 {
     long i = 0;
     long j = 0;
@@ -75,8 +80,10 @@ Result *merge(long *left, long left_len, long *right, long right_len,
     }
     if(logging > 1)
     {
-        print_array("merging:", left, left_len);
-        print_array("   with:",     right, right_len);
+        indent(level);
+        print_array("merging:", left, left_len, NO_SPECIAL);
+        indent(level);
+        print_array("   with:",     right, right_len, NO_SPECIAL);
     }
     while(i < left_len && j < right_len)
     {
@@ -131,7 +138,8 @@ Result *merge(long *left, long left_len, long *right, long right_len,
     }
     if(logging > 1)
     {
-        print_array("->", array, left_len + right_len);
+        indent(level);
+        print_array("      ->", array, left_len + right_len, NO_SPECIAL);
     }
     return r;
 }

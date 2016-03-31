@@ -13,8 +13,8 @@ Result *yaro_quick_sort(long *array, long len, int logging)
     memcpy(copy, array, len * sizeof(long));
     if(logging > 1)
     {
-        print_array("arr:", array, len);
-        print_array("cpy:", array, len);
+        print_array("arr:", array, len, NO_SPECIAL);
+        print_array("cpy:", array, len, NO_SPECIAL);
     }
     Result *r = result();
     r->array = copy;

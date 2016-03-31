@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold,  int logging);
+Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold,  int logging, int level);
 
 Result *quick_sort(long *array, long len, int logging)
 {
@@ -13,16 +13,17 @@ Result *quick_sort(long *array, long len, int logging)
     memcpy(copy, array, len * sizeof(long));
     if(logging > 1)
     {
-        print_array("arr:", array, len);
-        print_array("cpy:", array, len);
+        print_array("arr:", array, len, NO_SPECIAL);
+        print_array("cpy:", array, len, NO_SPECIAL);
+        printf("start\n\n");
     }
     Result *r = result();
     r->array = copy;
-    r = _quick_sort(copy, 0, len-1, r, 0, logging);
+    r = _quick_sort(copy, 0, len-1, r, 0, logging, 0);
     return r;
 }
 
-Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold, int logging)
+Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold, int logging, int level)
 {
     if(logging > 2)
     {
@@ -30,15 +31,18 @@ Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold
     }
     if (stop - start > threshold)
     {
-
-        if(logging > 1)
-        {
-            print_array("before partition:", array, stop-start);
-        }
         long pivot, pivot_idx, tmp, i, j;
         //pivot_idx = start;
         pivot_idx = rand()%(stop-start+1) + start;
         pivot = array[pivot_idx];
+        if(logging > 1)
+        {
+            indent(level);
+            print_array_range("partitioning:", array, start, stop, pivot_idx);
+            indent(level);
+            printf("pivot: array[%ld] = %ld\n", pivot_idx, pivot);
+        }
+        // Hoare's partitioning
         i = start - 1;
         j = stop + 1;
         while(1)
@@ -62,12 +66,14 @@ Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold
         }
         if(logging > 1)
         {
-            printf("start: %ld, stop: %ld, pivot_idx: %ld, i: %ld\n",
-                start, stop, pivot_idx, i);
-            print_array("after partition:", array, stop-start);
+            // indent(level);
+            // printf("start: %ld, stop: %ld, pivot_idx: %ld, i: %ld\n",
+            //     start, stop, pivot_idx, i);
+            indent(level);
+            print_array_range("after partition:", array, start, stop, NO_SPECIAL);
         }
-        r = _quick_sort(array, start, j, r, threshold, logging);
-        return  _quick_sort(array, j+1, stop, r, threshold, logging);
+        r = _quick_sort(array, start, j, r, threshold, logging, level+1);
+        return  _quick_sort(array, j+1, stop, r, threshold, logging, level+1);
         //return r;
     }
     return r;

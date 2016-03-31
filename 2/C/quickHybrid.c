@@ -30,20 +30,23 @@ Result *quick_insert_sort(long *array, long len, int logging, int threshold)
     memcpy(copy, array, len * sizeof(long));
     if(logging > 1)
     {
-        print_array("arr:", array, len);
-        print_array("cpy:", array, len);
+        print_array("arr:", array, len, NO_SPECIAL);
+        print_array("cpy:", array, len, NO_SPECIAL);
+        printf("start\n\n");
     }
     Result *r = result();
     r->array = copy;
-    r = _quick_sort(copy, 0, len-1, r, threshold, logging);
+    r = _quick_sort(copy, 0, len-1, r, threshold, logging, 0);
     if(logging > 1)
     {
-        print_array("\nquicksort done: ", copy, len);
+        print_array("\nquicksort done: ", copy, len, NO_SPECIAL);
     }
-    return insert_sort_nocopy(copy, len, logging, r);
+    return insert_sort_nocopy(copy, len, logging, r, 0);
 
 }
 
+
+//makes no sense
 Result *quick_merge_sort(long *array, long len, int threshold, int logging)
 {
     srand(time(NULL));
@@ -51,17 +54,18 @@ Result *quick_merge_sort(long *array, long len, int threshold, int logging)
     memcpy(copy, array, len * sizeof(long));
     if(logging > 1)
     {
-        print_array("arr:", array, len);
-        print_array("cpy:", array, len);
+        print_array("arr:", array, len, NO_SPECIAL);
+        print_array("cpy:", array, len, NO_SPECIAL);
+        printf("start\n\n");
     }
     Result *r = result();
     r->array = copy;
-    r = _quick_sort(copy, 0, len-1, r, threshold, logging);
+    r = _quick_sort(copy, 0, len-1, r, threshold, logging, 0);
     if(logging > 1)
     {
-        print_array("\nquicksort done: ", copy, len);
+        print_array("\nquicksort done: ", copy, len, NO_SPECIAL);
     }
-    return _merge_sort(copy, len, r, logging);
+    return _merge_sort(copy, len, r, logging, 0);
 
 }
 

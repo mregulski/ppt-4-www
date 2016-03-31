@@ -48,7 +48,9 @@ void print_result(Result *r, long len, long time, int tabular)
     }
 }
 
-void print_array(char *str, long *array, long len)
+
+#define NO_SPECIAL -1
+void print_array(char *str, long *array, long len, long special_idx)
 {
     if(str != NULL)
         printf("%s [", str);
@@ -57,9 +59,46 @@ void print_array(char *str, long *array, long len)
     for(long i = 0; i < len; i++)
     {
         if (i==len-1)
-            printf("%ld", array[i]);
+        {
+            if(i==special_idx)
+                printf("*%ld*", array[i]);
+            else
+                printf("%ld", array[i]);
+        }
         else
-            printf("%ld, ", array[i]);
+        {
+            if(i==special_idx)
+                printf("*%ld*,", array[i]);
+            else
+                printf("%ld,", array[i]);
+        }
+    }
+    printf("]\n");
+}
+
+
+void print_array_range(char *str, long *array, long start, long stop, long special_idx)
+{
+    if(str != NULL)
+        printf("%s [", str);
+    else
+        printf("[");
+    for(long i = start; i <= stop; i++)
+    {
+        if (i==stop)
+        {
+            if(i==special_idx)
+                printf("*%ld*", array[i]);
+            else
+                printf("%ld", array[i]);
+        }
+        else
+        {
+            if(i==special_idx)
+                printf("*%ld*,", array[i]);
+            else
+                printf("%ld,", array[i]);
+        }
     }
     printf("]\n");
 }
@@ -85,6 +124,15 @@ void print_key(char *str, long *array, long len, long key_idx)
         }
     }
     printf("]\n");
+}
+
+// fancy printer
+void indent(int level)
+{
+    for(int i = 0; i < level; i++)
+    {
+        printf("--- ");
+    }
 }
 
 #endif
