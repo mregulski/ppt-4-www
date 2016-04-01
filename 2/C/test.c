@@ -22,6 +22,7 @@ struct flags {
     int quick;
     int qi;
     int mi;
+    int yaro;
 };
 
 // main test method
@@ -46,7 +47,7 @@ int main(int argc, char **argv)
     OrderingE list_type = Random;
     // sort flags
     int filter = 0;
-    struct flags filterRules = {1,1,1,1,1};
+    struct flags filterRules = {1,1,1,1,1,1};
 
 
 
@@ -55,7 +56,7 @@ int main(int argc, char **argv)
     int c;
     do
     {
-        c = getopt(argc,argv,"s:t:v:i:m:fABCDE");
+        c = getopt(argc,argv,"s:t:v:i:m:fABCDEF");
         switch (c)
         {
             case 's':
@@ -89,7 +90,7 @@ int main(int argc, char **argv)
             case 'f':
                 filter = 1;
                 filterRules.insert=filterRules.merge=filterRules.quick = 0;
-                filterRules.qi=filterRules.mi = 0;
+                filterRules.qi=filterRules.mi=filterRules.yaro = 0;
                 break;
             case 'A':
                 filterRules.insert=1;
@@ -105,6 +106,9 @@ int main(int argc, char **argv)
                 break;
             case 'E':
                 filterRules.mi=1;
+                break;
+            case 'F':
+                filterRules.yaro=1;
                 break;
         }
     } while(c != -1);
@@ -242,18 +246,19 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
     // print_result(quick_merge, test_size, stop-start, tabular_out);
 
     //doenst workd
-    //print_array("\n\nsorted:", quick->array, test_size);
-    // logging = DEBUG;
-    // printf("%-15s","Yaroslavskiy:");
-    // print_array("\nbefore", arr, test_size);
-    // start = clock();
-    // Result *yaro = yaro_quick_sort(arr, test_size, logging);
-    // stop = clock();
-    // if(logging > -1 && test_size < MAX_OUTPUT_ARRAY)
-    // {
-    //     print_array("\nsorted", yaro->array, test_size);
-    // }
-    // print_result(yaro, test_size, stop-start, tabular_out);
+    if(filter.yaro)
+    {
+        printf("%-15s","Yaroslavskiy:\n");
+        print_array("\nbefore", arr, test_size, NO_SPECIAL);
+        start = clock();
+        Result *yaro = yaro_quick_sort(arr, test_size, logging);
+        stop = clock();
+        if(logging > -1 && test_size < MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted", yaro->array, test_size, NO_SPECIAL);
+        }
+        print_result(yaro, test_size, stop-start, tabular_out);
+    }
 }
 
 long *generate_list_random(long size)

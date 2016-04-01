@@ -57,7 +57,17 @@ Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold
             } while(array[j] > pivot);
             if (i >= j)
             {
+                if(logging > 1)
+                {
+                    indent(level);
+                    printf("pointers crossed: i = %ld, <j = %ld>\n",i,j);
+                }
                 break; //ret j
+            }
+            if (logging > 1)
+            {
+                indent(level);
+                printf("swapping %ld @ [%ld] with %ld @ [%ld]\n", array[i], i, array[j], j);
             }
             tmp = array[i];
             array[i] = array[j];
