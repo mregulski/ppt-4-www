@@ -1,4 +1,4 @@
-sort = (function() {
+var sort = (function() {
     var output = undefined;
     return {
         mergeSort: mergeSort
@@ -8,9 +8,10 @@ sort = (function() {
         if(output === undefined) {
             output = document.getElementById("output");
         }
-        while(output.firstChild) {
-            output.removeChild(output.firstChild);
-        }
+        output.innerHTML = "";
+        // while(output.firstChild) {
+        //     output.removeChild(output.firstChild);
+        // }
         return _mergeSort(array, 0);
     }
     function _mergeSort(array, level) {
@@ -34,9 +35,9 @@ sort = (function() {
         log("->  left: " + left, level);
         log("-> right: " + right, level);
 
-        console.log("split:")
-        console.log("\tleft: " + left);
-        console.log("\tright: " + right);
+        // console.log("split:")
+        // console.log("\tleft: " + left);
+        // console.log("\tright: " + right);
         left = _mergeSort(left, level+1);
         right = _mergeSort(right, level+1);
         return merge(left, right, level);
@@ -49,9 +50,9 @@ sort = (function() {
         log("    left: " + left, level);
         log(" & right: " + right, level);
 
-        console.log("merge:")
-        console.log("    left: " + left);
-        console.log("  &right: " + right);
+        // console.log("merge:")
+        // console.log("    left: " + left);
+        // console.log("  &right: " + right);
         while (left.length > 0 && right.length > 0) {
             if(left[0] <= right[0]) {
                 result.push(left.shift());
@@ -69,19 +70,24 @@ sort = (function() {
             result.push(right.shift());
         }
         log("    -> result: " + result,level);
-        console.log("\tresult: " + result);
+        // console.log("\tresult: " + result);
         return result;
     }
 
     function log(text, level) {
         var br = document.createElement("br");
-        var el = document.createElement("span");
-        el.classList.add("level-"+level)
-        var txt = document.createTextNode('-'.repeat(2*level)+text);
+        // var ell = '<div class="col-6-6 level-"' + level + '>' + text + '</div>';
 
+        var el = document.createElement("span");
+        // el.setAttribute("level", level);
+        el.classList.add("level-"+level%10);
+        el.classList.add("col-6-6");
+        var txt = document.createTextNode("--- ".repeat(level) + text);
+        //
         el.appendChild(txt);
         output.appendChild(el);
         output.appendChild(br);
+        // output.innerHTML += ell;
     }
 
 })();
