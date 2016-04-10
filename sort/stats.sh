@@ -16,7 +16,7 @@ for i in {1..$test_amount}; do
     printf "%13s\t%7s\t%12s\t%12s\n" "" "size" "swaps" "comparisons" >> $output
     while (($size > 0)); do
         echo -n "\r$(tput el)size: $size"
-        ./bin/$name -s $size -t random >> $output
+        ./$name -s $size -t random -fA >> $output
         #echo "" >> $output
         ((size-=100))
     done

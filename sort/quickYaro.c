@@ -36,7 +36,7 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
         long tmp;
 
         long left_pvt = array[left_idx], right_pvt = array[right_idx];
-        if(array[left_idx] > array[right_idx] && start > stop)
+        if(array[left_idx] < array[right_idx] && start > stop)
         {
             printf("swapping pivots(%ld <> %ld)\n", left_pvt, right_pvt);
             tmp = left_idx;
