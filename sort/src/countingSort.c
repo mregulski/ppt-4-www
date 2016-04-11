@@ -7,7 +7,6 @@ Result *counting_sort(long *array, long len, long maxVal, int logging)
     Result *r = result();
     long *counts = calloc(maxVal, sizeof(long));
     long *result = calloc(len, sizeof(long));
-    long total = 0, oldCount = 0;
     int j;
     for(j = 0; j < len; j++)
     {

@@ -20,4 +20,4 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 
 clean:
-	rm -rf bin
+	rm -rf $(OBJDIR)
