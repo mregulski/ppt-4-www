@@ -1,7 +1,8 @@
 #include "util.h"
-#include "insertSort.c"
-#include "mergeSort.c"
-#include "quickSort.c"
+#include "sort.h"
+// #include "insertSort.c"
+// #include "mergeSort.c"
+// #include "quickSort.c"
 #include <string.h>
 #include <time.h>
 

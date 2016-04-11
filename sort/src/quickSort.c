@@ -1,6 +1,5 @@
-#ifndef QUICK
-#define QUICK 1
 #include "util.h"
+#include "sort.h"
 #include <string.h>
 #include <time.h>
 
@@ -89,4 +88,3 @@ Result *_quick_sort(long *array, long start, long stop, Result *r, int threshold
     return r;
 
 }
-#endif

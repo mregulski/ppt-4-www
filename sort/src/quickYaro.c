@@ -1,10 +1,8 @@
-#ifndef YARO
-#define YARO 1
 #include "util.h"
-#include "insertSort.c"
+#include "sort.h"
 
 // main sorting function
-Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logging);
+
 
 // launcher function
 Result *yaro_quick_sort(long *array, long len, int logging)
@@ -122,5 +120,3 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
         return _yaro_quick_sort(array, b+1, stop, r, logging);
 
 }
-
-#endif

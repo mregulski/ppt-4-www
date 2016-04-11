@@ -1,6 +1,7 @@
 #ifndef MERGE
 #define MERGE 1
 #include "util.h"
+#include "sort.h"
 #include <string.h>
 
 Result *_merge_sort(long *array, long len, Result *r, int logging, int level);

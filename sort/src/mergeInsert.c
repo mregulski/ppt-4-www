@@ -1,6 +1,5 @@
 #include "util.h"
-#include "mergeSort.c"
-#include "insertSort.c"
+#include "sort.h"
 #include <string.h>
 #include <time.h>
 

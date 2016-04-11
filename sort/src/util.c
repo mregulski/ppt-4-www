@@ -1,13 +1,4 @@
-#ifndef UTIL
-#define UTIL 1
-#define DEBUG 1000
-#include <stdlib.h>
-#include <stdio.h>
-
-typedef struct {
-    long swaps;
-    long cmps;
-} Counter;
+#include "util.h"
 
 Counter *counter()
 {
@@ -17,11 +8,6 @@ Counter *counter()
     return c;
 }
 
-typedef struct {
-    Counter *count;
-    long *array;
-} Result;
-
 Result *result()
 {
     Result *r = malloc(sizeof(Result));
@@ -30,26 +16,18 @@ Result *result()
     return r;
 }
 
-typedef enum {
-    Ascending,
-    Descending,
-    Random
-} OrderingE;
-
-void print_result(Result *r, long len, long time, int tabular)
+void print_result(Result *r, long len, long time, int tabular, FILE *out)
 {
     if(tabular)
     {
-        printf("\t%7ld\t%12ld\t%12ld\t%6ld\n",len, r->count->swaps, r->count->cmps, time);
+        fprintf(out, "\t%7ld\t%12ld\t%12ld\t%9ld\n",len, r->count->swaps, r->count->cmps, time);
     }
     else
     {
-        printf("size:\t%7ld\tswaps:\t%12ld\tcmps:\t%12ld\n", len, r->count->swaps, r->count->cmps);
+        fprintf(out, "size:\t%7ld\tswaps:\t%12ld\tcmps:\t%12ld\n", len, r->count->swaps, r->count->cmps);
     }
 }
 
-
-#define NO_SPECIAL -1
 void print_array(char *str, long *array, long len, long special_idx)
 {
     if(str != NULL)
@@ -75,7 +53,6 @@ void print_array(char *str, long *array, long len, long special_idx)
     }
     printf("]\n");
 }
-
 
 void print_array_range(char *str, long *array, long start, long stop, long special_idx)
 {
@@ -125,8 +102,6 @@ void print_key(char *str, long *array, long len, long key_idx)
     }
     printf("]\n");
 }
-
-// fancy printer
 void indent(int level)
 {
     for(int i = 0; i < level; i++)
@@ -134,5 +109,3 @@ void indent(int level)
         printf("--- ");
     }
 }
-
-#endif

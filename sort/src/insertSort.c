@@ -1,6 +1,5 @@
-#ifndef INSERT
-#define INSERT 1
 #include "util.h"
+#include "sort.h"
 #include <string.h>
 
 Result *insert_sort(long *array, long len, int logging)
@@ -95,4 +94,3 @@ Result *insert_sort_nocopy(long *array, long len, int logging, Result *r, int le
 
     return r;
 }
-#endif
