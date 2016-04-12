@@ -27,8 +27,13 @@ Result *quick_insert_sort(long *array, long len, int logging, int threshold);
 
 // DOUBLE PIVOT QUICK SORT (Yaroslavskiy)
 Result *yaro_quick_sort(long *array, long len, int logging);
-Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logging);
+Result *_yaro_quick_sort(long *array, long start, long stop, Result *r,
+    int logging);
 
 // COUNTING SORT
-Result *counting_sort(long *array, long len, long maxVal, int logging);
+Result *counting_sort(long *array, long len, int logging);
+Result *counting_sort_radix(long *array, long len, long base, long exp,
+    Result *r, int logging);
+// RADIX SORT
+Result *radix_sort(long *array, long len, int base, int logging);
 #endif

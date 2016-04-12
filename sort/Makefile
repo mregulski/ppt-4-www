@@ -1,9 +1,10 @@
 CC = gcc
-CFLAGS = -Wall -C
+CFLAGS = -Wall -c
 OBJDIR = bin
 SRCDIR = src
 OBJS = $(addprefix $(OBJDIR)/, test.o util.o insertSort.o mergeSort.o\
-quickSort.o mergeInsert.o quickHybrid.o quickYaro.o countingSort.o)
+quickSort.o mergeInsert.o quickHybrid.o quickYaro.o countingSort.o\
+radixSort.o)
 
 all: sort
 debug: CFLAGS += -g

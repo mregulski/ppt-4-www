@@ -26,18 +26,11 @@ typedef enum {
     Random
 } OrderingE;
 
+// fancy printers
 void print_result(Result *r, long len, long time, int tabular, FILE *out);
-
-
-
 void print_array(char *str, long *array, long len, long special_idx);
-
-
 void print_array_range(char *str, long *array, long start, long stop, long special_idx);
-
 void print_key(char *str, long *array, long len, long key_idx);
-
-// fancy printer
 void indent(int level);
 
 #endif

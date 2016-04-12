@@ -52,7 +52,7 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
         {
             if(++r->count->cmps && array[k] < left_pvt)
             {
-                if(logging > 0)
+                if(logging > 1)
                 {
                     printf("\t%ld@%ld < left pivot = %ld\n", array[k],k, left_pvt);
                     printf("\t\tswapping %ld@%ld <> %ld@%ld\n", array[k], k, array[a],a );
@@ -71,7 +71,7 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
                     {
                         b--;
                     }
-                    if(logging > 0)
+                    if(logging > 1)
                     {
                         printf("\t%ld%ld > right pivot = %ld\n", array[k], k, right_pvt);
                         printf("\t\tswapping %ld <> %ld\n", array[k], array[b]);
@@ -83,7 +83,7 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
                     b--;
                     if(++r->count->cmps && array[k] < left_pvt)
                     {
-                        if(logging > 0)
+                        if(logging > 1)
                         {
                             printf("\t%ld%ld < left pivot = %ld\n", array[k], k, left_pvt);
                             printf("\t\tswapping %ld <> %ld\n", array[k], array[a]);
@@ -100,14 +100,14 @@ Result *_yaro_quick_sort(long *array, long start, long stop, Result *r, int logg
         }
         a--;
         b++;
-        if(logging > 0)
+        if(logging > 1)
         {
             printf("\tswapping %ld <> %ld ([%ld]<>[%ld])\n", array[start], array[a],start,a);
         }
         tmp = array[start];
         array[start] = array[a];
         array[a] = tmp;
-        if(logging>0)
+        if(logging > 1)
         {
             printf("\tswapping %ld <> %ld\n", array[stop], array[b]);
         }

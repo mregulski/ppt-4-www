@@ -28,7 +28,8 @@ struct sort {
 };
 
 // main test method
-void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int qm_threshold, struct sort conf[]);
+void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
+    int qm_threshold, int radix, struct sort conf[]);
 
 
 
@@ -44,6 +45,8 @@ int main(int argc, char **argv)
     int qi_threshold = 30;
     // array length at which merge_insert switches from merge to insert sort
     int mi_threshold = 30;
+    // base used by radix sort
+    int radix = 10;
     // type of list to generate
     OrderingE list_type = Random;
     struct sort conf[N_SORTS];
@@ -62,7 +65,7 @@ int main(int argc, char **argv)
     int c;
     do
     {
-        c = getopt(argc,argv,"s:t:v:i:m:o:fABCDEFG");
+        c = getopt(argc,argv,"s:t:v:i:m:o:fABCDEFGH");
         switch (c)
         {
             case 's':
@@ -93,6 +96,9 @@ int main(int argc, char **argv)
             case 'm':
                 mi_threshold = (int)strtol(optarg, NULL, 10);
                 break;
+            case 'r':
+                radix = (int)strtol(optarg, NULL, 10);
+                break;
             case 'f':
                 for(int i = 0; i < N_SORTS; i++) {
                     conf[i].enabled = 0;
@@ -119,6 +125,9 @@ int main(int argc, char **argv)
             case 'G':
                 conf[6].enabled=1;
                 break;
+            case 'H':
+                conf[7].enabled=1;
+                break;
             case 'o':
                 base_length = (strlen(optarg) + 1);
                 basename = malloc(base_length * sizeof(char));
@@ -144,6 +153,9 @@ int main(int argc, char **argv)
                 // basename.count.xxxxx
                 conf[6].filename = malloc(base_length+5+5+2);
                 sprintf(conf[6].filename,"%s.%s.%05d",basename,"count", 1);
+                // basename.radix.xxxxx
+                conf[7].filename = malloc(base_length+5+5+2);
+                sprintf(conf[7].filename,"%s.%s.%05d",basename,"count", 1);
                 break;
         }
 
@@ -155,13 +167,14 @@ int main(int argc, char **argv)
     srand(time(NULL) * getpid());
 
     // run test
-    test(test_size, logging, list_type, qi_threshold, mi_threshold, conf);
+    test(test_size, logging, list_type, qi_threshold, mi_threshold, radix, conf);
 
 }
 
 // cut-off value for printing sorted arrays
 #define MAX_OUTPUT_ARRAY 32
-void test(long test_size, int logging, OrderingE list_type, int qi_threshold, int mi_threshold, struct sort conf[])
+void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
+    int mi_threshold, int base, struct sort conf[])
 {
     long *arr = generate_list(list_type, test_size, logging);
     if(logging > 0)
@@ -317,6 +330,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
         }
         print_result(yaro, test_size, stop-start, tabular_out, out);
     }
+
     if(conf[6].enabled)
     {
         if(conf[6].filename != NULL)
@@ -330,12 +344,34 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold, in
         else
             { printf("%-15s","counting:\t"); }
         start = clock();
-        Result *counting = counting_sort(arr, test_size, test_size*2, logging);
+        Result *counting = counting_sort(arr, test_size, logging);
         stop = clock();
         print_result(counting, test_size, stop-start, tabular_out, out);
-        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+        if(logging > 0 && test_size != MAX_OUTPUT_ARRAY)
         {
             print_array("\nsorted", counting->array, test_size, NO_SPECIAL);
+        }
+    }
+
+    if(conf[7].enabled)
+    {
+        if(conf[7].filename != NULL)
+        {
+            out = fopen(conf[7].filename, "a");
+            if(out == NULL) {
+                perror("Can't open file:");
+                exit(EXIT_FAILURE);
+            }
+        }
+        else
+            { printf("%-15s","radix:\t"); }
+        start = clock();
+        Result *radix = radix_sort(arr, test_size, base, logging);
+        stop = clock();
+        print_result(radix, test_size, stop-start, tabular_out, out);
+        if(logging > 0 && test_size != MAX_OUTPUT_ARRAY)
+        {
+            print_array("\nsorted", radix->array, test_size, NO_SPECIAL);
         }
     }
 }
@@ -346,7 +382,10 @@ long *generate_list_random(long size)
     long *arr = malloc(sizeof(long) * size);
     for(long i = 0; i < size; i++)
     {
-        arr[i] = rand()%(size*2);
+        if(rand()%512 > 255)
+            arr[i] = rand()%(size*2);
+        else
+            arr[i] = rand()%(size*2);
     }
     return arr;
 }

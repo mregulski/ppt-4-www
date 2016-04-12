@@ -1,26 +1,103 @@
 #include "util.h"
 #include "sort.h"
 
-// requires knowing array's maximum (maxVal)
-Result *counting_sort(long *array, long len, long maxVal, int logging)
+// standalone version
+Result *counting_sort(long *arr, long len, int logging)
 {
+    long *array = malloc(len * sizeof(long));
+    memcpy(array, arr, len*sizeof(long));
     Result *r = result();
-    long *counts = calloc(maxVal, sizeof(long));
-    long *result = calloc(len, sizeof(long));
-    int j;
-    for(j = 0; j < len; j++)
+    int i;
+    long min,max;
+    min=max=array[0];
+    for(i = 0; i < len; i++)
     {
-        counts[array[j]]++;
+        if(array[i] >= max) {
+            max = array[i];
+        }
+        if(array[i] <= min) {
+            min = array[i];
+        }
     }
-    for(j = 1; j < maxVal; j++)
+    if(logging > 1) {
+        printf("max: %ld, min: %ld\n", max, min); }
+    long range = max - min + 1;
+    long *counts = malloc(range * sizeof(long));
+    long *result = malloc((len) * sizeof(long));
+
+    for(i = 0; i < range; i++)
     {
-        counts[j] += counts[j-1];
+        counts[i] = 0;
     }
-    for(j = len-1; j >= 0; j--)
+
+    for(i = 0; i < len; i++)
     {
-        result[counts[array[j]]] = array[j];
-        counts[array[j]]--;
+        counts[array[i]-min]++;
     }
+    if(logging > 1) {
+        print_array("counts", counts, range, NO_SPECIAL); }
+    for(i = 1; i < range; i++)
+    {
+        counts[i] += counts[i-1];
+    }
+    if(logging > 1) {
+        print_array("counts", counts, range, NO_SPECIAL); }
+    for(i = len-1; i >= 0; i--)
+    {
+        result[--counts[array[i]-min]] = array[i];
+        r->count->swaps++;
+    }
+    free(counts);
+    r->array = result;
+    return r;
+}
+
+// for radix_sort. sorts by single digit,
+Result *counting_sort_radix(long *array, long len, long base, long exp,
+    Result *r, int logging)
+{
+    int i, idx;
+    long *counts = malloc(base * sizeof(long));
+    long *result = malloc(len * sizeof(long));
+
+    for(i = 0; i < base; i++)
+    {
+        counts[i] = 0;
+    }
+
+    for(i = 0; i < len; i++)
+    {
+        if(base == 2) {
+            idx = (array[i] << 1) & 0xffff;
+        } else {
+            idx = (array[i]/exp)%base;
+        }
+        counts[idx]++;
+    }
+    if(logging > 1) {
+        print_array("counts", counts, base, NO_SPECIAL);
+    }
+    for(i = 1; i < base; i++)
+    {
+        counts[i] += counts[i-1];
+    }
+    if(logging > 1) {
+        print_array("counts", counts, base, NO_SPECIAL);
+    }
+    for(i = len-1; i >= 0; i--)
+    {
+        if(base == 2) {
+            idx = (array[i] << 1) & 0xffff;
+        } else {
+            idx = (array[i]/exp)%base;
+        }
+        result[--counts[idx]] = array[i];
+        r->count->swaps++;
+    }
+    if(logging > 1) {
+        print_array("csr", result, len, NO_SPECIAL);
+    }
+    free(counts);
     r->array = result;
     return r;
 }
