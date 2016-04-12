@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -c
+CFLAGS = -Wall -c -O1
 OBJDIR = bin
 SRCDIR = src
 OBJS = $(addprefix $(OBJDIR)/, test.o util.o insertSort.o mergeSort.o\

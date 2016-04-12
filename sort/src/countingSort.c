@@ -56,7 +56,7 @@ Result *counting_sort(long *arr, long len, int logging)
 Result *counting_sort_radix(long *array, long len, long base, long exp,
     Result *r, int logging)
 {
-    int i, idx;
+    int i;
     long *counts = malloc(base * sizeof(long));
     long *result = malloc(len * sizeof(long));
 
@@ -67,12 +67,7 @@ Result *counting_sort_radix(long *array, long len, long base, long exp,
 
     for(i = 0; i < len; i++)
     {
-        if(base == 2) {
-            idx = (array[i] << 1) & 0xffff;
-        } else {
-            idx = (array[i]/exp)%base;
-        }
-        counts[idx]++;
+        counts[(array[i]/exp)%base]++;
     }
     if(logging > 1) {
         print_array("counts", counts, base, NO_SPECIAL);
@@ -86,12 +81,7 @@ Result *counting_sort_radix(long *array, long len, long base, long exp,
     }
     for(i = len-1; i >= 0; i--)
     {
-        if(base == 2) {
-            idx = (array[i] << 1) & 0xffff;
-        } else {
-            idx = (array[i]/exp)%base;
-        }
-        result[--counts[idx]] = array[i];
+        result[--counts[(array[i]/exp)%base]] = array[i];
         r->count->swaps++;
     }
     if(logging > 1) {

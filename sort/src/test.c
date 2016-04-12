@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     int c;
     do
     {
-        c = getopt(argc,argv,"s:t:v:i:m:o:fABCDEFGH");
+        c = getopt(argc,argv,"i:m:o:r:s:t:v:fABCDEFGH");
         switch (c)
         {
             case 's':
@@ -132,30 +132,30 @@ int main(int argc, char **argv)
                 base_length = (strlen(optarg) + 1);
                 basename = malloc(base_length * sizeof(char));
                 strcpy(basename, optarg);
-                // basename.insert.xxxxx
-                conf[0].filename = malloc(base_length+6+5+2);
-                sprintf(conf[0].filename,"%s.%s.%05d",basename,"insert", 1);
-                // basename.merge.xxxxx
-                conf[1].filename = malloc(base_length+5+5+2);
-                sprintf(conf[1].filename,"%s.%s.%05d",basename,"merge", 1);
-                // basename.quick.xxxxx
-                conf[2].filename = malloc(base_length+5+5+2);
-                sprintf(conf[2].filename,"%s.%s.%05d",basename,"quick", 1);
-                // basename.quickins.xxxxx
-                conf[3].filename = malloc(base_length+8+5+2);
-                sprintf(conf[3].filename,"%s.%s.%05d",basename,"quickins", 1);
-                // basename.mergeins.xxxxx
-                conf[4].filename = malloc(base_length+8+5+2);
-                sprintf(conf[4].filename,"%s.%s.%05d",basename,"mergeins", 1);
-                // basename.yaro.xxxxx
-                conf[5].filename = malloc(base_length+4+5+2);
-                sprintf(conf[5].filename,"%s.%s.%05d",basename,"yaro", 1);
-                // basename.count.xxxxx
-                conf[6].filename = malloc(base_length+5+5+2);
-                sprintf(conf[6].filename,"%s.%s.%05d",basename,"count", 1);
-                // basename.radix.xxxxx
-                conf[7].filename = malloc(base_length+5+5+2);
-                sprintf(conf[7].filename,"%s.%s.%05d",basename,"count", 1);
+                // basename.insert
+                conf[0].filename = malloc(base_length+6+1);
+                sprintf(conf[0].filename,"%s.%s",basename,"insert");
+                // basename.merge
+                conf[1].filename = malloc(base_length+5+1);
+                sprintf(conf[1].filename,"%s.%s",basename,"merge");
+                // basename.quick
+                conf[2].filename = malloc(base_length+5+1);
+                sprintf(conf[2].filename,"%s.%s",basename,"quick");
+                // basename.quickins
+                conf[3].filename = malloc(base_length+8+1);
+                sprintf(conf[3].filename,"%s.%s",basename,"quickins");
+                // basename.mergeins
+                conf[4].filename = malloc(base_length+8+1);
+                sprintf(conf[4].filename,"%s.%s",basename,"mergeins");
+                // basename.yaro
+                conf[5].filename = malloc(base_length+4+1);
+                sprintf(conf[5].filename,"%s.%s",basename,"yaro");
+                // basename.count
+                conf[6].filename = malloc(base_length+5+1);
+                sprintf(conf[6].filename,"%s.%s",basename,"count");
+                // basename.radix
+                conf[7].filename = malloc(base_length+5+1);
+                sprintf(conf[7].filename,"%s.%s",basename,"radix");
                 break;
         }
 
@@ -181,9 +181,9 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
     {
         print_array("Generated array:", arr, test_size, NO_SPECIAL);
     }
-    int tabular_out = logging == 0 ? 1 : 0;
+    int tabular_out = conf[0].filename && !logging;
 
-    if(tabular_out)
+    if(!tabular_out)
     {
         printf("\t%15s\t%7s\t%12s\t%12s\t%9s\n","","size","swaps","comparisons", "time");
     }
@@ -203,8 +203,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("%-15s","insert sort:\t"); }
+        fprintf(out, "%-15s","insert sort:\t");
         // print_array("\nbefore", arr, test_size);
         start = clock();
         Result *insert = insert_sort(arr, test_size, logging);
@@ -214,6 +213,10 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             print_array("\nsorted:", insert->array, test_size, NO_SPECIAL);
         }
         print_result(insert, test_size, stop-start, tabular_out, out);
+        free(insert->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
 
     if(conf[1].enabled)
@@ -226,8 +229,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("%-15s", "merge sort:\t"); }
+        fprintf(out, "%-15s", "merge sort:\t");
 
         // print_array("\nbefore:", arr, test_size);
         start = clock();
@@ -238,6 +240,10 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             print_array("\nsorted:", merge->array, test_size, NO_SPECIAL);
         }
         print_result(merge, test_size, stop-start, tabular_out, out);
+        free(merge->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
 
     if(conf[2].enabled)
@@ -250,8 +256,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("%-15s", "quick sort:\t"); }
+        fprintf(out, "%-15s", "quick sort:\t");
         // print_array("\nbefore:", arr, test_size);
         start = clock();
         Result *quick = quick_sort(arr, test_size, logging);
@@ -261,6 +266,10 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             print_array("\nsorted:", quick->array, test_size, NO_SPECIAL);
         }
         print_result(quick, test_size, stop-start, tabular_out, out);
+        free(quick->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
 
     if(conf[3].enabled)
@@ -273,8 +282,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("quickins (%d):\t", qi_threshold); }
+        fprintf(out, "quickins (%d):\t", qi_threshold);
         // print_array("\nbefore", arr, test_size);
         start = clock();
         Result *quick_insert = quick_insert_sort(arr, test_size, logging, qi_threshold);
@@ -284,6 +292,10 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             print_array("\nsorted:", quick_insert->array, test_size, NO_SPECIAL);
         }
         print_result(quick_insert, test_size, stop-start, tabular_out, out);
+        free(quick_insert->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
 
     if(conf[4].enabled)
@@ -296,8 +308,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("mergeins (%d):\t", mi_threshold); }
+        fprintf(out, "mergeins (%d):\t", mi_threshold);
 
         start = clock();
         Result *merge_insert = merge_insert_sort(arr, test_size, mi_threshold, logging);
@@ -307,29 +318,36 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             print_array("\nsorted", merge_insert->array, test_size, NO_SPECIAL);
         }
         print_result(merge_insert, test_size, stop-start, tabular_out, out);
+        free(merge_insert->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
 
-    if(conf[5].enabled)
-    {
-        if(conf[5].filename != NULL)
-        {
-            out = fopen(conf[5].filename, "a");
-            if(out == NULL) {
-                perror("Can't open file:");
-                exit(EXIT_FAILURE);
-            }
-        }
-        else
-            { printf("%-15s","Yaroslavskiy:\t"); }
-        start = clock();
-        Result *yaro = yaro_quick_sort(arr, test_size, logging);
-        stop = clock();
-        if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
-        {
-            print_array("\nsorted", yaro->array, test_size, NO_SPECIAL);
-        }
-        print_result(yaro, test_size, stop-start, tabular_out, out);
-    }
+    // if(conf[5].enabled)
+    // {
+    //     if(conf[5].filename != NULL)
+    //     {
+    //         out = fopen(conf[5].filename, "a");
+    //         if(out == NULL) {
+    //             perror("Can't open file:");
+    //             exit(EXIT_FAILURE);
+    //         }
+    //     }
+    //     else
+    //         { printf("%-15s","Yaroslavskiy:\t"); }
+    //     start = clock();
+    //     Result *yaro = yaro_quick_sort(arr, test_size, logging);
+    //     stop = clock();
+    //     if(logging > 0 && test_size < MAX_OUTPUT_ARRAY)
+    //     {
+    //         print_array("\nsorted", yaro->array, test_size, NO_SPECIAL);
+    //     }
+    //     print_result(yaro, test_size, stop-start, tabular_out, out);
+    //     if(out!=stdout) {
+    //         fclose(out);
+    //     }
+    // }
 
     if(conf[6].enabled)
     {
@@ -341,15 +359,18 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("%-15s","counting:\t"); }
+        fprintf(out, "%-15s","counting:\t");
         start = clock();
         Result *counting = counting_sort(arr, test_size, logging);
         stop = clock();
-        print_result(counting, test_size, stop-start, tabular_out, out);
         if(logging > 0 && test_size != MAX_OUTPUT_ARRAY)
         {
             print_array("\nsorted", counting->array, test_size, NO_SPECIAL);
+        }
+        print_result(counting, test_size, stop-start, tabular_out, out);
+        free(counting->array);
+        if(out!=stdout) {
+            fclose(out);
         }
     }
 
@@ -363,17 +384,21 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            { printf("%-15s","radix:\t"); }
+        fprintf(out, "radix (%5d):\t", base);
         start = clock();
         Result *radix = radix_sort(arr, test_size, base, logging);
         stop = clock();
-        print_result(radix, test_size, stop-start, tabular_out, out);
         if(logging > 0 && test_size != MAX_OUTPUT_ARRAY)
         {
             print_array("\nsorted", radix->array, test_size, NO_SPECIAL);
         }
+        print_result(radix, test_size, stop-start, tabular_out, out);
+        free(radix->array);
+        if(out!=stdout) {
+            fclose(out);
+        }
     }
+    free(arr);
 }
 
 // Generators
