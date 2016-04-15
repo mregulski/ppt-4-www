@@ -2,6 +2,8 @@
 #define UTIL 1
 #define DEBUG 1000
 #define NO_SPECIAL -1
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -25,6 +27,8 @@ typedef enum {
     Descending,
     Random
 } OrderingE;
+
+long indexOf(long key, long *array, long len);
 
 // fancy printers
 void print_result(Result *r, long len, long time, int tabular, FILE *out);

@@ -165,9 +165,14 @@ int main(int argc, char **argv)
     // Setup rand(). getpid() guarantees seed refresh when test is ran
     // more than once per second (e.g. test.sh at small sizes).
     srand(time(NULL) * getpid());
-
+    #ifndef TESTS
+    #define TESTS 1
+    #endif
     // run test
-    test(test_size, logging, list_type, qi_threshold, mi_threshold, radix, conf);
+    for(int TEST_NO = 0; TEST_NO < TESTS; TEST_NO++)
+    {
+        test(test_size, logging, list_type, qi_threshold, mi_threshold, radix, conf);
+    }
 
 }
 
@@ -181,7 +186,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
     {
         print_array("Generated array:", arr, test_size, NO_SPECIAL);
     }
-    int tabular_out = conf[0].filename && !logging;
+    int tabular_out = 1 ;//|| conf[0].filename && !logging;
 
     if(!tabular_out)
     {
@@ -385,6 +390,7 @@ void test(long test_size, int logging, OrderingE list_type, int qi_threshold,
             }
         }
         fprintf(out, "radix (%5d):\t", base);
+        puts("");
         start = clock();
         Result *radix = radix_sort(arr, test_size, base, logging);
         stop = clock();

@@ -21,4 +21,4 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 
 clean:
-	rm -rf $(OBJDIR)
+	rm -f $(OBJDIR)

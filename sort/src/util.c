@@ -16,6 +16,19 @@ Result *result()
     return r;
 }
 
+long indexOf(long key, long *array, long len) {
+    int i = 0;
+    while(i < len)
+    {
+        if(array[i] == key) {
+            return i;
+        }
+        i++;
+    }
+    return -1;
+
+}
+
 void print_result(Result *r, long len, long time, int tabular, FILE *out)
 {
     if(tabular)
@@ -106,6 +119,6 @@ void indent(int level)
 {
     for(int i = 0; i < level; i++)
     {
-        printf("--- ");
+        printf(" ");
     }
 }

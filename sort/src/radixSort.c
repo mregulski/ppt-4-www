@@ -17,11 +17,12 @@ Result *radix_sort(long *arr, long len, int base, int logging)
     for(int exp = 1; max/exp > 0; exp *= base)
     {
         if(logging > 1) {
-            printf("exp: %i, max: %ld, base: %d\n", exp, max, base);
+            printf("digit: %is, array maximum: %ld, base: %d\n", exp, max, base);
         }
         r = counting_sort_radix(r->array, len, base, exp, r, logging);
         if(logging > 1) {
-            print_array("radix-part", r->array, len, NO_SPECIAL);
+            print_array("result so far:", r->array, len, NO_SPECIAL);
+            puts("");
         }
     }
     return r;

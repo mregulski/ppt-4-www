@@ -70,23 +70,23 @@ Result *counting_sort_radix(long *array, long len, long base, long exp,
         counts[(array[i]/exp)%base]++;
     }
     if(logging > 1) {
-        print_array("counts", counts, base, NO_SPECIAL);
+        print_array("individual counts:", counts, base, NO_SPECIAL);
     }
     for(i = 1; i < base; i++)
     {
         counts[i] += counts[i-1];
     }
     if(logging > 1) {
-        print_array("counts", counts, base, NO_SPECIAL);
+        print_array("prefix-summed counts", counts, base, NO_SPECIAL);
     }
     for(i = len-1; i >= 0; i--)
     {
         result[--counts[(array[i]/exp)%base]] = array[i];
         r->count->swaps++;
     }
-    if(logging > 1) {
-        print_array("csr", result, len, NO_SPECIAL);
-    }
+    // if(logging > 1) {
+    //     print_array("counting-sorted", result, len, NO_SPECIAL);
+    // }
     free(counts);
     r->array = result;
     return r;

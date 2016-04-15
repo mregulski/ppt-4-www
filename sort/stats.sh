@@ -13,25 +13,32 @@ max_breakpoint=$5
 for i in {1..$test_amount}; do
     size=$max_size
     breakpoint=$max_breakpoint
-    radix=$max_radix
-    output=$prefix.$size
-    while (($size > 0)); do
+    radix=512
+    output=$prefix
+    # while (($size > 0)); do
         echo -n "\r$(tput el)$(tput bold)size:$(tput sgr0) $size"
-        bin/sort -s $size -t random -o $output.rand
+        # bin/sort -s $size -t random -o $output.$size.rand
         # echo "\nsDone basic tests @ size=$size."
-        while (($breakpoint > 1)); do
-            bin/sort -s $size -t random -o $output.rand -fDE -i $breakpoint -m $breakpoint
-            ((breakpoint-=1))
-        done
+        # while (($breakpoint > 1)); do
+        #     bin/sort -s $size -t random -o $output.rand -fDE -i $breakpoint -m $breakpoint
+        #     ((breakpoint-=1))
+        # done
         # echo "\nDonse breakpoint tests @ size=$size."
         while (($radix > 1)); do
-            bin/sort -s $size -t random -o $output.rand -fH -r $radix
-            ((radix-=10))
+            bin/sort -s $size -fH -r $radix >> $output.$size.$radix.rand
+            let radix=$radix-32
         done
-        # escho "\nDone radix tests @ size=$size."
-        #echo "" >> $output
-        ((size-=100))
-    done
+        radix=20480
+        while (($radix > 512)); do
+            bin/sort -s $size -fH -r $radix >> $output.$size.$radix.rand
+            let radix=$radix-1024
+        done
+
+
+        # echo "\nDone radix tests @ size=$size."
+        # let size=$size-100
+        echo -n ""
+    # done
     echo "\r$(tput el)$(tput setaf 7)[$(date +"%H:%M:%S")]$(tput sgr0) Test $(tput bold)#$i$(tput sgr0) done."
 done
 echo "\r$(tput el)All tests done. Maximum size: $2."
