@@ -1,7 +1,6 @@
 body {
 	padding: 5px;
-	width: 90%;
-	max-width: 980px;
+	width: 80%;
 	margin: auto;
 	color: #222;
 	font-size: 100%;
@@ -34,7 +33,7 @@ h4:first-of-type,h5:first-of-type {
 h1 {
 	color: #DE4B2B;
 	font-size: 4.4rem;
-	display: block;
+	display: inline-block	;
 	vertical-align: bottom;
 }
 
@@ -47,7 +46,7 @@ h3 {
 }
 
 p {
-
+	margin-bottom: 5px;
 }
 
 #menuToggle
@@ -83,7 +82,7 @@ nav li:last-of-type {
 }
 
 nav a, nav a:visited {
-
+	color: inherit;
 	display: block;
 	text-decoration: none;
 	padding: 10px;
@@ -96,7 +95,7 @@ nav a:hover {
 	background: #153991;
 }
 
-nav .active, a:active {
+nav a.active, nav a:active {
 	background: #DE4B2B;
 	color: #fff;
 }
@@ -113,7 +112,8 @@ footer {
 
 pre {
 	padding: 5px;
-	white-space: pre;
+	margin-bottom: 5px;
+	white-space: pre-wrap;
 	background: #f4f4f4;
 	-moz-tab-size: 2;
 	-webkit-tab-size: 2;
@@ -121,8 +121,71 @@ pre {
 	tab-size: 2;
 }
 
+pre .comment {
+	color: #888;
+}
+/*code {
+	-moz-tab-size: 2;
+	-webkit-tab-size: 2;
+	-ms-tab-size: 2;
+	tab-size: 2;
+	white-space: pre-wrap;
+}*/
+
+#simulator input {
+	border-radius: 2px;
+	border: 1px solid #dbdbdb;
+	padding: 8px;
+	width: 100%
+}
+
+#runButton {
+	width: 80px;
+	height: 30px;
+}
+
 #output {
 	font-family: 'Courier New', monospace;
+	font-size: .75em;
+	font-weight: bold;
+	background: #f4f4f4;
+	padding: 10px;
+	overflow: auto;
+
+}
+
+#output .level-0 {
+	color: #000;
+}
+#output .level-1 {
+	color: #00a;
+}
+#output .level-2 {
+	color: #0a0;
+}
+#output .level-3 {
+	color: #a00;
+}
+#output .level-4 {
+	color: #0aa;
+}
+#output .level-5 {
+	color: #aa0;
+}
+#output .level-6 {
+	color: #a0a;
+}
+#output .level-7 {
+	color: #44f;
+}
+#output .level-8 {
+	color: #4f4;
+}
+#output .level-9 {
+	color: #f44;
+}
+#output .level-10 {
+	color: #4ff;
 }
 
 @media screen and (min-width: 680px) {
@@ -145,8 +208,8 @@ pre {
 	header img {
 		display: block;
 		min-width: 100px;
-		width: auto;
-		height: auto;
+		width: 120px;
+		height: 120px;
 
 		/*padding: 0 10px 0 0;*/
 	}

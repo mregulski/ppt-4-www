@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=content-width, initial-scale=1" />
 	<title>Sortowanie przez wstawianie</title>
-	<link rel="stylesheet" href="bower_components/HTML5-Reset/assets/css/reset.css"/>
+	<link rel="stylesheet" href="styles/reset.css"/>
 	<link rel="stylesheet" href="styles/grid.css"/>
 	<link rel="stylesheet" href="styles/algorytm.css"/>
 	<script src="scripts/menu.js"></script>
@@ -18,7 +18,7 @@
 			<img id="logo" src="res/infppt.png" alt="logo wydziału"/>
 		</div>
 		<div class="col-5-6">
-			<h1> Podstawowe algorytmy</h1>
+			<h1>Podstawowe algorytmy</h1>
 		</div>
 	</div>
 	<p class="space-after">Na stronach tych omówione są najciekawsze algorytmy omawiane na wykładzie ze Wstępu do Informatyki
@@ -44,8 +44,8 @@
 				<li class="algorytm">
 					<a href="#">Sortowanie przez wstawianie</a>
 				</li>
-				<li class="algorytm active">
-					<a href="#">Sortowanie przez scalanie</a>
+				<li class="algorytm">
+					<a href="#" class="active">Sortowanie przez scalanie</a>
 				</li>
 				<li class="algorytm">
 					<a href="#">Wyszukiwanie binarne</a>
@@ -74,30 +74,43 @@
 			</ol>
 			<section>
 				<h3>Pseudo-kod funkcji:</h3>
-				<pre>
-// posortuj Array[start...end]
-mergeSort(Array, start, end):
-	if start != end:
-		center &lt;- floor((start+end)/2)
-		mergeSort(Array, start, center)
-		mergeSort(Array, center+1, end)
-	    merge(Array, start, center, finish)
-
-// scal A[start...center] z A[center+1 ... end]
-merge(A, start, center, end):
-	i &lt;- start, j &lt;- center+1
-	A2 &lt;- [] // tablica pomocnicza
-		while i &lt;= center and j &lt;= end
-			if A[j] &lt; A[i]
-				append A[j] to A2
-				j++
-			else
-				append A[i] to A2
-				i++
-		if one of the halves is empty:
-			append the rest of the other to the end of A2
-			copy A2 to A
+				<div class="row">
+				<pre class="col-3-6">
+					<code>
+<span class="comment">// posortuj Array[start...end]</span>
+mergeSort(Array):
+	if Array.length > 1:
+		center = Array.length / 2
+		left = Array[0..center]
+		right = Array[center+1.. Array.length-1]
+		mergeSort(left)
+		mergeSort(right)
+		merge(left, right)
+					</code>
 				</pre>
+				<pre class="col-3-6">
+					<code>
+<span class="comment">// scal left z right</span>
+merge(left, right):
+	result = empty list;
+	while(left.length &gt; 0 and right.length &gt; 0)
+		if(left.first &lt;= right.first)
+			result.append(left.first)
+			left = left[1..]
+		else
+			result.append(right.first)
+			right = right[1..]
+	<span class="comment">// jedna jest już pusta</span>
+	while(left.length &gt; 0)
+		result.append(left.first)
+		left = left[1..]
+	while(right.length &gt; 0)
+		result.append(right.first)
+		right = right[1..]
+	return result
+					</code>
+				</pre>
+			</div>
 			</section>
 		</article>
 		<div id="simulator">

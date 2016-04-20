@@ -1,8 +1,6 @@
-page = (function(){
+(function(){
     'use strict';
-    var menu = null;
-    var input = null;
-    var run = null;
+    var menu, input, run;
     window.onload = function() {
         menu = document.getElementById("menu");
         input = document.getElementById("array");
@@ -10,7 +8,7 @@ page = (function(){
 
         document.getElementById("menuToggle").onclick = toggleMenu;
         run.addEventListener('click', runSort);
-        input.addEventListener('keypress', checkInput);
+        input.addEventListener('keyup', checkInput);
     }
 
     // re-enable hidden menu when window is resized above breakpoint
@@ -20,7 +18,7 @@ page = (function(){
 
     function checkInput() {
         var array = input.value.split(/[,; ]/);
-        //console.log(array);
+        console.log(array);
         if(array.length > 1) {
             run.disabled = false;
         }
@@ -37,10 +35,12 @@ page = (function(){
 
     function runSort() {
         var array = input.value.split(/[,; ]/);
-        console.log(array);
-        array = array.map(function(x) {
-            return parseInt(x,10);
-        })
+        console.log(parseInt(array[0]) != NaN);
+        if(!isNaN(parseInt(array[0]))) {
+            array = array.map(function(x) {
+                return parseInt(x,10);
+            });
+        }
         console.log(sort.mergeSort(array));
     }
 
