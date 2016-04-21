@@ -11,10 +11,9 @@ body {
 	margin-bottom: 3.2%;
 }
 
-#logo {
-	margin-bottom: 5px;
-}
 header img {
+	margin-bottom: 5px;
+	margin-right: 10px;
 	display: none;
 }
 
@@ -32,8 +31,8 @@ h4:first-of-type,h5:first-of-type {
 
 h1 {
 	color: #DE4B2B;
-	font-size: 4.4rem;
-	display: inline-block	;
+	font-size: 3.4rem;
+	display: inline;
 	vertical-align: bottom;
 }
 
@@ -71,7 +70,7 @@ nav {
 
 nav ul {
 	list-style-type: none;
-	padding: 5px;
+	padding-right: 20px;*/
 }
 
 nav li {
@@ -190,7 +189,7 @@ pre .comment {
 	color: #4ff;
 }
 
-@media screen and (min-width: 680px) {
+@media screen and (min-width: 800px) {
 	#menuToggle {
 		display: none;
 	}
@@ -202,22 +201,23 @@ pre .comment {
 	nav {
 		border-right: 1px solid #dbdbdb;
 	}
+}
 
-	article {
-
+@media screen and (min-width: 897px) {
+	h1 {
+		color: #222;
 	}
-
 	header img {
-		display: block;
+		display: inline-block;
 		min-width: 100px;
 		width: 120px;
 		height: 120px;
-
-		/*padding: 0 10px 0 0;*/
 	}
+}
+@media screen and (min-width: 1110px) {
 
 	h1 {
-		color: #222;
-
+		font-size: 4.4rem;
 	}
+
 }
