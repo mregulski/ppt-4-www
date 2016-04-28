@@ -3,6 +3,7 @@ package reshi.ppt.algorytmy.BST;
 /**
  * @author Marcin Regulski on 25.04.2016.
  */
+@SuppressWarnings("WeakerAccess")
 public class BSTNode<Key extends Comparable<Key>, Value> {
     private Key key;
     private Value value;
@@ -22,7 +23,9 @@ public class BSTNode<Key extends Comparable<Key>, Value> {
     public void setValue(Value value) {
         this.value = value;
     }
-
+    void setKey(Key key) {
+        this.key = key;
+    }
 
     public BSTNode(Key key, Value value) {
         this.key = key;
@@ -34,7 +37,10 @@ public class BSTNode<Key extends Comparable<Key>, Value> {
         return "{" + key + ": " + value.toString() + "}";
     }
 
-    // based on http://stackoverflow.com/a/8948691
+    /**
+     * Pretty print this node and all it's descendants.
+     * based on http://stackoverflow.com/a/8948691
+     */
     public void prettyPrint() {
         prettyPrint("", true);
     }
