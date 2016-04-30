@@ -1,15 +1,6 @@
 <?php
-$content =<<<EOT
-<p>
-Look at that text! Would anyone use that? Can you imagine that, the text of your next webpage?! Lorem Ipsum is unattractive, both inside and out. I fully understand why it’s former users left it for something else. They made a good decision. Look at that text! Would anyone use that? Can you imagine that, the text of your next webpage?!
-</p>
-<p>
-I’m the best thing that ever happened to placeholder text. Be careful, or I will spill the beans on your placeholder text. An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.
-</p>
-
-EOT;
-
 require_once('Page.php');
-$page = new AlgorithmPage(0,"Hello!");
-$page->RenderPage($content);
- ?>
+$content = file_get_contents('content/index.html');
+$page = new AlgorithmPage(0, "Hello!", $content);
+?>
+<?=$page->Render();?>
