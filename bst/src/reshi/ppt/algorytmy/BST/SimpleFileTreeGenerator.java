@@ -46,7 +46,7 @@ public class SimpleFileTreeGenerator {
                     execute(operation);
                 }
                 else {
-                    System.out.println("wtf: [" + String.join(", ", (CharSequence[]) instruction) + "]");
+                    System.out.println("Unknown instruction: " + String.join(", ", (CharSequence[]) instruction));
                 }
                 line = source.readLine();
 
@@ -93,12 +93,15 @@ public class SimpleFileTreeGenerator {
      * @param operation operation to execute.
      */
     private void execute(String operation) {
+        BSTNode<Integer, Integer> tmp;
         switch(operation) {
             case "min":
-                System.out.println("max: " + tree.minimum().getValue());
+                tmp = tree.minimum();
+                System.out.println("min: " + (tmp != null ? tmp.getValue() : ""));
                 break;
             case "max":
-                System.out.println("max: " + tree.maximum().getValue());
+                tmp = tree.maximum();
+                System.out.println("max: " + (tmp != null ? tmp.getValue() : ""));
                 break;
             case "inorder":
                 System.out.print("in-order: ");

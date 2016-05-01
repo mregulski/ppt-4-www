@@ -5,12 +5,12 @@ package reshi.ppt.algorytmy.BST;
  */
 @SuppressWarnings("WeakerAccess")
 public class BSTNode<Key extends Comparable<Key>, Value> {
-    private Key key;
-    private Value value;
+    protected Key key;
+    protected Value value;
 
-    public BSTNode<Key, Value> parent = null;
-    public BSTNode<Key, Value> left = null;
-    public BSTNode<Key, Value> right = null;
+    public BSTNode<Key, Value> parent;
+    public BSTNode<Key, Value> left;
+    public BSTNode<Key, Value> right;
 
 
     public Key getKey() {
@@ -26,7 +26,7 @@ public class BSTNode<Key extends Comparable<Key>, Value> {
     void setKey(Key key) {
         this.key = key;
     }
-
+    protected BSTNode() {}
     public BSTNode(Key key, Value value) {
         this.key = key;
         this.value = value;

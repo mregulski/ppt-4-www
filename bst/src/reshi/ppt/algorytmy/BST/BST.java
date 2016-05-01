@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Marcin Regulski on 25.04.2016.
  */
-@SuppressWarnings("WeakerAccess")
 public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> {
     private BSTNode<K, V> root;
-    private int size;
+    protected int size;
 
     /**
      * Create new empty BST.
      */
     public BST() {
-        this.root = null;
-        this.size = 0;
+        root = null;
+        size = 0;
     }
 
     /**
@@ -27,11 +27,11 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @return true if the tree contains no elements.
      */
     public boolean isEmpty() {
-        return this.root == null;
+        return root == null;
     }
 
     public BSTNode<K, V> getRoot() {
-        return this.root;
+        return root;
     }
 
     public int getSize() {
@@ -47,10 +47,10 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
         BSTNode<K, V> node = new BSTNode<>(key, value);
         size++;
         if(isEmpty()) {
-            this.root = node;
+            root = node;
         }
         else {
-            insert(node, this.root);
+            insert(node, root, (x)->{});
         }
     }
 
@@ -59,14 +59,15 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @param node node to be inserted
      * @param subtree root of a subtree to insert the node into.
      */
-    private void insert(BSTNode<K, V> node, BSTNode<K, V> subtree) {
+    protected void insert(BSTNode<K, V> node, BSTNode<K, V> subtree, Consumer<BSTNode<K, V>> preInsert) {
+        preInsert.accept(subtree);
         if(node.getKey().compareTo(subtree.getKey()) > 0) {
             if(subtree.right == null) {
                 subtree.right = node;
                 node.parent = subtree;
             }
             else {
-                insert(node, subtree.right);
+                insert(node, subtree.right, preInsert);
             }
         }
         else if (node.getKey().compareTo(subtree.getKey()) < 0) {
@@ -75,13 +76,12 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
                 node.parent = subtree;
             }
             else {
-                insert(node, subtree.left);
+                insert(node, subtree.left, preInsert);
             }
         }
         else {
             throw new IllegalArgumentException("Tree cannot contain duplicate keys");
         }
-
     }
 
     /**
@@ -99,8 +99,9 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
         // y <- node, x = child, x.parent <- node.parent
 
         // 2 children:
-        // y <-succ(node)
-
+        // y <- succ(node), x <- y.child
+        //      y has 1+ children: bind x to y's parent
+        //      y has no children: x null
         BSTNode<K, V> x, y;
         y = (node.left == null || node.right == null) ? node : successor(node);
         x = (y.left != null) ? y.left : y.right;
@@ -121,7 +122,6 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
             node.setValue(y.getValue());
         }
         this.size--;
-        //y = null;
     }
 
     /**
@@ -159,7 +159,7 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @return - minimal node of this tree.
      */
     public BSTNode<K, V> minimum() {
-        return minimum(this.root);
+        return !isEmpty() ? minimum(root) : null;
     }
 
     /**
@@ -179,7 +179,7 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @return - maximal node of this tree.
      */
     public BSTNode<K, V> maximum() {
-        return maximum(this.root);
+        return !isEmpty() ? maximum(this.root) : null;
     }
 
     /**
@@ -234,7 +234,7 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @param function function to call on each node.
      */
     public void preOrder(Consumer<BSTNode<K, V>> function) {
-        preOrder(function, this.root);
+        preOrder(function, root);
     }
 
     /**
@@ -251,10 +251,10 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
     }
 
     public void inOrder(Consumer<BSTNode<K, V>> function) {
-        inOrder(function, this.root);
+        inOrder(function, root);
     }
 
-    private void inOrder(Consumer<BSTNode<K, V>> function, BSTNode<K, V> node) {
+    protected void inOrder(Consumer<BSTNode<K, V>> function, BSTNode<K, V> node) {
         if(node != null) {
             inOrder(function, node.left);
             function.accept(node);
@@ -267,18 +267,13 @@ public class BST<K extends Comparable<K>, V> implements Iterable<BSTNode<K, V>> 
      * @param function function to call on each node.
      */
     public void postOrder(Consumer<BSTNode<K, V>> function) {
-        postOrder(function, this.root);
+        postOrder(function, root);
     }
 
-    /**
-     * Perform post-order traversal of a subtree rooted in the specified node, and call a function at each node.
-     * @param function - function to call on each node
-     * @param node - root of a subtree to traverse
-     */
-    private void postOrder(Consumer<BSTNode<K, V>> function, BSTNode<K, V> node) {
+    public void postOrder(Consumer<BSTNode<K, V>> function, BSTNode<K, V> node) {
         if(node != null) {
-            postOrder(function, node.left);
             postOrder(function, node.right);
+            postOrder(function, node.left);
             function.accept(node);
         }
     }
