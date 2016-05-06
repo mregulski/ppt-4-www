@@ -1,16 +1,27 @@
+@import 'colors';
 body {
-	padding: 5px;
+	background: $bg_base;
+	padding: 0 5px;
 	width: 80%;
-	margin: auto;
-	color: #222;
-	font-size: 100%;
-	font-family: Helmet, Freesans, sans-serif;
+	margin: 0 auto;
+	color: $txt_base;
+	font-size: 16px;
+	line-height: 2em;
+	font-family: $font_text;
 }
 
+#wrapper {
+	margin: 0 5px;
+	background: $bg_content;
+}
 .space-after {
 	margin-bottom: 3.2%;
 }
 
+header {
+	background: $bg_header;
+	color: $txt_base;
+}
 header img {
 	margin-bottom: 5px;
 	margin-right: 10px;
@@ -21,7 +32,7 @@ header p {
 	text-indent: 2em;
 }
 h1, h2, h3, h4, h5 {
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-family: $font_header, "Palatino Linotype", "Book Antiqua", Palatino, serif;
 	margin: 1.2rem 0;
 }
 /*h1:first-of-type,h2:first-of-type,h3:first-of-type,
@@ -30,7 +41,7 @@ h4:first-of-type,h5:first-of-type {
 }*/
 
 h1 {
-	color: #DE4B2B;
+	color: $highlight;
 	font-size: 3.4rem;
 	display: inline;
 	vertical-align: bottom;
@@ -53,29 +64,30 @@ p {
 #menuToggle
 {
 	display: block;
-	background: #DE4B2B;
+	background: $highlight;
 	color: #fff;
 	padding: 5px;
 }
 
 #menuToggle:active
 {
-	background: #e4e4e4;
+	background: $bg_secondary;
 	color: #fff;
 }
 
 nav {
+	color: $txt_base;
 	display: none;
 }
 
 nav ul {
 	list-style-type: none;
-	padding-right: 20px;*/
+	padding-right: 20px;
 }
 
 nav li {
-	background: #f4f4f4;
-	border-bottom: solid 2px #e2e2e2;
+	background: $bg_nav;
+	border-bottom: solid 2px #fff;
 }
 
 nav li:last-of-type {
@@ -93,11 +105,11 @@ nav a:visited {
 }
 nav a:hover {
 	/*color: #000;*/
-	background: #e4e4e4;
+	background: darken($bg_nav, 5%);
 }
 
 nav a.active, nav a:active {
-	background: #DE4B2B;
+	background: $highlight;
 	color: #fff;
 }
 
@@ -105,6 +117,10 @@ ol {
 	margin-left: 5%;
 }
 
+article {
+	border-radius: 15px;
+	padding: 0 5px;
+}
 footer {
 	text-align: center;
 	margin-top: 1.7rem;
@@ -115,7 +131,7 @@ pre {
 	padding: 5px;
 	margin-bottom: 5px;
 	white-space: pre-wrap;
-	background: #f4f4f4;
+	background: $bg_secondary;
 	-moz-tab-size: 2;
 	-webkit-tab-size: 2;
 	-ms-tab-size: 2;
@@ -135,7 +151,7 @@ pre .comment {
 
 #simulator input {
 	border-radius: 2px;
-	border: 1px solid #dbdbdb;
+	border: 1px solid darken($bg_secondary, 15%);
 	padding: 8px;
 	width: 100%
 }
@@ -149,7 +165,7 @@ pre .comment {
 	font-family: 'Courier New', monospace;
 	font-size: .75em;
 	font-weight: bold;
-	background: #f4f4f4;
+	background: $bg_secondary;
 	padding: 10px;
 	overflow: auto;
 
@@ -199,13 +215,13 @@ pre .comment {
 	}
 
 	nav {
-		border-right: 1px solid #dbdbdb;
+		border-right: 1px solid darken($bg_nav, 10%);
 	}
 }
 
 @media screen and (min-width: 897px) {
 	h1 {
-		color: #222;
+		color: inherit;
 	}
 	header img {
 		display: inline-block;
