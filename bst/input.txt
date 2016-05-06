@@ -1,23 +1,20 @@
-insert 5
+17
 insert 1
-insert 10
+insert 2
+insert 3
+min
+max
+inorder
+postorder
+delete 3
 insert 4
-insert 7
-insert 11
-insert 8
-insert 19
-insert -3
-insert 14
-insert 13
-insert -12
-insert 0.2
-insert 12
-preorder
+max
+find 2
+delete 1
+delete 2
+delete 3
+delete 4
 inorder
-postorder
-pretty
-delete 10
-preorder
-inorder
-postorder
-pretty
+min
+insert 1000
+max
