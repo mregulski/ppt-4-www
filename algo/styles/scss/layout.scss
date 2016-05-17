@@ -1,0 +1,23 @@
+@import 'main';
+
+.pseudo {
+    @include row();
+    pre {
+        background: darken($white, 20%);
+        padding: 2.5px 12.5px 0 12.5px;
+        &:last-child {
+            @include col(3, 6, $last: true);
+        }
+        &:not(:last-child) {
+            @include col(3, 6);
+        }
+    }
+}
+#content {
+    @include col(4, 6, $last: true);
+    margin-top: 10px;
+    height: 100%;
+}
+.row {
+    @include row();
+}

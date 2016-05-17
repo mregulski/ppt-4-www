@@ -1,0 +1,44 @@
+@import 'main';
+
+header {
+	background: $secondary-dark;
+	color: $txt_light;
+    padding: 10px 10px 12.5px 10px;
+    margin-bottom: 12.5px;
+    div:nth-child(1) {
+        @include row();
+        margin-bottom: 23.5px
+    }
+    h1 {
+        color: $primary;
+    	font-size: font-size(2);
+    	display: inline;
+
+
+        @include at('header_show_img') {
+            color: $txt_light;
+            font-size: font-size(3);
+            line-height: 120px;
+        }
+        @include at('header_show_full') {
+            font-size: font-size(4);
+
+        }
+    }
+
+    img {
+        display: none;
+        margin-right: 25px;
+        @include at('header_show_img') {
+            display: inline-block;
+    		// min-width: 100px;
+    		width: 120px;
+    		height: 120px;
+        }
+    }
+
+    p {
+        font-size: font-size(0);
+    	text-indent: 2em;
+    }
+}

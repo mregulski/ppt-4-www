@@ -5,8 +5,9 @@
 	<meta name="viewport" content="width=content-width, initial-scale=1" />
 	<title>{{Title}}</title>
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="styles/styles.css"/>
-	<!-- <link rel="stylesheet" href="http://basehold.it/24"> -->
+	<link rel="stylesheet" href="http://basehold.it/25">
 	<link rel="apple-touch-icon" sizes="57x57" href="res/apple-icon-57x57.png"/>
 	<link rel="apple-touch-icon" sizes="60x60" href="res/apple-icon-60x60.png"/>
 	<link rel="apple-touch-icon" sizes="72x72" href="res/apple-icon-72x72.png"/>
@@ -31,7 +32,7 @@
 <body>
 <div id="wrapper">
 	<header>
-		<div class="row space-after">
+		<div>
 			<div id="logo">
 				<img src="res/infppt.png" alt="logo wydziału"/>
 
@@ -43,12 +44,10 @@
 	</header>
 	<div id="menuToggle">&#9776; Menu</div>
 	<div class="row">
-	    <div class="col-2-6">
-	        <nav id="menu">
-	            {{MenuItems}}
-	        </nav>
-	    </div>
-	    <div class="col-4-6">
+        <nav id="menu">
+            {{MenuItems}}
+        </nav>
+	    <div id="content">
 	        {{PageContent}}
 	    </div>
 	</div>

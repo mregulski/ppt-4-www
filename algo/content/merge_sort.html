@@ -7,9 +7,9 @@
         <li>Posortuj każdą część przez scalanie, chyba że został tylko jeden element.</li>
         <li>Połącz posortowane podciągi w jeden.</li>
     </ol>
-    <section>
+    <section class="pseudo">
         <h3>Pseudo-kod funkcji:</h3>
-        <pre>
+            <pre>
 // posortuj Array[start...end]
 mergeSort(Array, start, end):
 if start != end:
@@ -17,7 +17,8 @@ center &lt;- floor((start+end)/2)
 mergeSort(Array, start, center)
 mergeSort(Array, center+1, end)
 merge(Array, start, center, finish)
-
+            </pre>
+            <pre>
 // scal A[start...center] z A[center+1 ... end]
 merge(A, start, center, end):
 i &lt;- start, j &lt;- center+1
@@ -32,14 +33,16 @@ while i &lt;= center and j &lt;= end
 if one of the halves is empty:
     append the rest of the other to the end of A2
     copy A2 to A
-        </pre>
+            </pre>
+    </section>
+    <section>
+        <div id="simulator">
+            <h3>Przykład działania</h3>
+            <p>Wprowadź dane do posortowania oddzielone przecinkami</p>
+            <input type="text" placeholder="dane do sortowania" id="array"/>
+            <button id="runButton" name="run" disabled>Sortuj</button>
+            <div id="output">
+            </div>
+        </div>
     </section>
 </article>
-<div id="simulator">
-    <h3>Przykład działania</h3>
-    <p>Wprowadź dane do posortowania oddzielone przecinkami</p>
-    <input type="text" placeholder="dane do sortowania" id="array"/>
-    <button id="runButton" name="run" disabled>Sortuj</button>
-    <div id="output">
-    </div>
-</div>

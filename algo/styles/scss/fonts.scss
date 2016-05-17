@@ -1,2 +1,34 @@
-$font_header: sans-serif;
-$font_text: Lato, 'Segoe UI', sans-serif;
+$font_header: 'PT Serif', serif;
+$font_text: 'Lato', sans-serif;
+
+$font-base-size: 1em;
+@function font-size($level) {
+    $sizes: (
+        -2: 0.382em,
+        -1: 0.618em,
+        0: 1em,
+        0.5: 1.309em,
+        1: 1.618em,
+        2: 2.618em,
+        3: 4.236em,
+        4: 6.854em
+    );
+    @return inspect(map-get($sizes, $level));
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: $font_header;
+}
+h2 {
+	font-size: font-size(2);
+    margin-bottom: 17.5px;
+}
+h3 {
+	font-size: font-size(1);
+    margin-top: 12.5px;
+    margin-bottom: 12.5px;
+}
+
+ol {
+    margin-left: 2em;
+}

@@ -8,7 +8,7 @@ var css = 'styles/css/*.css'
 gulp.task('compile-sass', function() {
     console.log("compiling sass...");
     return gulp.src(scss)
-        .pipe(sass())
+        .pipe(sass({outputStyle: 'compressed'}))
         .pipe(gulp.dest('styles/css/'));
 });
 

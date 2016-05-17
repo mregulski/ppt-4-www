@@ -1,0 +1,119 @@
+@import 'main';
+body {
+	background: $bg_base;
+	width: 80%;
+	margin: 0 auto;
+	color: $txt_base;
+	line-height: 25px;
+	font-family: $font_text;
+}
+
+#wrapper {
+	background: $bg_base;
+}
+
+#menuToggle
+{
+	display: block;
+	background: $highlight;
+	color: #fff;
+	padding: 5px;
+}
+
+#menuToggle:active
+{
+	background: $bg_secondary;
+	color: #fff;
+}
+
+
+article {
+	border-radius: 15px;
+}
+
+// pre {
+// 	white-space: pre-wrap;
+// 	background: darken($white, 20%);
+// 	tab-size: 2;
+// }
+//
+// pre .comment {
+// 	color: #888;
+// }
+/*code {
+	-moz-tab-size: 2;
+	-webkit-tab-size: 2;
+	-ms-tab-size: 2;
+	tab-size: 2;
+	white-space: pre-wrap;
+}*/
+
+#simulator input {
+	border-radius: 2px;
+	border: 1px solid darken($bg_secondary, 15%);
+	padding: 8px;
+	width: 100%
+}
+
+#runButton {
+	width: 80px;
+	height: 30px;
+}
+
+#output {
+	font-family: 'Courier New', monospace;
+	font-size: .75em;
+	font-weight: bold;
+	background: $bg_secondary;
+	padding: 10px;
+	overflow: auto;
+
+}
+
+#output .level-0 {
+	color: #000;
+}
+#output .level-1 {
+	color: #00a;
+}
+#output .level-2 {
+	color: #0a0;
+}
+#output .level-3 {
+	color: #a00;
+}
+#output .level-4 {
+	color: #0aa;
+}
+#output .level-5 {
+	color: #aa0;
+}
+#output .level-6 {
+	color: #a0a;
+}
+#output .level-7 {
+	color: #44f;
+}
+#output .level-8 {
+	color: #4f4;
+}
+#output .level-9 {
+	color: #f44;
+}
+#output .level-10 {
+	color: #4ff;
+}
+
+@media screen and (min-width: 800px) {
+	#menuToggle {
+		display: none;
+	}
+
+	#menu {
+		display: block;
+	}
+
+	nav {
+		border-right: 1px solid darken($bg_nav, 10%);
+	}
+}

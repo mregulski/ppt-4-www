@@ -6,29 +6,34 @@
 
 
 // As hex codes */
+$white: #fff;
+$black: #222;
 
-$color-primary-0: #DE492A;	// Main Primary color */
-$color-primary-1: #FFBDAF;
-$color-primary-2: #5F1000;
+$primary: #DE492A;	// Main Primary color */
+$color-primary-1: #FFAA99;
+$color-primary-2: #F6785D;
+$primary-dark-1: #AC290E;
+$primary-dark: #751400;
 
-$color-secondary-1-0: #DEB12A;	// Main Secondary color (1) */
-$color-secondary-1-1: #FFEBAF;
-$color-secondary-1-2: #5F4700;
+$color-secondary-1-0: #1F6D8B;	// Main Secondary color (1) */
+$color-secondary-1-1: #78AFC4;
+$color-secondary-1-2: #3E819B;
+$color-secondary-1-3: #0D516C;
+$secondary-dark: #02364A;
 
-$color-secondary-2-0: #30309B;	// Main Secondary color (2) */
-$color-secondary-2-1: #A1A1DB;
-$color-secondary-2-2: #060642;
-
-$color-complement-0: #1EA14F;	// Main Complement color */
-$color-complement-1: #99DFB3;
-$color-complement-2: #00451A;
+$ternary: #83CB26;	// Main Secondary color (2) */
+$color-secondary-2-1: #C7F190;
+$color-secondary-2-2: #A4E155;
+$color-secondary-2-3: #5E9D0C;
+$ternary-dark: #3D6B00;
 
 // bind colors to names
-$highlight: $color-primary-0;
-$txt_base: #222;
-$bg_base: $color-secondary-2-2;
+
+$highlight: $primary;
+$txt_base: $black;
+$bg_base: $white;
 $bg_secondary: lighten($color-secondary-1-1, 20%);
 $bg_content: $bg_secondary;
-$bg_header: $color-secondary-1-0;
+$bg_header: $secondary-dark;
 $bg_nav: $color-secondary-1-0;
 $txt_light: #eee;
