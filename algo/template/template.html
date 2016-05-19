@@ -6,8 +6,9 @@
 	<title>{{Title}}</title>
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=PT+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="styles/styles.css"/>
-	<link rel="stylesheet" href="http://basehold.it/25">
+	<link rel="stylesheet" href="http://basehold.it/30">
 	<link rel="apple-touch-icon" sizes="57x57" href="res/apple-icon-57x57.png"/>
 	<link rel="apple-touch-icon" sizes="60x60" href="res/apple-icon-60x60.png"/>
 	<link rel="apple-touch-icon" sizes="72x72" href="res/apple-icon-72x72.png"/>
@@ -26,22 +27,23 @@
 	<meta name="msapplication-TileImage" content="res/ms-icon-144x144.png"/>
 	<meta name="theme-color" content="#ffffff"/>
 	{{Styles}}
-	<script src="scripts/menu.js"></script>
-	{{Scripts}}
+	<script src="scripts/util.js"></script>
+
 </head>
 <body>
-<div id="wrapper">
-	<header>
-		<div>
-			<div id="logo">
-				<img src="res/infppt.png" alt="logo wydziału"/>
-
-				<h1>Podstawowe algorytmy</h1>
-			</div>
+<header>
+	<div class="wrapper">
+		<div id="logo">
+			<img src="res/infppt.png" alt="logo wydziału"/>
 		</div>
-		<p class="space-after">Na tych stronach omówione są najciekawsze algorytmy omawiane na wykładzie ze Wstępu do Informatyki
-		na pierwszym roku studiów informatycznych na Wydziale PPT PWr.</p>
-	</header>
+		<div>
+			<h1>Podstawowe algorytmy</h1>
+			<p>Najciekawsze algorytmy omawiane na wykładzie ze Wstępu do Informatyki
+			na Wydziale PPT PWr.</p>
+		</div>
+	</div>
+</header>
+<div class="wrapper">
 	<div id="menuToggle">&#9776; Menu</div>
 	<div class="row">
         <nav id="menu">
@@ -49,11 +51,14 @@
         </nav>
 	    <div id="content">
 	        {{PageContent}}
+			{{Like}}
+			{{Scripts}}
 	    </div>
 	</div>
-	<footer>
-		<p>Copyryght &copy; 2016 WPPT PWr</p>
-	</footer>
 </div>
+<footer>
+	<p>Copyryght <span class="highlight">&copy;</span> 2016 <span class="highlight">WPPT PWr</span></p>
+	{{VisitCounter}}
+</footer>
 </body>
 </html>

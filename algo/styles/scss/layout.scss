@@ -1,23 +1,39 @@
-@import 'main';
+$breakpoints: (
+    'min_normal': (min-width: 615px),
+    'grid_min_width': (min-width: 960px),
+    'header_show_img': (min-width: 1110px), /*897*/
+    'header_show_full': (min-width: 1742px)
+);
 
-.pseudo {
-    @include row();
-    pre {
-        background: darken($white, 20%);
-        padding: 2.5px 12.5px 0 12.5px;
-        &:last-child {
-            @include col(3, 6, $last: true);
+$gutter: 1.6%;
+
+@mixin at($name) {
+    @if map-has-key($breakpoints, $name) {
+        @media #{inspect(map-get($breakpoints, $name))} {
+            @content;
         }
-        &:not(:last-child) {
-            @include col(3, 6);
+    }
+    @else {
+        @warn "Unknown breakpoint: '#{$name}'";
+    }
+}
+
+@mixin col($col, $cols, $align: top, $first: false, $last: false) {
+    float: left;
+    width: 100%;
+    @include at('grid_min_width') {
+        width: percentage(($col/$cols)) - $gutter;
+        @if not $last {
+            margin-right: 1.6%;
         }
     }
 }
-#content {
-    @include col(4, 6, $last: true);
-    margin-top: 10px;
-    height: 100%;
-}
-.row {
-    @include row();
+
+@mixin row() {
+    &:after {
+        content: "";
+    	display: block;
+    	clear  : both;
+    	visibility: hidden;
+    }
 }

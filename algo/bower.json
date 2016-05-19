@@ -17,8 +17,11 @@
     "bower_components",
     "test",
     "tests"
-],
-"dependencies" : {
+  ],
+  "dependencies": {
     "HTML5-Reset": ">=2.1"
-}
+  },
+  "devDependencies": {
+    "modular-scale": "^2.1.3"
+  }
 }

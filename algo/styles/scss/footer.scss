@@ -1,8 +1,9 @@
 @import 'main';
 footer {
     color: $white;
-    font-size: font-size(-1);
+    font-size: ms(0);
     text-align: center;
-    background: $secondary-dark;
-    margin-top: 12.5px;
+    background: $secondary-darkest;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }

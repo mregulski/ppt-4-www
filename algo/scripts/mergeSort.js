@@ -1,19 +1,29 @@
-var sort = (function() {
-    var output = undefined;
-    return {
-        mergeSort: mergeSort
-    };
+(function() {
+    'use strict';
+    var input, output, run;
+    window.addEventListener('load', init);
+
+    // return {
+    //     mergeSort: mergeSort
+    // };
+
+    function init() {
+        input = document.getElementById("array");
+        run = document.getElementById("runButton");
+
+        run.addEventListener('click', runSort);
+        input.addEventListener('keyup', checkInput);
+    }
 
     function mergeSort(array) {
         if(output === undefined) {
             output = document.getElementById("output");
+            output.style.display = 'block';
         }
         output.innerHTML = "";
-        // while(output.firstChild) {
-        //     output.removeChild(output.firstChild);
-        // }
         return _mergeSort(array, 0);
     }
+
     function _mergeSort(array, level) {
 
 
@@ -44,7 +54,7 @@ var sort = (function() {
     }
 
     function merge(left, right, level) {
-        var output = document.getElementById("output");
+        // var output = document.getElementById("output");
         var result = [];
         log("merging", level);
         log("    left: " + left, level);
@@ -88,6 +98,32 @@ var sort = (function() {
         output.appendChild(el);
         output.appendChild(br);
         // output.innerHTML += ell;
+    }
+
+    function checkInput() {
+        var array = getSortableData(input);
+        console.log(array);
+        if(array.length > 1) {
+            run.disabled = false;
+        }
+        else {
+            run.disabled = true;
+        }
+    }
+
+    function runSort() {
+        var array = getSortableData(input);
+        console.log(parseInt(array[0]) != NaN);
+        if(!isNaN(parseInt(array[0]))) {
+            array = array.map(function(x) {
+                return parseInt(x,10);
+            });
+        }
+        console.log(mergeSort(array));
+    }
+
+    function getSortableData(input) {
+        return input.value.split(/[\s;,]+/);
     }
 
 })();

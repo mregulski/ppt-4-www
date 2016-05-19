@@ -1,0 +1,93 @@
+<div class="col-6-6">
+    <h2>Rozszerzony Algorytm Euklidesa</h2>
+    <p>
+        Jeśli przechowywana będzie informacja o kolejnych ilorazach,
+        to będzie też można wyznaczyć liczby całkowite w równaniu:</br> a*p + b*q =NWD(a, b)</br>
+        Ta metoda nazywana jest rozszerzonym algorytmem Euklidesa.
+        Kluczowa dla rozszerzonego algorytmu Euklidesa staje się możliwość stopniowego
+        zastępowania tych liczb przez kombinacje liniowe liczb wejściowych aż do
+        otrzymania równości: NWD(a, b) = {kombinacja liniowa liczb a, b};
+    </p>
+    <aside>
+        <h3>
+            Słów parę o Euklidesie
+        </h3>
+        <p>
+            Autor jednych z pierwszych prac teoretycznych z matematyki.
+            Główne jego dzieło to Elementy (tytuł grecki Stoicheia geometrias).
+            Elementy są pierwszą próbą aksjomatycznego ujęcia geometrii i były podstawowym podręcznikiem geometrii do XIX wieku.
+            Elementy były bardzo poczytne - przetłumaczono je na olbrzymią liczbę języków, zaś liczbą wydań ustępują jedynie Biblii.
+            Euklides usystematyzował ówczesną wiedzę matematyczną w postaci aksjomatycznego wykładu;
+            zachowały się też dzieła z geometrii, optyki (m.in. prawo odbicia światła), astronomii, teorii muzyki.
+        </p>
+    </aside>
+</div>
+<div class ="row">
+    <div class="col-3-6">
+        <section>
+            <h3>
+                Pseudo-kod:
+            </h3>
+            <pre id="col1"><code>while (b != 0)
+                c = a mod b
+                quot = floor( a/b )
+                a = b
+                b = c
+                r_tmp = r; s_tmp = s;
+                r = p - quot * r
+                s = q - quot * s
+                p = r_tmp; q = s_tmp;
+
+                NWD(a0, b0) = p*a0 + q*b0</code></pre>
+            </section>
+        </div>
+        <div class="col-3-6">
+            <section>
+                <h3>
+                    JavaScript:
+                </h3>
+
+                <pre id="col2"><code>function rozszerzonyAe(a,b){
+                    var x,y,xLast,yLast, q,e,m,as=a,bs=b;
+
+                    x = 1;
+                    y = 0;
+                    xLast = 0, yLast = 1;
+                    while(a != 0) {
+                        q = b / a;
+                        r = b % a;
+                        m = xLast - Math.floor(q)*x;
+                        n = yLast - Math.floor(q)*y;
+                        xLast = x, yLast = y;
+                        x = m, y = n;
+                        b = a, a = r;
+                    }
+                }</code></pre>
+            </section>
+        </div>
+    </div>
+    <div class="col-6-6">
+        <section>
+            <h4>
+                Obliczanie NWD
+            </h4>
+            <div class="panel">
+                <p>
+                    Wprowadź liczby X i Y i następnie naciśnij przycisk "Oblicz", aby obliczyć NWD metodą Rozszerzonego Algorytmu Euklidesa.<br>
+                </p>
+                <label for="varX">X:</label>
+                <input type="number" min="1" max="1000000" value="666" id="varX">&nbsp;
+                <label for="varY">Y:</label>
+                <input type="number" min="1" max="1000000" value="300" id="varY">
+            </div>
+            <p>
+                <span class = "button" id="CALC" onclick="callRAE()">OBLICZ</span>
+            </p>
+            <h5>
+                Obliczenia
+            </h5>
+            <div id="trace" class="panel result">
+                &nbsp;
+            </div>
+        </section>
+    </div>

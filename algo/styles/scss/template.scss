@@ -1,0 +1,44 @@
+@import 'main';
+
+body {
+	background: $bg_base;
+	color: $txt_base;
+	line-height: 30px;
+	font-family: $font_text;
+}
+
+section {
+	@include row;
+}
+
+#content {
+    @include col(9, 12, $last: true);
+    height: 100%;
+}
+
+.pseudo {
+    @include row();
+	margin-bottom: 30px;
+}
+
+div.code {
+	@include col(3, 6);
+	&:last-child {
+		@include col(3, 6, $last: true);
+	}
+	pre {
+		background: lighten($black, 75%);
+		padding: 2.5px 12.5px 0 12.5px;
+	}
+
+}
+
+code {
+    @include code;
+}
+
+.wrapper {
+    @include row();
+    width: $wrapper-width;
+    margin: 0 auto;
+}

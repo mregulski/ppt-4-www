@@ -1,0 +1,35 @@
+@import 'main';
+
+h1, h2, h3, h4, h5 {
+	font-family: $font_header;
+}
+
+h2 {
+    color: $ternary-dark;
+	font-size: ms(6);
+    margin-bottom: 4px;
+    line-height: normal;
+    // @include at('min_normal') {
+    //     line-height: ms(2);
+    // }
+}
+
+h3 {
+    color: $ternary-dark;
+	font-size: ms(3);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+h4 {
+	color: $ternary-dark;
+	font-size: ms(1);
+}
+
+#content ol {
+    margin-left: 2em;
+}
+
+.highlight {
+    color: $primary;
+}

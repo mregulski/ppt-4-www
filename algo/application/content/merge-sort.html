@@ -1,6 +1,6 @@
 <article>
     <h2>Sortowanie przez scalanie</h2>
-    <p>Rekurencyjny algorytm sortowania wykorzystujący metodę dziel i zwyciężaj.</p>
+    <p>Sortowanie przez scalanie to rekurencyjny algorytm sortowania wykorzystujący metodę dziel i zwyciężaj.</p>
     <h3>Schemat działania</h3>
     <ol>
         <li>Podziel zestaw danych na dwie równe części.</li>
@@ -9,17 +9,20 @@
     </ol>
     <section class="pseudo">
         <h3>Pseudo-kod funkcji:</h3>
+        <div class="code">
             <pre>
-                <code>// posortuj Array[start...end]
+<code>// posortuj Array[start...end]
 mergeSort(Array, start, end):
-if start != end:
-center &lt;- floor((start+end)/2)
-mergeSort(Array, start, center)
-mergeSort(Array, center+1, end)
-merge(Array, start, center, finish)</code>
+    if start != end:
+        center &lt;- floor((start+end)/2)
+        mergeSort(Array, start, center)
+        mergeSort(Array, center+1, end)
+        merge(Array, start, center, finish)</code>
             </pre>
+        </div>
+        <div class="code">
             <pre>
-                <code>// scal A[start...center] z A[center+1 ... end]
+<code>// scal A[start...center] z A[center+1 ... end]
 merge(A, start, center, end):
 i &lt;- start, j &lt;- center+1
 A2 &lt;- [] // tablica pomocnicza
@@ -34,6 +37,7 @@ if one of the halves is empty:
     append the rest of the other to the end of A2
     copy A2 to A</code>
             </pre>
+        </div>
     </section>
     <section>
         <div id="simulator">

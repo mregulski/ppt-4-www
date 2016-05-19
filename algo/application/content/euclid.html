@@ -1,0 +1,60 @@
+<article>
+    <h2>Największy Wspólny Dzielnik</h2>
+    Największym wspólnym dzielnikiem dwóch <b>liczb naturalnych</b> a, b nazywamy największą liczbę naturalną k taką, że (k|a) oraz (k|b). Oznaczamy ją NWD(a,b). Oto najważniejsze własności tej funkcji:<br/>
+    <ol>
+        <li>NWD(a,b) = NWD(b,a).</li>
+        <li>Jeśli a|b, to NWD(a,b) = a.</li>
+        <li>Jeśli a = k b + r, to NWD(a,b) = NWD(b,r).</li>
+    </ol>
+    <h3>Historia algorytmu Euklidesa</h3>
+    Algorytm wyznaczania największego wspólnego dzielnika dwóch liczb naturalnych oparty na przedstawionych tutaj własnościach został opisany przez Euklidesa w dziele Elementy, w księgach siódmej oraz dziesiątej, które powstało około 300 lat p.n.e.<br/><br/>
+    <section class="pseudo">
+        <h3>Kod funkcji NWD</h3>
+        <div class="code">
+            <h4>Pseudo-kod</h4>
+            <pre id="pseudoCode"><code>FUNCTION NWD(a,b)
+                BEGIN
+                WHILE (b <> 0) DO
+                [a,b] := [b, a mod b]
+                OD
+                RETURN a;
+                END</code></pre>
+            </div>
+            <div class="code">
+                <h4>JavaScript</h4>
+                <pre id="jsCode">
+                    <code>function NWD(a,b){
+                        var q;
+                        while (b != 0){
+                            q = a;
+                            a = b;
+                            b = q mod b;
+                        }
+                        return a;
+                    }</code>
+                </pre>
+            </div>
+        </section>
+        <section class="col-6-6" id="complexity">
+            <h3 id="com">Złożoność algorytmu</h3>
+            <div id="compl-1">$$O(2 \cdot log_2(m+n)) $$</div>
+            <div id="compl-2">$ O(1) $</div>
+            <div class="desc">czasowa</div><div class="desc">pamięciowa</div>
+        </section>
+        <section><h3 id="cprim">Obliczanie NWD</h3>
+            <div class="col-6-6" id="calc">
+                &nbsp;&nbsp;Wprowadź liczby X i Y i następnie naciśnij przycisk "Oblicz".<br/>
+                &nbsp;&nbsp;<label for="varX">X:</label>
+                <input type="number" min="1" max="1000000" value="6765" id="varX">
+                &nbsp;<label for="varY">Y:</label>
+                <input type="number" min="1" max="1000000" value="2509" id="varY">
+                <p>
+                    <span class="button" id="script0">OBLICZ</span>
+                </p>
+                <h4>Wynik</h4>
+            </div>
+        </section>
+    </article>
+    <div class="col-4-6" id="window">
+        &nbsp;
+    </div>

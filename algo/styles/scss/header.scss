@@ -1,44 +1,60 @@
 @import 'main';
 
 header {
-	background: $secondary-dark;
-	color: $txt_light;
-    padding: 10px 10px 12.5px 10px;
+    @include row();
+	background: $secondary-darkest;
+	color: $white;
+    padding: 10px ;
     margin-bottom: 12.5px;
-    div:nth-child(1) {
-        @include row();
-        margin-bottom: 23.5px
+    line-height: normal;
+    margin-bottom: 23.5px;
+    #logo {
+        @include col(2,12);
     }
+    #logo + div {
+        @include col(10,12);
+    }
+
     h1 {
         color: $primary;
-    	font-size: font-size(2);
-    	display: inline;
-
-
+    	font-size: ms(6);
+    	display: inline-block;
+        margin-bottom: 3px;
+        @include at('min_normal') {
+            font-size: ms(9);
+        }
         @include at('header_show_img') {
-            color: $txt_light;
-            font-size: font-size(3);
-            line-height: 120px;
+            color: $white;
+            font-size: ms(10);
+            margin-bottom: 24px;
+
         }
         @include at('header_show_full') {
-            font-size: font-size(4);
+            font-size: ms(12);
 
         }
     }
 
     img {
         display: none;
-        margin-right: 25px;
         @include at('header_show_img') {
             display: inline-block;
-    		// min-width: 100px;
-    		width: 120px;
-    		height: 120px;
+    		min-height: 125px;
+    		width: auto;
+    		// height: auto;
         }
     }
 
     p {
-        font-size: font-size(0);
-    	text-indent: 2em;
+        font-size: ms(1);
+        margin-bottom: 10px;
+        // @include at('min_normal') {
+        //     font-size: ms(9);
+        // }
+        @include at('header_show_img') {
+            font-size: ms(3);
+
+        }
+    	// text-indent: 2em;
     }
 }

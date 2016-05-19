@@ -1,34 +1,73 @@
 @import 'main';
 
-nav {
-    @include col(2, 6);
-	display: none;
-    margin-top: 2px;
+#menuToggle {
+    @include col(6,6);
+	display: block;
+	background: $primary;
+	color: $white;
+	padding: 5px;
     font-size: font-size(0.5);
     font-family: $font_header;
+
+    &:active {
+    	background: $primary-dark;
+    	color: $white;
+    }
+
+    @include at('grid_min_width') {
+        display: none;
+    }
+}
+
+#menu {
+    @include at('grid_min_width') {
+        display: block;
+    }
+}
+
+nav {
+    $nav_entry_bg: $ternary-dark;
+    @include transition-basic();
+    @include col(3, 12);
+	display: none;
+    // margin-top: 2px;
+    font-size: ms(1);
+    font-family: $font_header;
+
+    @include at('grid_min_width') {
+        border-right: 1px solid darken($nav_entry_bg, 10%);
+    }
+
     ul {
     	list-style-type: none;
-    	padding-right: 20px;
+        @include at('grid_min_width') {
+        	padding-right: 20px;
+        }
     }
     li {
-    	background: $ternary;
-    	border-bottom: solid 2px #fff;
-        &:last-of-type {
+        @include transition-basic();
+    	background: $nav_entry_bg;
+    	border-bottom: solid 2px $bg_base;
+
+        &:hover {
+            background: $primary;
+            border-radius: 15px 0 15px 0;
+        }
+
+        &:last-child {
         	border-bottom: none;
+        }
+
+        &:active {
+        	background: $primary-dark;
+        	color: $white;
         }
     }
     a {
-        color: $black;
+        @include transition-basic();
+        color: $white;
     	display: block;
     	text-decoration: none;
-    	padding: 12.5px;
-        &:hover {
-        	color: $white;
-        	background: $primary;
-        }
-        .active, &:active {
-            background: $primary;
-        	color: $white;
-        }
+    	padding: 15px;
     }
 }
