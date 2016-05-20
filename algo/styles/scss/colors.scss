@@ -29,4 +29,5 @@ $ternary-darkest: #3D6B00;
 
 // bind colors to names
 $bg-base: $white;
+$bg-code:  lighten($black, 75%);
 $txt-base: $black;

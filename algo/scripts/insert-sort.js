@@ -1,8 +1,10 @@
 var insertionSort;
 var callIS;
-
+window.addEventListener('load', function() {
+	document.getElementById('runButton').addEventListener('click', callIS);
+});
 function insertionSort(t) {
-    var tab = [], S = "<span style='font-weight: bold; color: #9cdb4b'>CiÄg przed sortowaniem:</span><br/>";
+    var tab = [], S = "<span>Ciąg przed sortowaniem:</span><br/>";
     for (var i = 0; i < t; i++) {
         tab[i] = Math.floor((Math.random()*100)+1);
         S += tab[i]+" "
@@ -16,7 +18,7 @@ function insertionSort(t) {
         }
         tab[j+1] = tmp;
     }
-    S += "<br/><br/><span style='font-weight: bold; color: #9cdb4b'>CiÄg po sortowaniu:</span><br/>";
+    S += "<br/><br/><span>Ciąg po sortowaniu:</span><br/>";
     for (var i = 0; i < t; i++) {
         S += tab[i]+" ";
     }
@@ -25,5 +27,6 @@ function insertionSort(t) {
 
 function callIS() {
     var n = document.getElementById("varN"), t = Math.abs(parseInt(n.value, 10));
-    (isNaN(t)||2>t)&&(t=2), (t>1000000)&&(t=1000000), n.value=t, document.getElementById("window").innerHTML=insertionSort(t)
+    (isNaN(t)||2>t)&&(t=2), (t>1000000)&&(t=1000000), n.value=t, document.getElementById("output").innerHTML=insertionSort(t);
+    document.getElementById("output").style.display = "block";
 }

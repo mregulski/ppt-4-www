@@ -2,7 +2,7 @@
 namespace Algorithm;
 require_once('Config.php');
 $NavData = [
-    ['id' => 0,  'href' => 'welcome',       'name' => 'Strona główna'],
+    ['id' => 0,  'href' => '/algo/',       'name' => 'Strona główna'],
     ['id' => 1,  'href' => 'euclid',      'name' => 'Algorytm Euklidesa'],
     ['id' => 2,  'href' => 'euclid-extended',  'name' => 'Rozszerzony Algorytm Euklidesa'],
     ['id' => 3,  'href' => 'prime-test',       'name' => 'Test pierwszości'],
@@ -29,6 +29,15 @@ class AlgorithmPage {
         $this->template  = file_get_contents('application/template/template.html');
     }
 
+    static function getId($href) {
+        global $NavData;
+        foreach ($NavData as $key => $val) {
+            if($NavData[$key]['href'] === $href) {
+                return $NavData[$key]['id'];
+            }
+        }
+    }
+
     function SetContent($content) {
         $this->content = $content;
         return $this;
@@ -44,20 +53,23 @@ class AlgorithmPage {
         return $this;
     }
 
-    function Render() {
+    function Render($visitorCount) {
         $scripts = $this->ScriptBlock();
         $styles = $this->StyleBlock();
         $menuitems = $this->GenerateMenu();
-        return $this->GetHTML($scripts, $styles, $menuitems);
+        return $this->GetHTML($scripts, $styles, $menuitems, $visitorCount);
     }
 
-    private function GetHTML($scripts, $styles, $menuitems) {
+    private function GetHTML($scripts, $styles, $menuitems, $visitorCount) {
         $styleDir = Config['StylePath'];
         $resDir = Config['ResPath'];
-        $html = str_replace(["{{Title}}", "{{Scripts}}", "{{Styles}}",
-            "{{MenuItems}}", "{{PageContent}}", "{{StylesDir}}", "{{ResDir}}"],
-                    [$this->title, $scripts, $styles, $menuitems,$this->content,
-                    $styleDir, $resDir], $this->template);
+        $html = str_replace(
+            ["{{Title}}", "{{Scripts}}", "{{Styles}}",
+                "{{MenuItems}}", "{{PageContent}}", "{{StylesDir}}", "{{ResDir}}",
+                "{{VisitCounter}}"],
+            [$this->title, $scripts, $styles, $menuitems,$this->content,
+                $styleDir, $resDir, $visitorCount],
+            $this->template);
         return $html;
     }
 
@@ -86,7 +98,7 @@ class AlgorithmPage {
     private function GenerateMenu() {
         global $NavData;
         $menu_class = 'algorytm';
-        $menu_entry = "<li class='$menu_class'><a href='{{Href}}' class='{{Class}}'>{{Name}}</a></li>";
+        $menu_entry = "<li class='$menu_class {{Class}}'><a href='{{Href}}' class='{{Class}}'>{{Name}}</a></li>";
         $menu = "<ul>\n";
         for($i = 0; $i < count($NavData); $i++) {
             $classes="";

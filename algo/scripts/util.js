@@ -1,10 +1,13 @@
 (function(){
     'use strict';
-    var input;
     console.log('util');
     window.addEventListener('load', init);
 
     function init() {
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            displayAlign: "left"
+        });
         menu = document.getElementById("menu");
         document
             .getElementById("menuToggle")

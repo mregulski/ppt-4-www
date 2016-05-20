@@ -7,7 +7,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/{{StylesDir}}/styles.css"/>
-	<link rel="stylesheet" href="http://basehold.it/30">
+	<!-- <link rel="stylesheet" href="http://basehold.it/30"> -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/{{ResDir}}/apple-icon-57x57.png"/>
 	<link rel="apple-touch-icon" sizes="60x60" href="/{{ResDir}}/apple-icon-60x60.png"/>
 	<link rel="apple-touch-icon" sizes="72x72" href="/{{ResDir}}/apple-icon-72x72.png"/>
@@ -27,6 +27,7 @@
 	<meta name="theme-color" content="#ffffff"/>
 	{{Styles}}
 	<script src="scripts/util.js"></script>
+	<script src="scripts/vote.js"></script>
 	<script type="text/javascript" async
   		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 	</script>
@@ -53,14 +54,18 @@
         </nav>
 	    <div id="content">
 	        {{PageContent}}
-			{{Like}}
+			<div class="votebox">
+				<button id="btn-upvote">+</button>
+				<span id="vote-count">-</span>
+				<button id="btn-downvote">-</button>
+			</div>
 			{{Scripts}}
 	    </div>
 	</div>
 </div>
 <footer>
 	<p>Copyryght <span class="highlight">&copy;</span> 2016 <span class="highlight">WPPT PWr</span></p>
-	{{VisitCounter}}
+	<p id="visitCounter">Strona odwiedzona <span class="highlight">{{VisitCounter}}</span> razy.</p>
 </footer>
 </body>
 </html>

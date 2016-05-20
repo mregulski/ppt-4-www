@@ -5,13 +5,10 @@ h1, h2, h3, h4, h5 {
 }
 
 h2 {
-    color: $ternary-dark;
+    color: $primary;//$ternary-dark;
 	font-size: ms(6);
-    margin-bottom: 4px;
+    margin-bottom: 19px;
     line-height: normal;
-    // @include at('min_normal') {
-    //     line-height: ms(2);
-    // }
 }
 
 h3 {

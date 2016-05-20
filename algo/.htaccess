@@ -1,2 +1,5 @@
 RewriteEngine On
 RewriteRule ^([\-a-z]+)$ index.php [NC,L]
+RewriteRule ^([\-a-z]+)\/upvote$ vote.php?action=upvote&page=$1
+RewriteRule ^([\-a-z]+)\/downvote$ vote.php?action=downvote&page=$1
+RewriteRule ^([\-a-z]+)\/rating$ vote.php?action=&page=$1

@@ -9,18 +9,13 @@
 }
 
 
-#runButton {
-	@include btn(120px);
+.runButton {
+	@include btn(15px);
 }
 
 #output {
-	$background: lighten($black, 75%);
+	$background: $bg-code;
 	$step: 6%;
-	@include code;
-	display: none;
-	background: $background;
-	padding: 10px;
-	overflow: auto;
 	.level-0 {
 		background: darken($background, $step * 0);
 	}

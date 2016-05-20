@@ -12,12 +12,12 @@ gulp.task('compile-sass', function() {
         .pipe(plumber({
             errorHandler: errorHandler
         }))
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(sass({
-            // outputStyle: 'compressed'
+            outputStyle: 'compressed'
 
         }))
-        .pipe(sourcemaps.write())
+        // .pipe(sourcemaps.write())
         .pipe(gulp.dest('styles/css/'));
 });
 

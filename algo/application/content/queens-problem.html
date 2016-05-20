@@ -22,10 +22,10 @@
 		<p>Podobnie postępujemy z kolejnymi wierszami.
 		W momencie, gdy któregoś hetmana nie da się postawić, (w każdej z 8 kolumn hetman będzie atakowany) to cofamy się o jeden wiersz i przesuwanmy hetmana na kolejne wolne pole. Jeśli takie nie istnieje, to znowu się cofamy itd. Ta cecha sprawia, że algorytm ustawiający hetmany na szachownicy jest przykładem rekurencji z powrotami. Gdy udało się szczęśliwie postawić 8. hetmana oznacza to, że znaleźliśmy rozwiązanie (zapisujemy ustawienia wszystkich hetmnanów np. w pliku wynikowym). Jeśli okaże się, że hetmana z pierwszego wiersza nie ma już gdzie postawić, to znaczy, że wszystkie możliwe kombinacje zostały już sprawdzone.</p>
 	</section>
-	<div class="row">
-		<section class="col-3-6">
+	<section class="pseudo">
+		<div class="code">
 			<h3>Algorytm w języku C</h3>
-			<pre class="code">
+			<pre>
 <code>const int n = 8;
 int y_position[n];
 int counter = 1;
@@ -56,10 +56,10 @@ void hetman(column) {
 }
 
 hetman(0);</code></pre>
-		</section>
-		<section class="col-3-6">
+		</div>
+		<div class="code">
 			<h3>Algorytm w języku JavaScript</h3>
-			<pre class="code">
+			<pre>
 <code>var n = 8;
 var yPosition = [];
 var counter = 1;
@@ -90,14 +90,14 @@ function hetman(column) {
 };
 
 hetman(0);</code></pre>
-		</section>
-	</div>
+		</div>
+	</section>
 	<section>
 		<h3>Wszystkie kombinacje</h3>
 		<p>Kolejne wyrazy ciągów reprezentują indeks hetmana w kolejnych wierszach planszy, są to wszystkie kombinacje.</p>
 		<p id="solutions"></p>
 		<p>Po wciśnięciu przycisku zostanie pobrane rozwiązanie z listy powyżej i na jego podstawie wygeneruje się plansza z ustawieniem hetmanów, spełniającym problem. Kolejne kliknięcie przejdą po kolejnych rozwiązaniach.</p>
-		<button id="generate">GENERUJ ROZWIĄZANIE</button>
+		<button id="runButton" class="runButton">Pokaż rozwiązanie</button>
 		<div align="center">
 			<pre id="deck">
 			</pre>

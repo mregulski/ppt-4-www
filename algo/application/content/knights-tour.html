@@ -6,36 +6,43 @@
 
             <h3>Pseudo-kod</h3>
             <blockquote cite="http://www.egheflin.com/professional/KnightsTourWiki.htm#In_Pseudocode">
-                <ul class="pseudo">
-                    <li>A position Q is accessible from a position P if P can move to Q by a single knight's move, and Q has not yet been visited.</li>
-                    <li>The accessibility of a position P is the number of positions accessible from P.</li>
-                    <a href="http://www.egheflin.com/professional/KnightsTourWiki.htm#In_Pseudocode" style="text-decoration:none;"><sup>[2]</sup></a></sup></li>
+                <p>
+                    A position Q is accessible from a position P if P can move to Q by a single knight's move, and Q has not yet been visited.
+                </p>
+                <p>
+                    The accessibility of a position P is the number of positions accessible from P.
+                </p>
+                    <!-- <a href="http://www.egheflin.com/professional/KnightsTourWiki.htm#In_Pseudocode" style="text-decoration:none;"><sup>[2]</sup></a></sup></li> -->
                 </ul>
-                <pre>
-                    <b>Algorithm:</b>
-
-                    set P to be a random initial position on the board
-                    mark the board at P with the move number "1"
-                    for each move number from 2 to the number of squares on the board,
-                    let S be the set of positions accessible from the input position
-                    set P to be the position in S with minimum accessibility
-                    mark the board at P with the current move number
-                    return the marked board
-                    each square will be marked with the move number on which it is visited
-                </pre>
+                <section class="pseudo">
+                    <div class="code">
+                        <h3>Algorithm</h3>
+                        <pre>
+                            set P to be a random initial position on the board
+                            mark the board at P with the move number "1"
+                            for each move number from 2 to the number of squares on the board,
+                            let S be the set of positions accessible from the input position
+                            set P to be the position in S with minimum accessibility
+                            mark the board at P with the current move number
+                            return the marked board
+                            each square will be marked with the move number on which it is visited
+                        </pre>
+                    </div>
+                </section>
             </blockquote>
         </div>
     </article>
 </div>
 
 <div>
+    <h3>Przykład</h3>
     <form>
-        <label for="rows">Number of rows</label><input type="text" name="rows" id="rows" value="8"><br>
-        Number of columns	<input type="text" name="columns" id="columns" value="8"> <br>
-        Box Size (px)<input type="text" name="boxSize" id="boxSize" value="50"> <br>
-        X:<input type="text" id="x" value="1"> <br>
-        Y:<input type="text" id="y" value="1"> <br>
-        <input type="Button" Value="Create Chess!" onClick="init(this.form)">
+        <label for="rows">Rows </label><input type="text" name="rows" id="rows" value="8"><br>
+        <label for="columns">Columnss <input type="text" name="columns" id="columns" value="8"> <br>
+        <label for="boxSize">Box size (px)<input type="text" name="boxSize" id="boxSize" value="50"> <br>
+        <label>X:</label><input type="text" id="x" value="1"> <br>
+        <label>Y:</label>label><input type="text" id="y" value="1"> <br>
+        <input id="runButton" class="runButton" type="Button" Value="Create Board!" onClick="init(this.form)">
     </form>
     <button onclick="myFunction()">RUN</button>
 </div>

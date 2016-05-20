@@ -34,14 +34,10 @@ nav {
     font-size: ms(1);
     font-family: $font_header;
 
-    @include at('grid_min_width') {
-        border-right: 1px solid darken($nav_entry_bg, 10%);
-    }
-
     ul {
     	list-style-type: none;
         @include at('grid_min_width') {
-        	padding-right: 20px;
+        	// padding-right: 15px;
         }
     }
     li {
@@ -49,7 +45,7 @@ nav {
     	background: $nav_entry_bg;
     	border-bottom: solid 2px $bg_base;
 
-        &:hover {
+        &:hover, &.active {
             background: $primary;
             border-radius: 15px 0 15px 0;
         }

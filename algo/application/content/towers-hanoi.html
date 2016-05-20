@@ -1,72 +1,87 @@
-<!-- article inside -->
-<h2 id="hanoi" class="major">Wieże Hanoi</h2>
-<p cite="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wieże Hanoi to problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach. Składają się z trzech słupków i dowolnej ilości dysków o różnych średnicach, które mogą być nasunięte na każdy ze słupków. Gra zaczyna się z wszystkimi dyskami ustawionymi na jednym z prętów w kolejności malejącej ku górze.<br>
-Celem jest przesuniecie całego stosu na inny słupek, przy zachowaniu następujących prostych zasad:</p>
-<ol>
-    <li>Możemy przesuwać tylko jeden dysk na raz.</li>
-    <li>Każdy ruch składa się ze zdejmowania dysku ze sczytu jednego stosu i przekładania go na inny.</li>
-    <li>Żaden dysk nie może być położony na mniejszym.</li>
-</ol>
-<p>Przy trzech dyskach, łamigłówka może być rozwiązana w siedmiu ruchach. Minimalna ilość ruchów, aby rozwiązać Wieże Hanoi to  2<sup>n</sup> - 1, gdzie n jest liczbą dysków.
-</p>
-<h3 class="minor">Algorytm:</h3>
-<div class="row">
-    <div class="col-6-6">
-        <h4 class="minmin">Pseudokod:</h4>
-        <code >Function Tower_Of_Hanoi(A, B, C):<br>
-        If N==1 : Move disk from A to B<br>
-        else<br>
-        Tower_Of_Hanoi (N-1, A, C, B)<br>
-        Move disk from A to B<br>
-        Tower_Of_Hanoi (N-1, C, B, A)</code>
-    </div>
-    <div class="col-6-6">
-        <h4 class="minmin">Javascript:</h4>
-        <code>function hanoi(n, A, B, C){<br>
-            &emsp;if(n==1) {S = S + A + " --> " + B +"\n";}<br>
-            &emsp;else {<br>
-                &emsp;&emsp;hanoi(n-1, A, C, B);<br>
-                &emsp;&emsp;S = S + A + " --> " + B +"\n";<br>
-                &emsp;&emsp;hanoi(n-1, C, B, A);<br>
-            &emsp;}<br>
-        }</code>
-    </div>
-</div>
-<h3 class="minor">Złożoność:</h3>
-Równanie określające liczbę ruchów potrzebnych do rozwiązania problemu wież Hanoi dla <b>n</b> krążków:
-$$\! L(n)\ =\ 2\ *\ L(n-1)\ +\ 1$$
-
-Powyższe równanie rekurencyjne można w łatwy sposób przekształcić do postaci jawnej, tj. nie korzystającej z rekursji:
-$$\! L(n)\ =\ 2\cdot L(n-1)\ +\ 1$$
-$$\! L(n)\ +\ 1\ =\ 2\cdot L(n-1)\ +\ 1\ +\ 1\ =\ 2\cdot (L(n-1)\ +\ 1)$$
-
-Niech   $\! L'(n)\ =\ L(n)\ +\ 1$
-
-Wtedy
-$$\! L'(n)\ =\ \ 2\cdot L'(n-1)$$
-
-jest to równanie określające ciąg geometryczny o ilorazie równym <b>2</b> takie, że
-$$\begin{matrix} L(1)\ =\ 1 \\ L^\prime(1)\ =\ 2 \\ L^\prime(2)\ =\ 4 \\ \vdots \\ L^\prime(n)\ =\ 2^n \end{matrix}$$
-
-Po powrocie do $L(n)$ otrzymujemy
-
-$$\! L(n)\ =\ 2^n\ -\ 1$$
-
-<h3 class="minor">Przykład:</h3>
-<p>Ustaw liczbę dysków: <input id="input" type="number" min="1" max="8"> <button id="ok">OK</button>  <span id="okInfo"></span></p>
-<!--div id="outcome"></div-->
-<div id="canvascont">
-    <canvas id="hanoicanvas" width="700" height="450">Your browser does not support canvas.</canvas>
-    <div id="controls">
-        <div class="col-2-6">
-            <button id="prev">Prev</button>
+<article>
+    <h2 id="hanoi" class="major">Wieże Hanoi</h2>
+    <p cite="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wieże Hanoi to problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach. Składają się z trzech słupków i dowolnej ilości dysków o różnych średnicach, które mogą być nasunięte na każdy ze słupków. Gra zaczyna się z wszystkimi dyskami ustawionymi na jednym z prętów w kolejności malejącej ku górze.<br>
+    Celem jest przesuniecie całego stosu na inny słupek, przy zachowaniu następujących prostych zasad:</p>
+    <ol>
+        <li>Możemy przesuwać tylko jeden dysk na raz.</li>
+        <li>Każdy ruch składa się ze zdejmowania dysku ze sczytu jednego stosu i przekładania go na inny.</li>
+        <li>Żaden dysk nie może być położony na mniejszym.</li>
+    </ol>
+    <p>Przy trzech dyskach, łamigłówka może być rozwiązana w siedmiu ruchach. Minimalna ilość ruchów, aby rozwiązać Wieże Hanoi to  2<sup>n</sup> - 1, gdzie n jest liczbą dysków.
+    </p>
+    <section class="pseudo">
+        <h3>Algorytm:</h3>
+        <div class="code">
+            <h4>Pseudokod:</h4>
+            <pre>
+    <code >Function Tower_Of_Hanoi(A, B, C):
+    If N==1 : Move disk from A to B
+    else
+    Tower_Of_Hanoi (N-1, A, C, B)
+    Move disk from A to B
+    Tower_Of_Hanoi (N-1, C, B, A)</code>
+            </pre>
         </div>
-        <div class="col-2-6">
-            <button id="auto">Auto</button>
-            <input id="speed" type="number" value="1" min="1" max="10">
+        <div class="code">
+            <h4 >Javascript:</h4>
+            <pre>
+<code>function hanoi(n, A, B, C){
+    if(n==1) {S = S + A + " --> " + B +"\n";}
+    else {
+        hanoi(n-1, A, C, B);
+        S = S + A + " --> " + B +"\n";
+        hanoi(n-1, C, B, A);
+    }
+}</code>
+            </pre>
         </div>
-        <div class="col-2-6">
-            <button id="next">Next</button>
+    </section>
+    <section>
+    <h3>Złożoność:</h3>
+        <p>Równanie określające liczbę ruchów potrzebnych do rozwiązania problemu wież Hanoi dla <b>n</b> krążków:
+        $$\! L(n)\ =\ 2\ *\ L(n-1)\ +\ 1$$
+        </p>
+        <p>
+        Powyższe równanie rekurencyjne można w łatwy sposób przekształcić do postaci jawnej, tj. nie korzystającej z rekursji:
+        $$\! L(n)\ =\ 2\cdot L(n-1)\ +\ 1$$
+        $$\! L(n)\ +\ 1\ =\ 2\cdot L(n-1)\ +\ 1\ +\ 1\ =\ 2\cdot (L(n-1)\ +\ 1)$$
+        </p>
+        <p>
+        Niech   $\! L'(n)\ =\ L(n)\ +\ 1$
+        </p>
+        <p>
+        Wtedy
+        $$\! L'(n)\ =\ \ 2\cdot L'(n-1)$$
+        </p>
+        <p>
+        jest to równanie określające ciąg geometryczny o ilorazie równym <b>2</b> takie, że
+        $$\begin{matrix} L(1)\ =\ 1 \\ L^\prime(1)\ =\ 2 \\ L^\prime(2)\ =\ 4 \\ \vdots \\ L^\prime(n)\ =\ 2^n \end{matrix}$$
+        </p>
+        <p>
+        Po powrocie do $$L(n)$$ otrzymujemy
+        </p>
+        <p>
+        $$\! L(n)\ =\ 2^n\ -\ 1$$
+        </p>
+    </section>
+    <section>
+        <h3 class="minor">Przykład:</h3>
+        <p>Ustaw liczbę dysków: <input id="input" type="number" min="1" max="8"> <button id="ok">OK</button>  <span id="okInfo"></span></p>
+        <!--div id="outcome"></div>-->
+        <div id="canvascont">
+            <canvas id="hanoicanvas" width="700" height="450">Your browser does not support canvas.</canvas>
+            <div id="controls">
+                <div class="col-2-6">
+                    <button id="prev">Prev</button>
+                </div>
+                <div class="col-2-6">
+                    <button id="auto">Auto</button>
+                    <input id="speed" type="number" value="1" min="1" max="10">
+                </div>
+                <div class="col-2-6">
+                    <button id="next">Next</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+</article>

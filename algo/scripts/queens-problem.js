@@ -76,5 +76,5 @@ function generateDeck() {
 
 window.addEventListener('load', function() {
     generateSolutions();
-    document.getElementById("generate").onclick = generateDeck;
+    document.getElementById("runButton").onclick = generateDeck;
 });

@@ -1,4 +1,8 @@
 var wynik;
+window.addEventListener('load', function() {
+	document.getElementById('runButton').addEventListener('click', callNWD);
+
+});
 function rozszerzonyAe(a,b){
     var x,y,xLast,yLast, q,e,m,as=a,bs=b;
 
@@ -31,5 +35,6 @@ function callRAE(){
     a=Math.abs(parseInt(n.value,10));
     (isNaN(t)||1>t)&&(t=1),(isNaN(a)||1>a)&&(a=1),
     e.value=t,n.value=a,
-    document.getElementById("trace").innerHTML=call(t,a)
+    document.getElementById("output").innerHTML = call(t,a)
+    document.getElementById("output").style.display = "block";
 }

@@ -13,8 +13,7 @@ window.addEventListener('load', function() {
 	ctx = canvas.getContext("2d");
 	ctx.transform(1, 0, 0, -1, 0, 0); // (╯°□°）╯︵ ┻━┻
 	ctx.translate(0, -ctx.canvas.height);
-
-}
+});
 
 // canvas version
 var n;
