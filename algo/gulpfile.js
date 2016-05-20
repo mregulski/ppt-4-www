@@ -7,7 +7,6 @@ var scss = 'styles/scss/**/*.scss';
 var css = 'styles/css/*.css'
 
 gulp.task('compile-sass', function() {
-    console.log("compiling sass...");
     return gulp.src(scss)
         .pipe(plumber({
             errorHandler: errorHandler

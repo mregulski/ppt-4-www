@@ -16,6 +16,7 @@ var voteMachine = (function(){
         req.responseType = 'json';
         req.open("POST", location.href + '/upvote', true);
         req.send();
+        disableVoting();
     }
 
     function downvote() {
@@ -24,12 +25,21 @@ var voteMachine = (function(){
         req.responseType = 'json';
         req.open("POST", location.href + '/downvote');
         req.send();
+        disableVoting();
     }
 
     function updateVotes(xhrEvent) {
-        document
-            .getElementById("vote-count")
-            .textContent = xhrEvent.target.response.rating;
+        var votesCounter = document.getElementById("vote-count");
+        if(xhrEvent == null)
+            votesCounter.textContent = "0"
+        else {
+            votesCounter.textContent = xhrEvent.target.response.rating;
+        }
+    }
+
+    function disableVoting() {
+        var voteArea = document.getElementById('voting');
+        voteArea.innerHTML = "<span>Twój głos został zapisany.</span>";
     }
 
     function init() {

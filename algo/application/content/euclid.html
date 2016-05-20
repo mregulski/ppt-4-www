@@ -1,13 +1,16 @@
 <article>
     <h2>Największy Wspólny Dzielnik</h2>
-    Największym wspólnym dzielnikiem dwóch <b>liczb naturalnych</b> a, b nazywamy największą liczbę naturalną k taką, że (k|a) oraz (k|b). Oznaczamy ją NWD(a,b). Oto najważniejsze własności tej funkcji:<br/>
+    Największym wspólnym dzielnikiem dwóch <b>liczb naturalnych</b> a, b nazywamy największą liczbę naturalną k taką,
+    że (k|a) oraz (k|b). Oznaczamy ją NWD(a,b). Oto najważniejsze własności tej funkcji:<br/>
     <ol>
         <li>NWD(a,b) = NWD(b,a).</li>
         <li>Jeśli a|b, to NWD(a,b) = a.</li>
         <li>Jeśli a = k b + r, to NWD(a,b) = NWD(b,r).</li>
     </ol>
     <h3>Historia algorytmu Euklidesa</h3>
-    Algorytm wyznaczania największego wspólnego dzielnika dwóch liczb naturalnych oparty na przedstawionych tutaj własnościach został opisany przez Euklidesa w dziele Elementy, w księgach siódmej oraz dziesiątej, które powstało około 300 lat p.n.e.<br/><br/>
+    Algorytm wyznaczania największego wspólnego dzielnika dwóch liczb naturalnych oparty na przedstawionych tutaj
+     własnościach został opisany przez Euklidesa w dziele Elementy, w księgach siódmej oraz dziesiątej, które powstało
+     około 300 lat p.n.e.<br/><br/>
     <section class="pseudo">
         <h3>Kod funkcji NWD</h3>
         <div class="code">
@@ -41,7 +44,7 @@ END</code>
     <section id="complexity">
         <h3 id="com">Złożoność algorytmu</h3>
         <div id="compl-1">$$O(2 \cdot log_2(m+n)) $$</div>
-        <div id="compl-2">$ O(1) $</div>
+        <div id="compl-2">$$ O(1) $$</div>
         <div class="desc">czasowa</div><div class="desc">pamięciowa</div>
     </section>
     <section>

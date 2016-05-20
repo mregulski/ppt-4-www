@@ -1,7 +1,4 @@
 <?php
-/*
-https://github.com/moagrius/RegexRouter
-*/
 class Router {
     private $routes = array();
 

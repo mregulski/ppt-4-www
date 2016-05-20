@@ -6,6 +6,7 @@
 	<title>{{Title}}</title>
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/{{StylesDir}}/styles.css"/>
 	<!-- <link rel="stylesheet" href="http://basehold.it/30"> -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/{{ResDir}}/apple-icon-57x57.png"/>
@@ -49,16 +50,14 @@
 <div class="wrapper">
 	<div id="menuToggle">&#9776; Menu</div>
 	<div class="row">
-        <nav id="menu">
-            {{MenuItems}}
-        </nav>
+		<div id="sidebar">
+			<nav>
+	            {{MenuItems}}
+	        </nav>
+		</div>
 	    <div id="content">
 	        {{PageContent}}
-			<div class="votebox">
-				<button id="btn-upvote">+</button>
-				<span id="vote-count">-</span>
-				<button id="btn-downvote">-</button>
-			</div>
+			{{Feedback}}
 			{{Scripts}}
 	    </div>
 	</div>

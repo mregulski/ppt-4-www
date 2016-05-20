@@ -11,6 +11,10 @@ section {
 	@include row;
 }
 
+#sidebar {
+	@include col(3, 12);
+}
+
 #content {
     @include col(9, 12, $last: true);
     height: 100%;
@@ -22,7 +26,7 @@ section {
 
 .pseudo {
     @include row();
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
 
 div.code {
@@ -31,6 +35,9 @@ div.code {
 	}
 	&:last-child {
 		@include col(3, 6, $last: true);
+	}
+	&:only-child {
+		@include col(6,6);
 	}
 	h4 {
 		color: $secondary-dark;
@@ -68,15 +75,5 @@ code {
 	label {
 		display: inline-block;
 		width: 100px;
-	}
-}
-.votebox {
-	@include col(12,12);
-	border-top: 1px solid $secondary-dark;
-	background: $ternary-light;
-	button {
-		width: 30px;
-		border: 1px solid $primary;
-		border-radius: 30px;
 	}
 }

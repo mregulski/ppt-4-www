@@ -1,13 +1,17 @@
 <article>
     <h2 id="hanoi" class="major">Wieże Hanoi</h2>
-    <p cite="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wieże Hanoi to problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach. Składają się z trzech słupków i dowolnej ilości dysków o różnych średnicach, które mogą być nasunięte na każdy ze słupków. Gra zaczyna się z wszystkimi dyskami ustawionymi na jednym z prętów w kolejności malejącej ku górze.<br>
+    <p cite="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wieże Hanoi to problem polegający na odbudowaniu, z
+        zachowaniem kształtu, wieży z krążków o różnych średnicach. Składają się z trzech słupków i dowolnej
+         ilości dysków o różnych średnicach, które mogą być nasunięte na każdy ze słupków. Gra zaczyna się z
+         wszystkimi dyskami ustawionymi na jednym z prętów w kolejności malejącej ku górze.<br>
     Celem jest przesuniecie całego stosu na inny słupek, przy zachowaniu następujących prostych zasad:</p>
     <ol>
         <li>Możemy przesuwać tylko jeden dysk na raz.</li>
         <li>Każdy ruch składa się ze zdejmowania dysku ze sczytu jednego stosu i przekładania go na inny.</li>
         <li>Żaden dysk nie może być położony na mniejszym.</li>
     </ol>
-    <p>Przy trzech dyskach, łamigłówka może być rozwiązana w siedmiu ruchach. Minimalna ilość ruchów, aby rozwiązać Wieże Hanoi to  2<sup>n</sup> - 1, gdzie n jest liczbą dysków.
+    <p>Przy trzech dyskach, łamigłówka może być rozwiązana w siedmiu ruchach. Minimalna ilość ruchów, aby
+        rozwiązać Wieże Hanoi to  2<sup>n</sup> - 1, gdzie n jest liczbą dysków.
     </p>
     <section class="pseudo">
         <h3>Algorytm:</h3>
@@ -47,7 +51,7 @@
         $$\! L(n)\ +\ 1\ =\ 2\cdot L(n-1)\ +\ 1\ +\ 1\ =\ 2\cdot (L(n-1)\ +\ 1)$$
         </p>
         <p>
-        Niech   $\! L'(n)\ =\ L(n)\ +\ 1$
+        Niech   $$\! L'(n)\ =\ L(n)\ +\ 1$$
         </p>
         <p>
         Wtedy

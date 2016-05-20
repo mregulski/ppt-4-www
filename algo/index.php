@@ -17,8 +17,11 @@ $router->route('/algo\/$/', function($matches) {
 $router->route('/[a-zA-Z\-]+$/', function($matches) {
     global $counter;
     $page = (new Algorithm\AlgorithmPage(Algorithm\AlgorithmPage::getId($matches[0]), "Algorytmy"))
-                -> SetContent(file_get_contents("application/content/".$matches[0].".html"))
-                -> RegisterScript('scripts/'.$matches[0].'.js');
+                -> SetContent(file_get_contents("application/content/".$matches[0].".html"));
+                
+    if(file_exists("styles/$matches[0].css")) {
+        $page = $page -> RegisterScript('scripts/'.$matches[0].'.js');
+    }
 
     if(file_exists("styles/$matches[0].css")) {
         $page = $page -> RegisterStyle("styles/$matches[0].css");

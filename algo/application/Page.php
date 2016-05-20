@@ -66,11 +66,18 @@ class AlgorithmPage {
         $html = str_replace(
             ["{{Title}}", "{{Scripts}}", "{{Styles}}",
                 "{{MenuItems}}", "{{PageContent}}", "{{StylesDir}}", "{{ResDir}}",
-                "{{VisitCounter}}"],
+                "{{VisitCounter}}", "{{Feedback}}"],
             [$this->title, $scripts, $styles, $menuitems,$this->content,
-                $styleDir, $resDir, $visitorCount],
+                $styleDir, $resDir, $visitorCount, $this->GetFeedback()],
             $this->template);
         return $html;
+    }
+
+    private function GetFeedback() {
+        if($this->id == 0) {
+            return "";
+        }
+        return file_get_contents('application/template/feedback.html');
     }
 
     private function ScriptBlock() {

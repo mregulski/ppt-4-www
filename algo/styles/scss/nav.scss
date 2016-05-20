@@ -6,7 +6,7 @@
 	background: $primary;
 	color: $white;
 	padding: 5px;
-    font-size: ms(2);
+    font-size: ms(1);
     font-family: $font_header;
 
     &:active {
@@ -16,29 +16,28 @@
 
     @include at('grid_min_width') {
         display: none;
-    }
-}
-
-#menu {
-    @include at('grid_min_width') {
-        display: block;
+        font-size: ms(2);
     }
 }
 
 nav {
     $nav_entry_bg: $ternary-dark;
     @include transition-basic();
-    @include col(3, 12);
+    // @include col(3, 12);
 	display: none;
     // margin-top: 2px;
-    font-size: ms(1);
+    font-size: ms(0);
     font-family: $font_header;
+
+    @include at('grid_min_width') {
+        display: block;
+    }
 
     ul {
     	list-style-type: none;
-        @include at('grid_min_width') {
-        	// padding-right: 15px;
-        }
+        // @include at('grid_min_width') {
+        // 	// padding-right: 15px;
+        // }
     }
     li {
         @include transition-basic();
@@ -64,6 +63,9 @@ nav {
         color: $white;
     	display: block;
     	text-decoration: none;
-    	padding: 15px;
+    	padding: 7.5px 10px;
+        @include at('min_normal') {
+            padding: 7.5px 15px;
+        }
     }
 }

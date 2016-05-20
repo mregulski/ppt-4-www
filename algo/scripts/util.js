@@ -9,7 +9,7 @@
             jax: ["input/TeX", "output/HTML-CSS"],
             displayAlign: "left"
         });
-        menu = document.getElementById("menu");
+        var menu = document.getElementById("menu");
         document
             .getElementById("menuToggle")
             .addEventListener('click', toggleMenu);
@@ -38,7 +38,6 @@
 
     function equalPre() {
         var preBlocks = document.querySelectorAll('.code pre');
-        console.log(preBlocks);
         var maxHeight = 0;
         for(var i = 0; i < preBlocks.length; i++) {
             maxHeight = preBlocks[i].offsetHeight > maxHeight
