@@ -53,15 +53,23 @@ code {
     margin: 0 auto;
 }
 
-#output {
+#output-wrapper {
 	@include col(12,12);
-	@include code;
 	display: none;
-	background: $bg-code;
-	padding: 10px;
 	overflow: auto;
 }
 
+#output {
+	@include code;
+	background: $bg-code;
+	padding: 10px;
+}
+.input-group {
+	label {
+		display: inline-block;
+		width: 100px;
+	}
+}
 .votebox {
 	@include col(12,12);
 	border-top: 1px solid $secondary-dark;

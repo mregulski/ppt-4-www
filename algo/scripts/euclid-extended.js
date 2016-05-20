@@ -36,5 +36,5 @@ function callRAE(){
     (isNaN(t)||1>t)&&(t=1),(isNaN(a)||1>a)&&(a=1),
     e.value=t,n.value=a,
     document.getElementById("output").innerHTML = call(t,a)
-    document.getElementById("output").style.display = "block";
+    document.getElementById("output-wrapper").style.display = "block";
 }

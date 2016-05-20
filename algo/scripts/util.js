@@ -2,6 +2,7 @@
     'use strict';
     console.log('util');
     window.addEventListener('load', init);
+    window.addEventListener('resize', equalPre);
 
     function init() {
         MathJax.Hub.Config({
@@ -12,6 +13,7 @@
         document
             .getElementById("menuToggle")
             .addEventListener('click', toggleMenu);
+        equalPre();
     }
 
     // re-enable hidden menu when window is resized above breakpoint
@@ -32,6 +34,22 @@
             menu.style.display = 'block';
         else
             menu.style.display = 'none';
+    }
+
+    function equalPre() {
+        var preBlocks = document.querySelectorAll('.code pre');
+        console.log(preBlocks);
+        var maxHeight = 0;
+        for(var i = 0; i < preBlocks.length; i++) {
+            maxHeight = preBlocks[i].offsetHeight > maxHeight
+                    ? preBlocks[i].offsetHeight
+                    : maxHeight;
+        }
+
+        for(var i = 0; i < preBlocks.length; i++) {
+            preBlocks[i].style.height = maxHeight + 'px';
+        }
+
     }
 
 })();

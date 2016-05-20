@@ -50,14 +50,13 @@ function callTest()
 	f=document.getElementById("varK");
 	n=Math.abs(parseInt(e.value,10));
 	k=Math.abs(parseInt(f.value,10));
-	var output = document.getElementById("output");
-    output.innerHTML = fermatTest(n, k);
-	output.style.display = "block";
+    document.getElementById("output").innerHTML = fermatTest(n, k);
+	document.getElementById("output-wrapper").style.display = "block";
 
 }
 
 window.addEventListener('load', function()
 {
 	document.getElementById("runButton").onclick=callTest;
-	window.onresize=checkSize;
+	// window.onresize=checkSize;
 });

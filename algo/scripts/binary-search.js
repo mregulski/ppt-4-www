@@ -29,9 +29,9 @@ function binarySearch(array, key) {
 function callBS(){
 	var e=document.getElementById("varX"),
 	t=Math.abs(parseInt(e.value,10));
-    var output = document.getElementById("output");
-	output.innerHTML = binarySearch([1,2,3,4,5,6,7,8,9,10], t)
-    output.style.display = "block";
+
+	document.getElementById("output").innerHTML = binarySearch([1,2,3,4,5,6,7,8,9,10], t)
+    document.getElementById("output-wrapper").style.display = "block";
 }
 
 

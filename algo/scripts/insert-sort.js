@@ -26,7 +26,11 @@ function insertionSort(t) {
 }
 
 function callIS() {
-    var n = document.getElementById("varN"), t = Math.abs(parseInt(n.value, 10));
-    (isNaN(t)||2>t)&&(t=2), (t>1000000)&&(t=1000000), n.value=t, document.getElementById("output").innerHTML=insertionSort(t);
-    document.getElementById("output").style.display = "block";
+    var n = document.getElementById("varN"),
+	t = Math.abs(parseInt(n.value, 10));
+    (isNaN(t)||2>t)&&(t=2),
+	 (t>1000000)&&(t=1000000),
+	  n.value=t,
+	document.getElementById("output").innerHTML=insertionSort(t);
+    document.getElementById("output-wrapper").style.display = "block";
 }

@@ -18,7 +18,7 @@
     function mergeSort(array) {
         if(output === undefined) {
             output = document.getElementById("output");
-            output.style.display = 'block';
+            document.getElementById("output-wrapper").style.display = 'block';
         }
         output.innerHTML = "";
         return _mergeSort(array, 0);

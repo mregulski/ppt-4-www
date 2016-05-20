@@ -36,15 +36,27 @@
 
 <div>
     <h3>Przykład</h3>
-    <form>
-        <label for="rows">Rows </label><input type="text" name="rows" id="rows" value="8"><br>
-        <label for="columns">Columnss <input type="text" name="columns" id="columns" value="8"> <br>
-        <label for="boxSize">Box size (px)<input type="text" name="boxSize" id="boxSize" value="50"> <br>
-        <label>X:</label><input type="text" id="x" value="1"> <br>
-        <label>Y:</label>label><input type="text" id="y" value="1"> <br>
-        <input id="runButton" class="runButton" type="Button" Value="Create Board!" onClick="init(this.form)">
-    </form>
-    <button onclick="myFunction()">RUN</button>
+        <div class="input-group">
+            <label for="rows">Rows</label>
+            <input type="text" name="rows" id="rows" value="8"><br>
+
+            <label for="columns">Columns</label>
+            <input type="text" name="columns" id="columns" value="8"/> <br>
+
+            <label for="boxSize">Box size (px)</label>
+            <input type="text" name="boxSize" id="boxSize" value="50"/> <br>
+
+            <label>X:</label>
+            <input type="text" id="x" value="1"/> <br>
+
+            <label>Y:</label>
+            <input type="text" id="y" value="1"/> <br>
+
+            <button id="runButton" class="runButton" type="Button" Value="Create Board!" onClick="init(this.form)">
+                Create Board!
+            </button>
+            <button onclick="myFunction()">RUN</button>
+        </div>
 </div>
 <div class="col-8" style="overflow:auto; float:right;" >
     <canvas id="myCanvas" height="0" width="0" ></canvas><br>

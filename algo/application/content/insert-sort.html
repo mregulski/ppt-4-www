@@ -1,4 +1,4 @@
-<article class="col-4-6" id="text">
+<article>
     <h2>Sortowanie przez wstawianie</h2>
     <p>Sortowanie przez wstawianie należy do prostych algorytmów sortowania o złożoności O(n<sup>2</sup>). Polega ono na tym, że bierzemy kolejne elementy do posortowania i wstawiamy je pomiędzy elementy będące już na odpowiednich pozycjach.</p>
     <ol>
@@ -54,14 +54,13 @@
     </section>
     <section><h3 id="cprim">Sortowanie ciągu</h3>
         <div class="col-6-6" id="calc">
-            &nbsp;&nbsp;Wprowadź liczbę n (ilość elementów) i naciśnij przycisk "Oblicz".<br/>
+            &nbsp;&nbsp;Wprowadź liczbę n (ilość elementów) i naciśnij przycisk "Sortuj".<br/>
             &nbsp;&nbsp;<label for="varN">n:</label>
-            <input type="number" min="2" max="1000000" value="19" id="varN">
+            <input type="number" min="2" max="1000000" value="19" id="varN"><br>
             <button id="runButton" class="runButton">Sortuj</button>
-
-            <h4>Wynik</h4>
-            <div id="output">
-                &nbsp;
+            <div id="output-wrapper">
+                <h4>Wynik</h4>
+                <div id="output"></div>
             </div>
         </div>
     </section>
