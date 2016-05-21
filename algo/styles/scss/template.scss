@@ -13,6 +13,13 @@ section {
 
 #sidebar {
 	@include col(3, 12);
+    display: none;
+	margin-bottom: 30px;
+    @include at('grid_min_width') {
+        display: block;
+		margin-bottom: 0px;
+    }
+
 }
 
 #content {

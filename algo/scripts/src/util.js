@@ -3,13 +3,13 @@
     console.log('util');
     window.addEventListener('load', init);
     window.addEventListener('resize', equalPre);
-
+    var menu;
     function init() {
         MathJax.Hub.Config({
             jax: ["input/TeX", "output/HTML-CSS"],
             displayAlign: "left"
         });
-        var menu = document.getElementById("menu");
+        menu = document.getElementById("sidebar");
         document
             .getElementById("menuToggle")
             .addEventListener('click', toggleMenu);

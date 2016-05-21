@@ -44,6 +44,9 @@ gulp.task('minify-css', ['compile-sass'], function() {
 
 gulp.task('uglify-js', function() {
     return gulp.src(js.src)
+        .pipe(plumber({
+            errorHandler: errorHandler
+        }))
         .pipe(uglify())
         .pipe(rename({
             suffix: ".min"

@@ -1,40 +1,34 @@
 'use strict';
-(function(){
+var logo = (function(){
     var canvas;
     var container;
     var baseWidth = 306;
-    window.addEventListener('load', function() {
+    return {
+        init: init
+    };
+    function init() {
+        
         canvas = document.getElementById("logo");
         container = canvas.parentElement;
-        console.log(container);
-        canvas.width = container.offsetWidth;
-        canvas.height = canvas.width;
-        console.log("width:",canvas.width);
-        var scale = getScale();
-        draw(scale);
-        
-    });
-    window.addEventListener('resize', function() {
-        
-        console.log('pre', canvas.width);
-        var ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.setTransform(1,0,0,1,0,0);
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        console.log(container);
         canvas.width = container.offsetWidth;
         canvas.height = canvas.width;
         var scale = getScale();
-        
-        console.log('scale:',scale);
-        ctx.restore();
         draw(scale);
-    });
-    
-    return {
-        draw: draw,
-        width: baseWidth
-    };
+            
+      
+        window.addEventListener('resize', function() {
+            
+            var ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.setTransform(1,0,0,1,0,0);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            canvas.width = container.offsetWidth;
+            canvas.height = canvas.width;
+            var scale = getScale();
+            ctx.restore();
+            draw(scale);
+        });
+    }
     
     function draw(scale) {
         if(canvas.getContext) {

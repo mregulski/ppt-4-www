@@ -1,10 +1,14 @@
 var canvas, context, numofBoxesI, numofBoxesJ, form, boxSize;
 
+window.addEventListener('load', function() {
+    var runBtn = document.querySelector("button.runButton");
+    runBtn.onclick = drawPath;
+})
+
 function init(form) {
 
-    canvas = document.getElementById('myCanvas');
+    canvas = document.getElementById('board');
     context = canvas.getContext('2d');
-
     numofBoxesI = document.getElementById('rows').value;
     numofBoxesJ = document.getElementById('columns').value;
     boxSize = document.getElementById('boxSize').value;
@@ -88,8 +92,9 @@ function Box(isMarked, positionI, positionJ) {
 }
 
 var arr, cnt;
-function myFunction()
+function drawPath()
 {
+    init();
     //create the 2-d matrix
     cnt=0;
     arr = new Array(numofBoxesI);

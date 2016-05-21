@@ -104,17 +104,19 @@ class AlgorithmPage {
     }
     private function GenerateMenu() {
         global $NavData;
-        $menu_class = 'algorytm';
-        $menu_entry = "<li class='$menu_class {{Class}}'><a href='{{Href}}' class='{{Class}}'>{{Name}}</a></li>";
+        $menu_entry = "<li class='{{Class:active}}'><a href='{{Href}}' class='{{Class:active}}'>{{Name}}</a></li>";
         $menu = "<ul>\n";
         for($i = 0; $i < count($NavData); $i++) {
             $classes="";
             if((int) $NavData[$i]["id"] === $this->id) {
                 $classes.="active";
-            };
-            $element = (string) str_replace("{{Href}}", (string) $NavData[$i]["href"], $menu_entry);
+                $element = (string) str_replace("href='{{Href}}'", "", $menu_entry);
+            }
+            else {
+                $element = (string) str_replace("{{Href}}", (string) $NavData[$i]["href"], $menu_entry);
+            }
             $element = (string) str_replace("{{Name}}", (string) $NavData[$i]["name"], $element);
-            $element = (string) str_replace("{{Class}}", (string) $classes, $element);
+            $element = (string) str_replace("{{Class:active}}", (string) $classes, $element);
             $menu .= $element."\n";
 
         };

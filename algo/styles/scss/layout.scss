@@ -18,7 +18,7 @@ $gutter: 1.6%;
     }
 }
 
-@mixin col($col, $cols, $align: top, $first: false, $last: false) {
+@mixin col($col, $cols, $first: false, $last: false) {
     float: left;
     width: 100%;
     @include at('grid_min_width') {

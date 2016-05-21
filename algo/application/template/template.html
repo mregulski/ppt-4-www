@@ -27,10 +27,13 @@
 	<meta name="msapplication-TileImage" content="/{{ResDir}}/ms-icon-144x144.png"/>
 	<meta name="theme-color" content="#ffffff"/>
 	{{Styles}}
-	<script  src="scripts/util.min.js"></script>
-	<script  src="scripts/vote.min.js"></script>
+	<script  src="scripts/src/util.js"></script>
+	<script  src="scripts/src/vote.js"></script>
 	<script  src="scripts/logo.min.js"></script>
-	<script 
+	<!--<script>window.addEventListener('load', function() {
+		logo.init()
+	})</script>-->
+	<script async
   		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 	</script>
 
@@ -41,6 +44,7 @@
 		<div>
 			<canvas id="logo" width="165" height="165"></canvas>
 		</div>
+		<script>logo.init()</script>
 		<!--<div id="logo">
 			<img src="/{{ResDir}}/infppt.png" alt="logo wydziału"/>
 		</div>-->

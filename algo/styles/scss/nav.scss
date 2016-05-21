@@ -24,14 +24,12 @@ nav {
     $nav_entry_bg: $ternary-dark;
     @include transition-basic();
     // @include col(3, 12);
-	display: none;
+	;
     // margin-top: 2px;
     font-size: ms(0);
     font-family: $font_header;
 
-    @include at('grid_min_width') {
-        display: block;
-    }
+   
 
     ul {
     	list-style-type: none;
@@ -66,6 +64,10 @@ nav {
     	padding: 7.5px 10px;
         @include at('min_normal') {
             padding: 7.5px 15px;
+        };
+        
+        &.active {
+            cursor: default;
         }
     }
 }

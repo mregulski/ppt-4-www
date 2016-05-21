@@ -1,22 +1,63 @@
 @import 'main';
 
-.votebox {
+#feedback {
 	@include col(6,6);
+   
     margin-top: 15px;
     border-top: 1px solid $secondary-dark;
+}
 
-    #voting {
-        background: $bg-code;
-        height: 100%;
-        padding: 5px 0 10px 5px;
+.votes {
+    // @include col(6,6);
+    @include row();
+    background: $bg-code;
+    height: 100%;
+    padding: 5px 0 10px 5px;
+     
+    div {
+        @include col(3,6);
+        // @include row(); 
     }
-
-    button {
+    .vote-count {
         display: inline-block;
-        width: 30px;
         margin: 0 5px;
-		border: 1px solid $primary;
-		border-radius: 30px;
+        
     }
-
+    & > span {
+        @include col(3,6);
+        padding-top: 1em;
+        
+    }
+    button {
+        transition: background 0.2s ease-in;//cubic-bezier(.03,.93,0,1.75);
+        transition: color 0.2s ease-in;
+        font: $font-text;
+        display: inline-block;
+		border-radius: 15px;
+        background: transparent;
+        font-size: ms(2);
+        &.upvote {
+            border: 1px solid $primary;
+            &:hover {
+                color: $primary;
+            }
+            &.clicked {
+                background: $primary;
+                color: $white;
+            }
+        }
+        &.downvote {
+            border: 1px solid $secondary;
+            &:hover {
+                color: $secondary;
+            }
+            &.clicked {
+                background: $secondary;
+                color: $white;
+            }
+        }
+        &.clicked:hover {
+            color: $black;
+        }
+    }
 }
