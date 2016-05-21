@@ -1,4 +1,7 @@
 bower_components/*
 node_modules/*
+.vscode
 *.css
 !__reset.css
+*.min.js
+

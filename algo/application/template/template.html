@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=content-width, initial-scale=1" />
 	<title>{{Title}}</title>
-	<link href='https://fonts.googleapis.com/css?family=Lato:400,900,700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Lato|PT+Serif|PT+Mond&subset=latin-ext' rel='stylesheet' type='text/css'>
+	<!--<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>-->
 	<link rel="stylesheet" href="/{{StylesDir}}/styles.css"/>
 	<!-- <link rel="stylesheet" href="http://basehold.it/30"> -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/{{ResDir}}/apple-icon-57x57.png"/>
@@ -27,9 +27,10 @@
 	<meta name="msapplication-TileImage" content="/{{ResDir}}/ms-icon-144x144.png"/>
 	<meta name="theme-color" content="#ffffff"/>
 	{{Styles}}
-	<script src="scripts/util.js"></script>
-	<script src="scripts/vote.js"></script>
-	<script type="text/javascript" async
+	<script  src="scripts/util.min.js"></script>
+	<script  src="scripts/vote.min.js"></script>
+	<script  src="scripts/logo.min.js"></script>
+	<script 
   		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 	</script>
 
@@ -37,9 +38,12 @@
 <body>
 <header>
 	<div class="wrapper">
-		<div id="logo">
-			<img src="/{{ResDir}}/infppt.png" alt="logo wydziału"/>
+		<div>
+			<canvas id="logo" width="165" height="165"></canvas>
 		</div>
+		<!--<div id="logo">
+			<img src="/{{ResDir}}/infppt.png" alt="logo wydziału"/>
+		</div>-->
 		<div>
 			<h1>Podstawowe algorytmy</h1>
 			<p>Najciekawsze algorytmy omawiane na wykładzie ze Wstępu do Informatyki

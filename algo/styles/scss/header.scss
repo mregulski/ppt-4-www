@@ -8,13 +8,17 @@ header {
     margin-bottom: 12.5px;
     line-height: normal;
     margin-bottom: 23.5px;
-    #logo {
-        @include col(2,12);
+    .wrapper {
+        div:first-child {
+            @include at('grid_min_width') {
+                @include col(2,12);
+                height: 100%;
+            }
+        }
+        div:last-child {
+            @include col(10,12);
+        }
     }
-    #logo + div {
-        @include col(10,12);
-    }
-
     h1 {
         color: $primary;
     	font-size: ms(6);
@@ -34,7 +38,7 @@ header {
         }
     }
 
-    img {
+    #logo {
         display: none;
         @include at('header_show_img') {
             display: inline-block;
