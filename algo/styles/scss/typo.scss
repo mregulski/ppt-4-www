@@ -3,17 +3,19 @@
 h1, h2, h3, h4, h5 {
 	font-family: $font_header;
 }
-
+code {
+	font-size: ms(-1);
+}
 h2 {
     color: $primary;//$ternary-dark;
 	margin-bottom: 8px;
     line-height: normal;
-	font-size: ms(2);
+	font-size: ms(3);
 	@include at('min_normal') {
-		font-size: ms(3);
+		font-size: ms(4);
 	}
 	@include at('header_show_img') {
-		font-size: ms(4);
+		font-size: ms(5);
 	}
 	@include at('header_show_full') {
 		font-size: ms(6);

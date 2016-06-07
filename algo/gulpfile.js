@@ -16,7 +16,7 @@ var css = {
     workFiles: this.workDir+'*.css',
     src: 'styles/css/*.css',
 };
-    
+
 var js = {
     src: 'scripts/src/**/*.js',
     rootDir: 'scripts/'
@@ -37,7 +37,7 @@ gulp.task('compile-sass', function() {
 });
 
 gulp.task('minify-css', ['compile-sass'], function() {
-    return gulp.src(['styles/__reset.min.css', css.workDir+'*.css'])
+    return gulp.src(['styles/__reset.css', css.workDir+'*.css'])
         .pipe(concat('styles.css'))
         .pipe(gulp.dest(css.rootDir));
 })

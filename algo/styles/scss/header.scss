@@ -2,12 +2,12 @@
 
 header {
     @include row();
+    width: 100%;
 	background: $secondary-darkest;
 	color: $white;
-    padding: 10px ;
-    margin-bottom: 12.5px;
+    padding: 10px;
+    margin-bottom: 35px;
     line-height: normal;
-    margin-bottom: 23.5px;
     .wrapper {
         div:first-child {
             @include at('grid_min_width') {
@@ -21,20 +21,21 @@ header {
     }
     h1 {
         color: $primary;
+        margin-top: 0;
     	font-size: ms(6);
     	display: inline-block;
         margin-bottom: 3px;
         @include at('min_normal') {
-            font-size: ms(9);
+            font-size: ms(8);
         }
         @include at('header_show_img') {
             color: $white;
-            font-size: ms(10);
-            margin-bottom: 24px;
+            font-size: ms(9);
+            // margin-bottom: 24px;
 
         }
         @include at('header_show_full') {
-            font-size: ms(12);
+            font-size: ms(11);
         }
     }
 
@@ -50,12 +51,12 @@ header {
 
     p {
         font-size: ms(1);
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         // @include at('min_normal') {
         //     font-size: ms(9);
         // }
         @include at('header_show_img') {
-            font-size: ms(3);
+            font-size: ms(1);
 
         }
     	// text-indent: 2em;

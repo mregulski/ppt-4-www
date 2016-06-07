@@ -1,17 +1,14 @@
 var voteMachine = (function(){
-    
+
 
     var upBtn, downBtn, voteCount;
-    
+
     var vote = 0;
     window.addEventListener('load', init);
     return {
         vote: function() {return vote;}
     };
     
-
-
-
     function upvote() {
         var req = new XMLHttpRequest();
         req.addEventListener('load', updateVotes);
@@ -19,7 +16,7 @@ var voteMachine = (function(){
         req.open("POST", location.href + '/upvote', true);
         req.send();
     }
-    
+
     function downvote() {
         var req = new XMLHttpRequest();
         req.addEventListener('load', updateVotes);
@@ -44,7 +41,7 @@ var voteMachine = (function(){
         downBtn.onclick = downClick();
         getVotes();
     }
-    
+
     function getVotes() {
         var initReq = new XMLHttpRequest();
         initReq.addEventListener('load', updateVotes);
@@ -52,7 +49,7 @@ var voteMachine = (function(){
         initReq.open('GET', location.href + '/rating');
         initReq.send();
     }
-    
+
     function upClick() {
         if(vote == 1) {
             return function() {
@@ -71,7 +68,7 @@ var voteMachine = (function(){
                 downBtn.onclick = downClick();
                 upBtn.classList.add('clicked');
             }
-            
+
         }
         if(vote == -1) {
             return function() {
@@ -85,7 +82,7 @@ var voteMachine = (function(){
             }
         }
     }
-    
+
     function downClick() {
         if(vote == 1) {
             return function() {
@@ -105,9 +102,9 @@ var voteMachine = (function(){
                 downBtn.onclick = downClick();
                 upBtn.onclick = upClick();
                 downBtn.classList.add('clicked');
-                
+
             }
-            
+
         }
         if(vote == -1) {
             return function() {
@@ -119,10 +116,10 @@ var voteMachine = (function(){
             }
         }
     }
-    
+
     function removeClass(element, className) {
         element.className = element.className
             .replace(new RegExp('(?:^|\s)'+className+'(?!\S)/'), '');
     }
-    
+
 })();

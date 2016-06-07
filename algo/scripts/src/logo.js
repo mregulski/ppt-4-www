@@ -7,17 +7,13 @@ var logo = (function(){
         init: init
     };
     function init() {
-        
         canvas = document.getElementById("logo");
         container = canvas.parentElement;
         canvas.width = container.offsetWidth;
         canvas.height = canvas.width;
         var scale = getScale();
         draw(scale);
-            
-      
         window.addEventListener('resize', function() {
-            
             var ctx = canvas.getContext('2d');
             ctx.save();
             ctx.setTransform(1,0,0,1,0,0);
@@ -29,7 +25,6 @@ var logo = (function(){
             draw(scale);
         });
     }
-    
     function draw(scale) {
         if(canvas.getContext) {
             var ctx = canvas.getContext('2d');
@@ -45,15 +40,12 @@ var logo = (function(){
             ctx.restore();
         }
     }
-    
     function getScale() {
         return canvas.width / baseWidth;
     }
-    
     function Segment(scale) {
         this.path = path();
         this.scale = scale;
-        
         function path(scale) {
             var path = new Path2D();
             console.log("path", path);
@@ -72,7 +64,7 @@ var logo = (function(){
             path.lineTo(scale*(x+27), scale*(y-75));
             path.lineTo(scale*(x+38), scale*(y-64));
             path.quadraticCurveTo(scale*(x-6), scale*(y-48), scale*(x-16), scale*(y-5));
-            return path;    
+            return path;
         }
          function circle() {
             var path = new Path2D();
@@ -80,5 +72,4 @@ var logo = (function(){
             return path;
         }
     }
-    
 })();

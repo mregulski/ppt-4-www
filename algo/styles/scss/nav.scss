@@ -29,13 +29,9 @@ nav {
     font-size: ms(0);
     font-family: $font_header;
 
-   
-
     ul {
     	list-style-type: none;
-        // @include at('grid_min_width') {
-        // 	// padding-right: 15px;
-        // }
+        padding-left: 0;
     }
     li {
         @include transition-basic();
@@ -65,7 +61,7 @@ nav {
         @include at('min_normal') {
             padding: 7.5px 15px;
         };
-        
+
         &.active {
             cursor: default;
         }

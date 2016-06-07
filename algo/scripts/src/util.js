@@ -39,6 +39,11 @@
     function equalPre() {
         var preBlocks = document.querySelectorAll('.code pre');
         var maxHeight = 0;
+
+        for(var i = 0; i < preBlocks.length; i++) {
+            preBlocks[i].style.height = 'auto';
+        }
+
         for(var i = 0; i < preBlocks.length; i++) {
             maxHeight = preBlocks[i].offsetHeight > maxHeight
                     ? preBlocks[i].offsetHeight
@@ -48,6 +53,7 @@
         for(var i = 0; i < preBlocks.length; i++) {
             preBlocks[i].style.height = maxHeight + 'px';
         }
+
 
     }
 
