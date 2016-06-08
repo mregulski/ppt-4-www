@@ -9,6 +9,10 @@
 $white: #fffefd;
 $black: #222;
 
+@function grey($percent) {
+  @return darken(#fff, $percent);
+}
+
 $primary: #DE492A;	// Main Primary color */
 $primary-lightest: #FFAA99;
 $primary-light: #F6785D;

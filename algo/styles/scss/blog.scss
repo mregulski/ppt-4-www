@@ -1,0 +1,90 @@
+@import "main";
+
+.blog {
+  h1 {
+    font-size: ms(4);
+    line-height: ms(4);
+    color: $primary;
+  }
+  pre {
+    font-family: $font_text;
+  }
+}
+
+.blog-entry {
+  border: 1px $bg-code solid;
+  margin-bottom: 25px;
+  padding: 5px;
+
+  .meta {
+    background: $bg-code;
+    padding: 0 15px;
+    div {
+      display: inline-block;
+    }
+    div:first-child {
+      padding-right: 10px;
+      border-right: 1px solid darken($bg-code, 25%);
+    }
+    div:last-child {
+      padding-left: 10px;
+    }
+  }
+}
+
+.blog-edit {
+  display: inline-block;
+  input[type="submit"] {
+    @include btn(5px, 25px, $secondary);
+    font-size: ms(0);
+  }
+}
+
+//.blog-edit {
+//  display: inline-block;
+//  border-left: 1px solid darken($bg-code, 25%);
+//  padding: 5px 15px;
+//  font-size: ms(0);
+//}
+
+.blog-remove {
+  display: inline-block;
+  margin-left: 15px;
+  input[type="submit"] {
+    @include btn(5px, 25px, $primary-dark);
+    font-size: ms(0);
+  }
+}
+
+.blog-editor {
+  input[type='text'] {
+    @include active_input_shadow;
+    display: block;
+    border: 1px solid grey(25%);
+    padding: 10px;
+    font-size: ms(1);
+    width: 50%;
+  }
+  textarea {
+    @include active_input_shadow;
+    border: 1px solid grey(25%);
+    margin-top: 15px;
+    padding: 5px;
+    width: 50%;
+    height: 300px;
+  }
+}
+
+.blog-submit {
+  input {
+    @include btn(60px, 30px);
+    display: inline-block;
+    vertical-align: middle;
+    &[type='submit'] {
+      @include btn-color($ternary-dark);
+    }
+    &[type='button'] {
+      @include btn-color($primary-dark);
+    }
+  }
+}

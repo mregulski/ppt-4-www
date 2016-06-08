@@ -8,14 +8,18 @@ class Counter {
             fwrite($fp, 0);
             fclose($fp);
         }
+        $fp = fopen($this->counterFile, 'r');
+        $data = fread($fp, filesize($this->counterFile));
+        $this->count = $data;
+        fclose($fp);
     }
 
     function update() {
         $fp = fopen($this->counterFile, 'r');
         $data = fread($fp, filesize($this->counterFile));
         $this->count = $data + 1;
-
         fclose($fp);
+
         $fp = fopen($this->counterFile, 'w');
         fwrite($fp, $this->count);
         fclose($fp);

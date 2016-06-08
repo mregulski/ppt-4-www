@@ -1,0 +1,13 @@
+<article class="blog blog-editor">
+    <h1>{{Heading}}</h1>
+    <form action="" method="POST">
+        <label for="entry-title">Tytuł</label>
+        <input id="entry-title" type="text" name="entry-title" value="{{Title}}"/>
+        <textarea name="entry-body" placeholder="Dodaj nowy wpis">{{Entry}}</textarea>
+        <input type="hidden" name="method" value="{{Method}}">
+        <div class="blog-submit">
+            <input type="submit" value="Zapisz wpis"/>
+            <a href="../blog"><input type="button" value="Odrzuć"/></a>
+        </div>
+    </form>
+</article>

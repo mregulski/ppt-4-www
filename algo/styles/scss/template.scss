@@ -25,7 +25,7 @@ section {
 
 #content {
     @include col(9, 12, $last: true);
-    height: 100%;
+  min-height: 100%;
 	@include at('grid_min_width') {
         border-left: 1px solid darken($ternary-dark, 10%);
 		padding-left: 15px;

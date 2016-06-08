@@ -1,0 +1,8 @@
+@import 'main';
+
+a {
+  @include transition-basic();
+  text-decoration: none;
+
+}
+

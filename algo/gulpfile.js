@@ -40,7 +40,7 @@ gulp.task('minify-css', ['compile-sass'], function() {
     return gulp.src(['styles/__reset.css', css.workDir+'*.css'])
         .pipe(concat('styles.css'))
         .pipe(gulp.dest(css.rootDir));
-})
+});
 
 gulp.task('uglify-js', function() {
     return gulp.src(js.src)
@@ -52,12 +52,12 @@ gulp.task('uglify-js', function() {
             suffix: ".min"
         }))
         .pipe(gulp.dest(js.rootDir))
-})
+});
 
 gulp.task('watch', function() {
     gulp.watch([scss.src], ['minify-css']);
     gulp.watch(js.src, ['uglify-js'])
-})
+});
 
 function errorHandler(error) {
     console.error(error.messageFormatted);

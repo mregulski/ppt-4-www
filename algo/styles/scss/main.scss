@@ -1,29 +1,46 @@
 @import 'colors';
 @import 'fonts';
 @import 'layout';
+@import '../../bower_components/modular-scale/stylesheets/modular-scale';
 
-@import 'bower_components/modular-scale/stylesheets/modular-scale';
 $wrapper-width: 80%;
 
-
 @mixin transition-basic() {
-    transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
-@mixin btn($width: 15px, $height: 30px) {
-    @include transition-basic();
-    padding: 0 $width;
-    background: $primary;
-    color: $white;
-    font-family: $font_text;
-    font-size: ms(1);
-    margin: 10px 0;
-    border: 1px solid $primary-darkest;
-    border-radius: 15px;
-    &:hover {
-        background: darken($primary, 9%);
-    }
-    &:active {
-        background: darken($primary, 15%);
-    }
 
+@mixin btn($width: 15px, $height: 30px, $color: $primary) {
+  @include transition-basic();
+  @include btn-color($color);
+  display: inline-block;
+  padding: 0 $width;
+  vertical-align: middle;
+  color: $white;
+  font-family: $font_text;
+  font-size: ms(1);
+  margin: 10px 0;
+  height: $height;
+  border: 1px solid $color;
+  border-radius: 15px;
+
+}
+
+@mixin btn-color($color) {
+  $border-color: darken($color, 3%);
+  background: $color;
+  border-color: $border-color;
+  &:hover {
+    background: darken($color, 5%);
+    border-color: darken($border-color, 5%);
+  }
+  &:active {
+    background: darken($color, 9%);
+    border-color: darken($border-color, 9%);
+  }
+}
+
+@mixin active_input_shadow() {
+  &:focus {
+    box-shadow: inset 1px 1px 3px grey(30%);
+  }
 }

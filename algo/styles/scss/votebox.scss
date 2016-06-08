@@ -2,8 +2,7 @@
 
 #feedback {
 	@include col(6,6);
-   
-    margin-top: 15px;
+    margin: 15px 0 0 0;
     border-top: 1px solid $secondary-dark;
 }
 
@@ -34,7 +33,7 @@
         font: $font-text;
         display: inline-block;
 		border-radius: 15px;
-        background: transparent;
+        background: $white;
         font-size: ms(2);
         &.upvote {
             border: 1px solid $primary;

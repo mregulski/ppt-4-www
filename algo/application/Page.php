@@ -1,86 +1,30 @@
 <?php
-namespace Algorithm;
-require_once('Config.php');
-$NavData = [
-    ['id' => 0,  'href' => '/algo/',       'name' => 'Strona główna'],
-    ['id' => 1,  'href' => 'euclid',      'name' => 'Algorytm Euklidesa'],
-    ['id' => 2,  'href' => 'euclid-extended',  'name' => 'Rozszerzony Algorytm Euklidesa'],
-    ['id' => 3,  'href' => 'prime-test',       'name' => 'Test pierwszości'],
-    ['id' => 4,  'href' => 'erastotenes-sieve',       'name' => 'Sito Erastotenesa'],
-    ['id' => 5,  'href' => 'insert-sort', 'name' => 'Sortowanie przez wstawianie'],
-    ['id' => 6,  'href' => 'merge-sort',  'name' => 'Sortowanie przez scalanie'],
-    ['id' => 7,  'href' => 'binary-search',  'name' => 'Wyszukiwanie binarne'],
-    ['id' => 8,  'href' => 'towers-hanoi',       'name' => 'Wieże Hanoi'],
-    ['id' => 9,  'href' => 'queens-problem',      'name' => 'Problem hetmanów'],
-    ['id' => 10, 'href' => 'knights-tour',      'name' => 'Problem skoczka szachowego']
-];
 
-class AlgorithmPage {
-    private $template;
-    private $id = -1;
-    private $title = "";
-    private $scripts = [];
-    private $styles = [];
-    private $content = "";
+/**
+ * Created by PhpStorm.
+ * User: mrmar
+ * Date: 08.06.2016
+ * Time: 19:37
+ */
+class Page
+{
+    protected $scripts = [];
+    protected $styles = [];
 
-    function __construct($id, $title) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->template  = file_get_contents('application/template/template.html');
-    }
-
-    static function getId($href) {
-        global $NavData;
-        foreach ($NavData as $key => $val) {
-            if($NavData[$key]['href'] === $href) {
-                return $NavData[$key]['id'];
-            }
-        }
-    }
-
-    function SetContent($content) {
-        $this->content = $content;
-        return $this;
-    }
-
-    function RegisterScript($script) {
+    function register_script($script)
+    {
         $this->scripts[] = $script;
         return $this;
     }
 
-    function RegisterStyle($style) {
+    function register_style($style)
+    {
         $this->styles[] = $style;
         return $this;
     }
 
-    function Render($visitorCount) {
-        $scripts = $this->ScriptBlock();
-        $styles = $this->StyleBlock();
-        $menuitems = $this->GenerateMenu();
-        return $this->GetHTML($scripts, $styles, $menuitems, $visitorCount);
-    }
-
-    private function GetHTML($scripts, $styles, $menuitems, $visitorCount) {
-        $styleDir = Config['StylePath'];
-        $resDir = Config['ResPath'];
-        $html = str_replace(
-            ["{{Title}}", "{{Scripts}}", "{{Styles}}",
-                "{{MenuItems}}", "{{PageContent}}", "{{StylesDir}}", "{{ResDir}}",
-                "{{VisitCounter}}", "{{Feedback}}"],
-            [$this->title, $scripts, $styles, $menuitems,$this->content,
-                $styleDir, $resDir, $visitorCount, $this->GetFeedback()],
-            $this->template);
-        return $html;
-    }
-
-    private function GetFeedback() {
-        if($this->id == 0) {
-            return "";
-        }
-        return file_get_contents('application/template/feedback.html');
-    }
-
-    private function ScriptBlock() {
+    protected function ScriptBlock()
+    {
         $scriptTags = "";
         foreach($this->scripts as $script) {
             $scriptTags .= "<script src='{$script}'></script>\n";
@@ -89,7 +33,8 @@ class AlgorithmPage {
         return $scriptTags;
     }
 
-    private function StyleBlock() {
+    protected function StyleBlock()
+    {
         $styleTags = "";
         foreach($this->styles as $style) {
             $styleTags .= "<link rel='stylesheet' href='$style'/>\n";
@@ -98,31 +43,10 @@ class AlgorithmPage {
         return $styleTags;
     }
 
-    public function Footer() {
-        global $Footer;
-        return $Footer;
+    protected function link($href)
+    {
+        return '/' . \Configuration::property('application_root') . "$href";
     }
-    private function GenerateMenu() {
-        global $NavData;
-        $menu_entry = "<li class='{{Class:active}}'><a href='{{Href}}' class='{{Class:active}}'>{{Name}}</a></li>";
-        $menu = "<ul>\n";
-        for($i = 0; $i < count($NavData); $i++) {
-            $classes="";
-            if((int) $NavData[$i]["id"] === $this->id) {
-                $classes.="active";
-                $element = (string) str_replace("href='{{Href}}'", "", $menu_entry);
-            }
-            else {
-                $element = (string) str_replace("{{Href}}", (string) $NavData[$i]["href"], $menu_entry);
-            }
-            $element = (string) str_replace("{{Name}}", (string) $NavData[$i]["name"], $element);
-            $element = (string) str_replace("{{Class:active}}", (string) $classes, $element);
-            $menu .= $element."\n";
 
-        };
-        $menu .= "</ul>\n";
-        return $menu;
-    }
 
 }
-?>

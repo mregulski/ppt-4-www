@@ -65,5 +65,8 @@ nav {
         &.active {
             cursor: default;
         }
+      &:visited {
+        color: $white;
+      }
     }
 }
