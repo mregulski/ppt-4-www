@@ -14,6 +14,7 @@ class Router {
                 return call_user_func($callback, $params);
             }
         }
+        echo("<html><body><h1>404 - not found</h1><p>Requested URL has not been found.</p></body></html>");
     }
 }
 ?>

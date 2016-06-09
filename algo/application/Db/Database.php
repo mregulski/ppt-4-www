@@ -25,7 +25,7 @@ class Database
         }
     }
 
-    public function getUser($login)
+    public function get_user($login)
     {
         $user = ['username' => '', 'hash' => ''];
         $stmt = $this->db->prepare("SELECT username, hash FROM users WHERE username = ?");
@@ -38,35 +38,35 @@ class Database
         return false;
     }
 
-    public function save_entry($data)
+    public function create_user($login, $password)
     {
-
-        $entry['author'] = $_SESSION['user'];
-        $entry['createdAt'] = date("Y-m-d H:i:s");
-        $entry['title'] = strip_tags($data['entry-title']);
-        $entry['content'] = strip_tags($data['entry-body']);
-        \Logger::log("Saving entry:\nTitle: " . $entry['title'] . "\nAuthor: " . $entry['author'] . "\nCreatedAt: " . $entry['createdAt']
-            . "\nContent: " . $entry['content'], "Database.save_entry");
-        $stmt = $this->db->prepare("INSERT INTO entries(author, createdAt, title, content) VALUES (?,?,?,?)");
-        $stmt->bind_param('ssss', $entry['author'], $entry['createdAt'], $entry['title'], $entry['content']);
-
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true;
-        };
+        $stmt = $this->db->prepare("INSERT INTO users(username, hash) VALUES (?,?)");
+        $hash = hash('sha256', $password);
+        $stmt->bind_param("ss", $login, $hash);
+        $status = $stmt->execute();
         $stmt->close();
-        return false;
+        return $status;
+
+    }
+
+    public function get_page_count()
+    {
+        $entry_count = $this->db->query("SELECT count(id) FROM entries")->fetch_row()[0];
+        $page_count = ceil($entry_count / \Configuration::property('blog.entries_per_page'));
+        \Logger::log("Total entries: $entry_count ($page_count pages)", "Db\\Database.get_page_count");
+        return $page_count;
     }
 
     public function get_entries($page)
     {
-        $start = $page * \Configuration::property('blog.entries_per_page');
-        $end = $start + \Configuration::property('blog.entries_per_page');
+        $amount = \Configuration::property('blog.entries_per_page');
+        $start = $page * $amount;
+
 
         $entries = array();
-
-        $stmt = $this->db->prepare("SELECT id, author, title, content, modifiedAt FROM entries ORDER BY createdAt DESC LIMIT ?, ?");
-        $stmt->bind_param("ii", $start, $end);
+        \Logger::log("Getting entries #$start through #" . ($start + $amount - 1), "Db\\Database.getEntries");
+        $stmt = $this->db->prepare("SELECT id, author, title, content, modifiedAt FROM entries ORDER BY createdAt DESC LIMIT ?, ? ");
+        $stmt->bind_param("ii", $start, $amount);
         if ($stmt->execute()) {
             $stmt->bind_result($id, $author, $title, $content, $modifiedAt);
             while ($stmt->fetch()) {
@@ -104,15 +104,36 @@ class Database
         return false;
     }
 
+    public function save_entry($data)
+    {
+
+        $entry['author'] = $_SESSION['user'];
+        $entry['createdAt'] = date("Y-m-d H:i:s");
+        $entry['title'] = strip_tags($data['entry-title']);
+        $entry['content'] = strip_tags($data['entry-body'], \Configuration::property('blog.allowed_tags'));
+        $entry['content'] = trim($entry['content']);
+        \Logger::log("Saving entry:\nTitle: " . $entry['title'] . "\nAuthor: " . $entry['author'] . "\nCreatedAt: " . $entry['createdAt']
+            . "\nContent: " . $entry['content'], "Database.save_entry");
+        $stmt = $this->db->prepare("INSERT INTO entries(author, createdAt, title, content) VALUES (?,?,?,?)");
+        $stmt->bind_param('ssss', $entry['author'], $entry['createdAt'], $entry['title'], $entry['content']);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            \Logger::log("Entry saved.", "Database::save_entry");
+            return true;
+        };
+        $stmt->close();
+        return false;
+    }
 
     public function update_entry($id, $data)
     {
         $entry['id'] = $id;
         $entry['title'] = strip_tags($data['entry-title']);
-        $entry['content'] = strip_tags($data['entry-body']);
-
-        $stmt = $this->db->prepare("UPDATE entries SET title = ?, content = ? WHERE id = ?");
-        $stmt->bind_param('ssi', $entry['title'], $entry['content'], $id);
+        $entry['content'] = strip_tags($data['entry-body'], \Configuration::property('blog.allowed_tags'));
+        $entry['content'] = trim($entry['content']);
+        $stmt = $this->db->prepare("UPDATE entries SET title = ?, content = ?, modifiedAt = ? WHERE id = ?");
+        $stmt->bind_param('sssi', $entry['title'], $entry['content'], date("Y-m-d H:i:s"), $id);
 
         $status = $stmt->execute();
         $stmt->close();

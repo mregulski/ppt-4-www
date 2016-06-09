@@ -1,4 +1,6 @@
 <?php
+namespace Blog;
+require_once('application/Page.php');
 /**
  * Created by PhpStorm.
  * User: mrmar
@@ -6,24 +8,29 @@
  * Time: 14:23
  */
 
-namespace Blog;
-
 use Logger;
 
-class LoginPage
+class LoginPage extends \Page
 {
     private $template;
-    private $config;
+    private $mode;
 
-    public function __construct()
+    public function __construct($mode)
     {
-        $this->template = \Configuration::property('template.login');
+        if ($mode === 'login' || $mode === 'register') {
+            $this->mode = $mode;
+        } else {
+            throw new \Exception("invalid mode for LoginPage");
+        }
+        $this->template = $this->get_template($mode);
         Logger::log('template:' . $this->template);
     }
 
-    public function render($error)
+    public function render($msg, $type)
     {
-        return str_replace('{{ERROR_MSG}}', $error, file_get_contents($this->template));
+        return str_replace(['{{msg}}', '{{msg_class}}', '{{action}}', '{{title}}'],
+            [$msg, $type, $this->mode, $this->mode == 'login' ? "Logowanie do bloga" : "Nowe konto"],
+            $this->template);
     }
 
     public function authorize($username, $password)

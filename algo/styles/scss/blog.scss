@@ -1,6 +1,7 @@
 @import "main";
 
 .blog {
+  width: 100%;
   h1 {
     font-size: ms(4);
     line-height: ms(4);
@@ -9,6 +10,24 @@
   pre {
     font-family: $font_text;
   }
+  a {
+    color: inherit;
+  }
+
+  .read-more {
+    @include transition-basic;
+    color: $ternary-dark;
+    padding: 0 5px;
+    &:hover {
+      background: $ternary-dark;
+      border-radius: 5px 0 5px 0;
+      color: $white;
+    }
+  }
+}
+
+.blog-editor {
+  width: 100%;
 }
 
 .blog-entry {
@@ -19,6 +38,7 @@
   .meta {
     background: $bg-code;
     padding: 0 15px;
+    font-size: ms(-1);
     div {
       display: inline-block;
     }
@@ -30,61 +50,66 @@
       padding-left: 10px;
     }
   }
+
+  .entry-body {
+    h1, h2, h3, h4, h5 {
+      color: $secondary;
+    }
+  }
 }
 
 .blog-edit {
   display: inline-block;
   input[type="submit"] {
     @include btn(5px, 25px, $secondary);
-    font-size: ms(0);
   }
 }
-
-//.blog-edit {
-//  display: inline-block;
-//  border-left: 1px solid darken($bg-code, 25%);
-//  padding: 5px 15px;
-//  font-size: ms(0);
-//}
 
 .blog-remove {
   display: inline-block;
   margin-left: 15px;
   input[type="submit"] {
     @include btn(5px, 25px, $primary-dark);
-    font-size: ms(0);
   }
 }
 
-.blog-editor {
+.blog-editor-wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: baseline;
   input[type='text'] {
     @include active_input_shadow;
     display: block;
     border: 1px solid grey(25%);
     padding: 10px;
     font-size: ms(1);
-    width: 50%;
+    width: 100%;
   }
   textarea {
     @include active_input_shadow;
     border: 1px solid grey(25%);
     margin-top: 15px;
     padding: 5px;
-    width: 50%;
     height: 300px;
+    width: 100%;
   }
 }
 
 .blog-submit {
+  display: flex;
+  justify-content: center;
   input {
-    @include btn(60px, 30px);
+    @include btn(30px, 30px);
     display: inline-block;
     vertical-align: middle;
     &[type='submit'] {
       @include btn-color($ternary-dark);
+      align-self: flex-start;
     }
     &[type='button'] {
       @include btn-color($primary-dark);
+      margin-left: 60px;
     }
   }
 }

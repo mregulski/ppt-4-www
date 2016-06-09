@@ -3,7 +3,6 @@
 class Configuration
 {
     const AppRoot = 'algo/';
-    private static $config;
     private static $properties = [
         "application_root" => self::AppRoot,
         "script_path" => self::AppRoot . 'scripts/',
@@ -12,14 +11,24 @@ class Configuration
         "template" => [
             "algorithm" => "application/template/template.html",
             "login" => "application/template/login.html",
+            "register" => "application/template/register.html",
             "feedback" => "application/template/feedback.html",
-            "blog" => "application/template/template.html",
-            "blog_entry" => "application/template/blog-entry.html",
-            "blog_editor" => "application/template/blog-editor.html",
-            "editor" => "application/template/template.html",
+            "blog" => [
+                "list" => "application/template/template.html",
+                "list_entry" => "application/template/blog/list-entry.html",
+                "single_entry" => "application/template/template.html",
+                "editor" => "application/template/blog/editor.html",
+                "edit" => "application/template/template.html",
+                "pagination" => [
+                    "container" => "application/template/blog/pagination/pagination.html",
+                    "link" => "application/template/blog/pagination/page_link.html",
+                ]
+            ],
         ],
         "blog" => [
-            "entries_per_page" => 10,
+            "entries_per_page" => 6,
+            "excerpt_length" => 55,
+            "allowed_tags" => '<h1><h2><h3><h4><h5><a><p><br><section><b><i>',
         ],
     ];
 
@@ -30,13 +39,11 @@ class Configuration
     public static function property($name)
     {
         $property = explode('.', $name);
-        if (count($property) == 1) {
-
-            return self::$properties[$property[0]];
+        $cur = self::$properties;
+        foreach ($property as $prop) {
+            $cur = $cur[$prop];
         }
-        if (count($property) == 2) {
-            return self::$properties[$property[0]][$property[1]];
-        }
+        return $cur;
     }
 }
 

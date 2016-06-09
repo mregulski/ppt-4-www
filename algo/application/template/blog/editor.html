@@ -1,0 +1,15 @@
+<article class="blog">
+    <div class="blog-editor-wrapper">
+        <h1>{{Heading}}</h1>
+        <form class="blog-editor" action="{{submit_url}}" method="POST">
+            <label for="entry-title">Tytuł</label>
+            <input id="entry-title" type="text" name="entry-title" value="{{Title}}"/>
+            <textarea name="entry-body" placeholder="Dodaj nowy wpis">{{Entry}}</textarea>
+            <input type="hidden" name="method" value="{{Method}}">
+            <div class="blog-submit">
+                <input type="submit" value="Zapisz wpis"/>
+                <a href="{{blog_url}}"><input type="button" value="Odrzuć"/></a>
+            </div>
+        </form>
+    </div>
+</article>

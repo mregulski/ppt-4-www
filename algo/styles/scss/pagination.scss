@@ -1,0 +1,41 @@
+@import 'main';
+
+#blog-pagination {
+  text-align: center;
+  ul {
+    display: inline-block;
+    list-style-type: none;
+  }
+  .pagination-link {
+    @include transition-basic;
+
+    display: inline-block;
+    border: 1px solid $black;
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+    a {
+      padding: 10px 20px;
+      display: block;
+    }
+    &:hover {
+      background: $primary;
+      border-radius: 15px 0 15px 0;
+      a {
+        color: $white;
+      }
+    }
+  }
+  .active {
+    background: $primary;
+    border-radius: 15px 0 15px 0;
+    & > a, & > a:hover {
+      color: $white;
+    }
+  }
+  .pagination-filler {
+    border: 0px;
+    pointer-events: none;
+
+  }
+}

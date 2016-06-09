@@ -20,7 +20,7 @@
     }
 }
 
-nav {
+#sidebar nav {
     $nav_entry_bg: $ternary-dark;
     @include transition-basic();
     // @include col(3, 12);

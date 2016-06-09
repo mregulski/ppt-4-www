@@ -3,6 +3,6 @@
 a {
   @include transition-basic();
   text-decoration: none;
-
+  color: $black;
 }
 

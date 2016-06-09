@@ -28,10 +28,9 @@ class Session
         }
         $username = $_POST['username'];
         $password = $_POST['password'];
-        echo hash('sha256', $password);
         $db = new Database();
 
-        $user = $db->getUser($username);
+        $user = $db->get_user($username);
         if ($user) {
             if (hash('sha256', $password) === $user['hash']) {
                 self::create($user);

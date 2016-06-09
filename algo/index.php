@@ -29,6 +29,45 @@ $router->route('/' . $application_root . '($|\/$)/', function ($matches) {
 });
 
 /**
+ * Login page
+ */
+$router->route('/' . $application_root . 'login($|\/$)/', function ($matches) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo (new LoginPage('login'))->render(null, null);
+    } else {
+        if (Session::login()) {
+            Logger::log("user logged in: " . $_SESSION['user'], "Router::execute(/login");
+            header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+        } else {
+            http_response_code(403);
+            echo (new LoginPage('login'))->render("Nieprawidłowe dane", 'error');
+        }
+    }
+});
+/**
+ * Registration
+ */
+$router->route('/' . $application_root . 'register($|\/$)/', function ($matches) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo (new LoginPage('register'))->render(null, null);
+        return;
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ((new \Db\Database())->create_user($_POST['username'], $_POST['password'])) {
+            echo (new LoginPage('login'))->render("Utworzono nowe konto", 'success');
+        }
+    } else {
+        if (Session::login()) {
+            Logger::log("user logged in: " . $_SESSION['user'], "Router::execute(/login");
+            header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+        } else {
+            http_response_code(403);
+            echo (new LoginPage('register'))->render("Nieprawidłowe dane", 'error');
+        }
+    }
+});
+
+/**
  * Logout
  */
 $router->route('/' . $application_root . 'logout($|\/$)/', function () {
@@ -37,20 +76,6 @@ $router->route('/' . $application_root . 'logout($|\/$)/', function () {
     return;
 });
 
-/**
- * Login page
- */
-$router->route('/' . $application_root . 'login($|\/$)/', function ($matches) {
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        echo (new LoginPage())->render(null);
-    } else {
-        if (Session::login()) {
-            Logger::log("user logged in: " . $_SESSION['user'], "Router::execute(/login");
-            header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
-        }
-    }
-
-});
 
 /**
  * Blog front page
@@ -59,7 +84,7 @@ $router->route('/' . $application_root . 'blog($|\/$)/', function ($matches) {
     global $counter;
     $counter->update();
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        echo (new BlogPage(false, 0, null))->render($counter->getCount());
+        echo (new BlogPage(false, 1, null))->render($counter->getCount());
     } else {
         echo 'posted';
     }
@@ -71,9 +96,14 @@ $router->route('/' . $application_root . 'blog($|\/$)/', function ($matches) {
 $router->route('/' . $application_root . 'blog\/([0-9]+)($|\/$)/', function ($matches) {
     global $counter;
     $counter->update();
-    $page_number = $matches[1];
+    $page_number = (int)$matches[1];
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        echo (new BlogPage(false, $page_number, null))->render($counter->getCount());
+        if ($page_number <= (new \Db\Database())->get_page_count()) {
+            echo (new BlogPage(false, $page_number, null))->render($counter->getCount());
+            return;
+        }
+        http_response_code(404);
+        echo("<html><body><h1>404 - not found</h1><p>Requested URL has not been found.</p></body></html>");
     }
 });
 
@@ -82,7 +112,7 @@ $router->route('/' . $application_root . 'blog\/([0-9]+)($|\/$)/', function ($ma
  * GET: editor page
  * POST: add entry
  */
-$router->route('/' . $application_root . 'blog\/new/', function ($matches) {
+$router->route('/' . $application_root . 'blog\/new($|\/$)/', function ($matches) {
     global $counter;
     if (!Session::check()) {
         header("Location: /" . Configuration::property('application_root') . 'login');
@@ -92,35 +122,51 @@ $router->route('/' . $application_root . 'blog\/new/', function ($matches) {
         echo (new BlogPage(true, null, null))->render($counter->getCount());
     } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ((new \Db\Database())->save_entry($_POST)) {
-            http_response_code(201);
+            http_response_code(303);
             header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+            return;
         } else {
             http_response_code(500);
             header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+            return;
         }
-        header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+    }
+});
+
+/**
+ * GET: editor page
+ */
+$router->route('/' . $application_root . 'blog\/entry\/([0-9]+)\/edit($|\/$)/', function ($matches) {
+    global $counter;
+    $post_number = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        echo (new BlogPage(true, null, $post_number))->render($counter->getCount());
+        return;
+    } else {
+        http_response_code(406);
     }
 });
 
 /**
  * Particular blog entry
- * GET: editor page
+ * GET: entry
  * POST/patch: update
  * POST/delete: delete
  */
 $router->route('/' . $application_root . 'blog\/entry\/([0-9]+)($|\/$)/', function ($matches) {
     global $counter;
-    $counter->update();
     $post_number = $matches[1];
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        echo (new BlogPage(true, null, $post_number))->render($counter->getCount());
+        Logger::log("Entry: #$post_number", "Router::execute(/blog/entry/{id})");
+        echo (new BlogPage(false, null, $post_number))->render($counter->getCount());
         return;
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST['method'] == 'PATCH') { // update
             if ((new \Db\Database())->update_entry($post_number, $_POST)) {
                 http_response_code(302);
-                header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog");
+                header("Location: https://" . $_SERVER['HTTP_HOST'] . "/algo/blog/entry/$post_number");
                 return;
             }
             http_response_code(500);

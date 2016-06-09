@@ -1,0 +1,81 @@
+@import "main";
+
+.login .wrapper {
+  margin-top: 30px;
+  height: 100%;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.login h1 {
+  width: 100%;
+  align-self: flex-start;
+  margin-bottom: 15px;
+  font-size: ms(4);
+  line-height: normal;
+  color: $primary;
+  border-bottom: 1px solid darken($bg-code, 15%);
+}
+
+.login #buttons {
+  display: flex;
+  flex-direction: row;
+  #back {
+    @include btn(15px, $color: $secondary);
+    align-self: flex-start;
+    font-size: ms(0);
+  }
+  #register {
+    @include btn(15px, $color: $ternary-dark);
+    margin-left: 30px;
+    font-size: ms(0);
+  }
+}
+
+.login form {
+  width: 100%;
+  background: $bg-code;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+
+  font-size: ms(0);
+  border: 1px solid black;
+  padding: 15px 90px 30px 90px;
+  input[name] {
+    font-size: ms(1);
+    display: block;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+  input[type="submit"] {
+    @include btn($height: 45px);
+    width: 50%;
+    align-self: center;
+  }
+}
+
+.login-msg {
+  display: none;
+  width: 100%;
+  justify-self: flex-start;
+  text-align: center;
+  font-size: ms(1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.login-error {
+  color: $primary-dark;
+  background: $primary-lightest;
+  display: block;
+}
+
+.login-success {
+  color: $ternary-darkest;
+  background: $ternary-light;
+  display: block;
+}

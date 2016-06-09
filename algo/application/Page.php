@@ -11,6 +11,13 @@ class Page
     protected $scripts = [];
     protected $styles = [];
 
+    protected function get_template($name)
+    {
+        $template_file = Configuration::property('template.' . $name);
+        Logger::log("Template '$name' resolved to '$template_file'.", "Page.get_template");
+        return file_get_contents($template_file);
+    }
+    
     function register_script($script)
     {
         $this->scripts[] = $script;
@@ -43,9 +50,17 @@ class Page
         return $styleTags;
     }
 
-    protected function link($href)
+    protected function url($href)
     {
         return '/' . \Configuration::property('application_root') . "$href";
+    }
+
+    protected function link($url = '', $text = '', $class = '', $id = '')
+    {
+        $link = "<a {{id}} {{class}} {{href}} >{{text}}</a>";
+        return str_replace(['{{id}}', '{{class}}', '{{href}}', '{{text}}'],
+            ['id="' . $id . '"', 'class="' . $class . '"', $url != '' ? 'href="' . $url . '"' : '', $text],
+            $link);
     }
 
 

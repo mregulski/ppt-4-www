@@ -90,12 +90,18 @@ class AlgorithmPage extends \Page
         global $NavData;
         $menu_entry = "<li class='{{Class:active}}'><a href='{{Href}}' class='{{Class:active}}'>{{Name}}</a></li>";
         $menu = "<ul>\n";
+        if ($this->id == 0) {
+            $menu .= str_replace(['{{Class:active}}', 'href=\'{{Href}}\'', '{{Name}}'],
+                ['active', '', 'Strona główna'],
+                $menu_entry);
+        } else {
+            $menu .= str_replace(['{{Class:active}}', '{{Href}}', '{{Name}}'],
+                ['', '/' . \Configuration::property('application_root'), 'Strona główna'],
+                $menu_entry);
+        }
 
         $menu .= str_replace(['{{Class:active}}', '{{Href}}', '{{Name}}'],
-            [$this->id == 0 ? 'active' : '', \Configuration::property('application_root'), 'Strona główna'],
-            $menu_entry);
-        $menu .= str_replace(['{{Class:active}}', '{{Href}}', '{{Name}}'],
-            ['', $this->link('blog'), 'Blog'],
+            ['', $this->url('blog'), 'Blog'],
             $menu_entry);
         for ($i = 1; $i < count($NavData); $i++) {
             $classes = "";
